@@ -6,8 +6,8 @@
       "destination": "/owner-panel"
     },
     {
-      "source": "/Home.html",
-      "destination": "/home"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
