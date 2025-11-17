@@ -4229,7 +4229,7 @@
             <tbody id="cart-modal-body"></tbody>
           </table>
           <div class="text-end fw-bold mt-3 pt-3 border-top">
-            <span id="cartTotalTitle">الإجمالي | Total:</span> 
+            <span id="cartTotalTitle">الإجمالي | Total:</span>
             <span id="cart-total" class="text-primary fs-5">0.00 ر.س</span>
           </div>
         </div>
@@ -7740,13 +7740,13 @@
       if (e.target.classList.contains('cart-qty')) {
         const idx = parseInt(e.target.getAttribute('data-idx'), 10);
         const val = Math.max(1, parseInt(e.target.value, 10) || 1);
-        if (cart[idx]) { 
+        if (cart[idx]) {
           cart[idx].qty = val;
           // Ensure price is still a number
           cart[idx].price = parseFloat(cart[idx].price) || 0;
-          saveCart(); 
-          renderCartModal(); 
-          updateCartBadge(); 
+          saveCart();
+          renderCartModal();
+          updateCartBadge();
         }
       }
     });
@@ -7755,9 +7755,9 @@
       if (rm) {
         const idx = parseInt(rm.getAttribute('data-idx'), 10);
         if (idx >= 0 && idx < cart.length) {
-          cart.splice(idx, 1); 
-          saveCart(); 
-          renderCartModal(); 
+          cart.splice(idx, 1);
+          saveCart();
+          renderCartModal();
           updateCartBadge();
           showToast(document.documentElement.lang === 'ar' ? 'تم حذف المنتج من السلة' : 'Item removed from cart', 'info');
         }
