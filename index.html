@@ -660,6 +660,199 @@
       }
     }
 
+    /* Modern Cart Items Styling */
+    .cart-items-container {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .cart-items-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .cart-items-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .cart-items-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    .cart-items-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    .cart-item-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .cart-item-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .cart-item-image {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #212529;
+    }
+
+    .cart-item-desc {
+      font-size: 0.875rem;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-item-price-info {
+      margin-top: 0.5rem;
+    }
+
+    .cart-item-unit-price {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-item-quantity .btn {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .cart-item-quantity .cart-qty {
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .cart-item-quantity .cart-qty:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .cart-item-total {
+      font-size: 1.2rem;
+    }
+
+    .cart-item-card .remove-cart-item {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .cart-item-card .remove-cart-item:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+    }
+
+    .cart-empty-state {
+      padding: 3rem 1rem;
+    }
+
+    .cart-empty-state i {
+      opacity: 0.5;
+    }
+
+    .cart-summary {
+      background: #f8f9fa;
+      padding: 1.25rem;
+      border-radius: 10px;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .cart-item-card {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .cart-item-image {
+        width: 80px;
+        height: 80px;
+      }
+
+      .cart-item-controls {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-item-quantity {
+        order: 1;
+      }
+
+      .cart-item-total {
+        order: 2;
+        font-size: 1.1rem;
+      }
+
+      .cart-item-card .remove-cart-item {
+        order: 3;
+      }
+    }
+
     /* Products Section Header */
     #products-pane {
       padding: 2rem 0;
@@ -4211,21 +4404,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <table class="table table-bordered align-middle">
-            <thead>
-              <tr>
-                <th></th>
-                <th id="thTotal">الإجمالي | Total</th>
-                <th id="thPrice">السعر | Price</th>
-                <th id="thQty">الكمية | Quantity</th>
-                <th id="thName">اسم المنتج | Product Name</th>
-              </tr>
-            </thead>
-            <tbody id="cart-modal-body"></tbody>
-          </table>
-          <div class="text-end fw-bold mt-3 pt-3 border-top">
-            <span id="cartTotalTitle">الإجمالي | Total:</span>
-            <span id="cart-total" class="text-primary fs-5">0.00 ر.س</span>
+          <div id="cart-modal-body" class="cart-items-container"></div>
+          <div class="cart-summary mt-4 pt-3 border-top">
+            <div class="d-flex justify-content-between align-items-center">
+              <span id="cartTotalTitle" class="fs-5 fw-semibold">الإجمالي | Total:</span>
+              <span id="cart-total" class="text-primary fs-4 fw-bold">0.00 ر.س</span>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -4733,38 +4917,172 @@
       };
       let html = '', total = 0;
 
-      cart.forEach((item, idx) => {
-        // Ensure price is a number
-        const price = parseFloat(item.price) || 0;
-        const qty = parseInt(item.qty) || 1;
-        const itemTotal = price * qty;
-        total += itemTotal;
+      if (cart.length === 0) {
+        html = `
+          <div class="cart-empty-state text-center py-5">
+            <i class="bi bi-cart-x" style="font-size: 4rem; color: #dee2e6;"></i>
+            <p class="mt-3 text-muted fs-5">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</p>
+            <p class="text-muted">${combineTexts('أضف منتجات إلى السلة للبدء', 'Add products to cart to get started', 'Add products to cart to get started')}</p>
+          </div>`;
+      } else {
+        let cartNeedsUpdate = false;
 
-        // Reorder columns to match image: Delete | Total | Price | Quantity | Product Name
-        html += `<tr>
-      <td><button class="btn btn-danger btn-sm remove-cart-item" data-idx="${idx}" title="${combineTexts('حذف', 'Delete', 'Delete')}"><i class="bi bi-trash"></i></button></td>
-      <td class="fw-bold">${fmt(itemTotal)}</td>
-      <td>${fmt(price)}</td>
-      <td><input type="number" min="1" value="${qty}" data-idx="${idx}" class="form-control form-control-sm cart-qty text-center" style="width:70px;"></td>
-      <td>${esc(item.name || '')}</td>
-    </tr>`;
-      });
+        cart.forEach((item, idx) => {
+          // Ensure price is a number
+          const price = parseFloat(item.price) || 0;
+          const qty = parseInt(item.qty) || 1;
+          const itemTotal = price * qty;
+          total += itemTotal;
 
-      document.getElementById('cart-modal-body').innerHTML = html || `<tr><td colspan="5" class="text-center py-4">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</td></tr>`;
+          // Handle legacy cart items that might not have img/desc/name
+          // Try to get product data if missing and update the cart item
+          const isProduct = /^\d+$/.test(String(item.id));
+
+          if (isProduct) {
+            const pid = parseInt(item.id, 10);
+            // Try to find product in allProducts first, then hardcoded products, then database
+            let product = null;
+            if (allProducts && allProducts.length > 0) {
+              product = allProducts.find(p => p.id === pid);
+            }
+            if (!product) {
+              product = products.find(p => p.id === pid);
+            }
+
+            if (product) {
+              // Update missing image
+              if (!item.img || item.img === '' || item.img === 'https://placehold.co/120x120/e9ecef/6c757d?text=Product') {
+                if (product.img && product.img.trim() !== '') {
+                  item.img = product.img;
+                } else {
+                  // Create SVG fallback with product name
+                  const productName = item.name || combineTexts(product.name?.ar, product.name?.en, product.name?.[lang]) || 'Product';
+                  item.img = createSVGImage(productName, 120, 120);
+                }
+                cartNeedsUpdate = true;
+              }
+              // Update missing description
+              if (!item.desc || item.desc === '') {
+                const currentLang = document.documentElement.lang;
+                item.desc = combineTexts(product.desc?.ar, product.desc?.en, product.desc?.[currentLang]) || '';
+                cartNeedsUpdate = true;
+              }
+              // Update missing name
+              if (!item.name || item.name === '') {
+                const currentLang = document.documentElement.lang;
+                item.name = combineTexts(product.name?.ar, product.name?.en, product.name?.[currentLang]) || '';
+                cartNeedsUpdate = true;
+              }
+              // Ensure isProduct flag is set
+              if (item.isProduct === undefined) {
+                item.isProduct = true;
+                cartNeedsUpdate = true;
+              }
+              // Store original item reference
+              if (!item.originalItem) {
+                item.originalItem = product;
+                cartNeedsUpdate = true;
+              }
+            }
+          }
+
+          // Create proper fallback image using SVG
+          const productNameForImg = item.name || 'Product';
+          const fallbackImg = createSVGImage(productNameForImg, 120, 120);
+          const itemImg = (item.img && item.img.trim() !== '' && item.img !== 'https://placehold.co/120x120/e9ecef/6c757d?text=Product')
+            ? item.img
+            : fallbackImg;
+          const itemDesc = item.desc || '';
+
+          html += `
+            <div class="cart-item-card" data-idx="${idx}">
+              <div class="cart-item-image">
+                <img src="${esc(itemImg)}" alt="${esc(item.name || '')}" 
+                     onerror="this.onerror=null;this.src='${fallbackImg}'" 
+                     loading="lazy">
+              </div>
+              <div class="cart-item-details">
+                <h6 class="cart-item-name">${esc(item.name || '')}</h6>
+                ${itemDesc ? `<p class="cart-item-desc text-muted small mb-2">${esc(itemDesc)}</p>` : ''}
+                <div class="cart-item-price-info">
+                  <span class="cart-item-unit-price">${fmt(price)} ${combineTexts('لكل', 'each', 'each')}</span>
+                </div>
+              </div>
+              <div class="cart-item-controls">
+                <div class="cart-item-quantity">
+                  <button class="btn btn-sm btn-outline-secondary qty-decrease" data-idx="${idx}" type="button">−</button>
+                  <input type="number" min="1" value="${qty}" data-idx="${idx}" 
+                         class="form-control form-control-sm cart-qty text-center" 
+                         style="width: 60px;">
+                  <button class="btn btn-sm btn-outline-secondary qty-increase" data-idx="${idx}" type="button">+</button>
+                </div>
+                <div class="cart-item-total">
+                  <span class="fw-bold text-primary">${fmt(itemTotal)}</span>
+                </div>
+                <button class="btn btn-sm btn-danger remove-cart-item" data-idx="${idx}" 
+                        title="${combineTexts('حذف', 'Delete', 'Delete')}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>`;
+        });
+
+        // Save cart if we updated any legacy items
+        if (cartNeedsUpdate) {
+          saveCart();
+        }
+      }
+
+      document.getElementById('cart-modal-body').innerHTML = html;
       document.getElementById('cart-total').textContent = fmt(total);
       updateCartBadge();
     }
 
-    function addToCart(id) {
+    // Helper function to get product by ID (checks database, allProducts, and hardcoded array)
+    async function getProductById(pid) {
+      // First, try allProducts (contains database products loaded by renderProducts)
+      if (allProducts && allProducts.length > 0) {
+        const found = allProducts.find(p => p.id === pid);
+        if (found) return found;
+      }
+
+      // Second, try hardcoded products array
+      const hardcoded = products.find(p => p.id === pid);
+      if (hardcoded) return hardcoded;
+
+      // Third, try database directly
+      if (typeof db !== 'undefined' && db) {
+        try {
+          if (!db.db) await db.init();
+          const dbProduct = await db.getProduct(pid);
+          if (dbProduct && dbProduct.isActive !== false) {
+            return dbProduct;
+          }
+        } catch (error) {
+          console.warn('Error loading product from database:', error);
+        }
+      }
+
+      return null;
+    }
+
+    // Helper function to create SVG fallback image
+    function createSVGImage(text, width = 120, height = 120) {
+      const encodedText = encodeURIComponent(text || 'Product');
+      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'><rect width='100%' height='100%' fill='%23e9ecef'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%236c757d' font-family='Arial, sans-serif' font-size='14' font-weight='bold'>${encodedText}</text></svg>`;
+    }
+
+    async function addToCart(id) {
       const lang = document.documentElement.lang;
       let item;
 
       const isProduct = /^\d+$/.test(String(id));
       if (isProduct) {
         const pid = parseInt(id, 10);
-        item = products.find(p => p.id === pid);
+        item = await getProductById(pid);
         if (!item) {
           console.warn('Product not found:', id);
+          showToast(lang === 'ar' ? 'المنتج غير موجود' : 'Product not found', 'error');
           return;
         }
       }
@@ -4773,6 +5091,7 @@
         item = subscriptions.find(s => s.id === subId);
         if (!item) {
           console.warn('Subscription not found:', id);
+          showToast(lang === 'ar' ? 'الاشتراك غير موجود' : 'Subscription not found', 'error');
           return;
         }
       }
@@ -4790,21 +5109,50 @@
 
       const existing = cart.find(x => String(x.id) === String(id));
 
+      // Prepare display data
+      const displayName = isProduct
+        ? combineTexts(item.name?.ar, item.name?.en, item.name?.[lang])
+        : combineTexts(`${item.months} أشهر`, `${item.months} Months`, `${item.months} ${(lang === 'ar') ? 'أشهر' : 'Months'}`);
+
+      const displayDesc = isProduct
+        ? combineTexts(item.desc?.ar, item.desc?.en, item.desc?.[lang])
+        : (item.features ? combineTexts(item.features.ar?.join(', '), item.features.en?.join(', '), item.features[lang]?.join(', ')) : '');
+
+      // Get image with proper fallback
+      let displayImg = '';
+      if (isProduct) {
+        displayImg = item.img || '';
+        // If no image or image is empty, create SVG fallback with product name
+        if (!displayImg || displayImg.trim() === '') {
+          const productName = displayName || combineTexts(item.name?.ar, item.name?.en, item.name?.[lang]) || 'Product';
+          displayImg = createSVGImage(productName, 120, 120);
+        }
+      }
+
       if (existing) {
         existing.qty = (parseInt(existing.qty) || 0) + 1;
-        // Update price in case it changed
+        // Update all product data to ensure it's current
         existing.price = price;
+        existing.name = displayName;
+        existing.desc = displayDesc;
+        if (isProduct) {
+          existing.img = displayImg;
+          existing.isProduct = true;
+          existing.originalItem = item;
+        }
       } else {
-        const displayName = isProduct
-          ? combineTexts(item.name?.ar, item.name?.en, item.name?.[lang])
-          : combineTexts(`${item.months} أشهر`, `${item.months} Months`, `${item.months} ${(lang === 'ar') ? 'أشهر' : 'Months'}`);
-
-        cart.push({
+        const cartItem = {
           id: String(id),
           qty: 1,
           name: displayName,
-          price: price
-        });
+          price: price,
+          desc: displayDesc,
+          img: displayImg,
+          isProduct: isProduct,
+          originalItem: isProduct ? item : null
+        };
+
+        cart.push(cartItem);
       }
 
       saveCart();
@@ -5078,6 +5426,8 @@
     // تهيئة عند التحميل
     document.addEventListener('DOMContentLoaded', () => {
       applyGenderStyle(genderStyle);
+      // Initialize cart badge on page load
+      updateCartBadge();
     });
 
     // Accordion state
@@ -7727,8 +8077,11 @@
     document.addEventListener('click', (e) => {
       const addBtn = e.target.closest('.add-to-cart');
       if (addBtn) {
-        addToCart(addBtn.getAttribute('data-id'));
-        showToast(document.documentElement.lang === 'ar' ? 'أضيف للسلة.' : 'Added to cart.', 'success');
+        addToCart(addBtn.getAttribute('data-id')).then(() => {
+          showToast(document.documentElement.lang === 'ar' ? 'أضيف للسلة.' : 'Added to cart.', 'success');
+        }).catch(err => {
+          console.error('Error adding to cart:', err);
+        });
       }
     });
     document.getElementById('cart-modal-body')?.addEventListener('input', (e) => {
@@ -7746,6 +8099,35 @@
       }
     });
     document.getElementById('cart-modal-body')?.addEventListener('click', (e) => {
+      // Handle quantity increase
+      const increaseBtn = e.target.closest('.qty-increase');
+      if (increaseBtn) {
+        const idx = parseInt(increaseBtn.getAttribute('data-idx'), 10);
+        if (cart[idx]) {
+          cart[idx].qty = (parseInt(cart[idx].qty) || 1) + 1;
+          saveCart();
+          renderCartModal();
+          updateCartBadge();
+        }
+        e.preventDefault();
+        return;
+      }
+
+      // Handle quantity decrease
+      const decreaseBtn = e.target.closest('.qty-decrease');
+      if (decreaseBtn) {
+        const idx = parseInt(decreaseBtn.getAttribute('data-idx'), 10);
+        if (cart[idx] && cart[idx].qty > 1) {
+          cart[idx].qty = Math.max(1, (parseInt(cart[idx].qty) || 1) - 1);
+          saveCart();
+          renderCartModal();
+          updateCartBadge();
+        }
+        e.preventDefault();
+        return;
+      }
+
+      // Handle remove item
       const rm = e.target.closest('.remove-cart-item');
       if (rm) {
         const idx = parseInt(rm.getAttribute('data-idx'), 10);
@@ -7756,6 +8138,8 @@
           updateCartBadge();
           showToast(document.documentElement.lang === 'ar' ? 'تم حذف المنتج من السلة' : 'Item removed from cart', 'info');
         }
+        e.preventDefault();
+        return;
       }
     });
     // Payment configuration
