@@ -2137,6 +2137,18 @@
       await loadUsersData();
       await loadProducts();
       await updateStats();
+      
+      // Check for URL parameter to open specific tab
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab');
+      if (tab === 'products') {
+        // Switch to products tab
+        const productsTab = document.getElementById('products-tab');
+        if (productsTab) {
+          const tabTrigger = new bootstrap.Tab(productsTab);
+          tabTrigger.show();
+        }
+      }
     }
 
     function showLogin() {
