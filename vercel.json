@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/owner-panel.html",
-      "destination": "/owner-panel.html"
+      "destination": "/owner-panel"
     },
     {
       "source": "/(.*)",
