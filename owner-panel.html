@@ -1,0 +1,3621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>لوحة تحكم المالك | Owner Control Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#667eea">
+
+  <!-- مكتبات CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js">
+
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --success-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+      --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.2);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      min-height: 100vh;
+    }
+
+    /* Login Page Styles */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      padding: 3rem;
+      width: 100%;
+      max-width: 450px;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo i {
+      font-size: 4rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .login-title {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-subtitle {
+      color: #718096;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-floating label {
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    .form-control {
+      border-radius: var(--radius-md);
+      border: 2px solid #e2e8f0;
+      padding: 0.875rem 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+
+    .btn-login {
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.875rem 2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      width: 100%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-login:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    /* Dashboard Styles */
+    .dashboard-container {
+      display: none;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .dashboard-header {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .dashboard-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    /* Dashboard Tabs */
+    .dashboard-tabs-container {
+      background: white;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 1.5rem;
+    }
+
+    .dashboard-tabs {
+      border: none !important;
+      gap: 0.5rem;
+    }
+
+    .dashboard-tabs .nav-link {
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      color: #64748b;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      text-decoration: none;
+    }
+
+    .dashboard-tabs .nav-link:hover {
+      background: #e2e8f0;
+      color: #475569;
+      transform: translateY(-2px);
+    }
+
+    .dashboard-tabs .nav-link.active {
+      background: var(--primary-gradient);
+      color: white !important;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .dashboard-tabs .nav-link i {
+      font-size: 1.1rem;
+    }
+
+    .dashboard-tab-content {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      min-height: 400px;
+    }
+
+    .btn-logout {
+      background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.5rem;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-logout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+    }
+
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      border-left: 4px solid;
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .stat-card.primary {
+      border-left-color: #667eea;
+    }
+
+    .stat-card.success {
+      border-left-color: #48bb78;
+    }
+
+    .stat-card.warning {
+      border-left-color: #ed8936;
+    }
+
+    .stat-card.info {
+      border-left-color: #4299e1;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+      color: white;
+      background: var(--primary-gradient);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+
+    .stat-card.primary .stat-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .stat-card.success .stat-icon {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    }
+
+    .stat-card.warning .stat-icon {
+      background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+    }
+
+    .stat-card.info .stat-icon {
+      background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      color: #718096;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .users-table-container {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    #usersTableContainer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: var(--radius-md);
+    }
+
+    .table {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      min-width: 1100px;
+      white-space: nowrap;
+    }
+
+    .table-responsive-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -1rem;
+      padding: 0 1rem;
+    }
+
+    .table thead th {
+      background: #f7fafc;
+      border: none;
+      padding: 0.875rem 0.75rem;
+      font-weight: 700;
+      color: #2d3748;
+      text-align: right;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .table tbody td {
+      padding: 0.875rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    .table tbody tr:hover {
+      background: #f8fafc;
+      transition: background 0.2s ease;
+    }
+
+    /* Responsive table columns */
+    @media (max-width: 1400px) {
+      .table {
+        min-width: 1300px;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .table {
+        min-width: 1100px;
+        font-size: 0.85rem;
+      }
+
+      .table thead th,
+      .table tbody td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+
+    .badge-code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .btn-action {
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.75rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+      border: none;
+      margin: 0.15rem;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-action.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .btn-action.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .btn-action.loading span {
+      opacity: 0;
+    }
+
+    .btn-generate {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-whatsapp {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+    }
+
+    .btn-view {
+      background: #4299e1;
+      color: white;
+    }
+
+    .btn-view:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+    }
+
+    .btn-edit {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #d97706;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #a0aec0;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+      border-radius: var(--radius-lg);
+      border: none;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .modal-header {
+      background: var(--primary-gradient);
+      color: white;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      border: none;
+      padding: 1.5rem;
+    }
+
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .code-display {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .code-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .code-display:hover::before {
+      left: 100%;
+    }
+
+    .code-display:hover {
+      border-color: #667eea;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .code-display.admin-code {
+      border-left: 4px solid #667eea;
+    }
+
+    .code-display.viewer-code {
+      border-left: 4px solid #48bb78;
+    }
+
+    .code-display .code-value {
+      font-family: 'Courier New', monospace;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #2d3748;
+      margin: 0.75rem 0;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+      background: white;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .code-display .code-label {
+      color: #4a5568;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .code-display .code-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .code-display.admin-code .code-icon {
+      color: #667eea;
+    }
+
+    .code-display.viewer-code .code-icon {
+      color: #48bb78;
+    }
+
+    /* Loading Animation */
+    .code-loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(102, 126, 234, 0.3);
+      border-radius: 50%;
+      border-top-color: #667eea;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Success Animation */
+    @keyframes codePulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .code-display.success .code-value {
+      animation: codePulse 0.5s ease-in-out;
+    }
+
+    /* Copy Button in Code Display */
+    .code-copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: rgba(102, 126, 234, 0.1);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.5rem;
+      color: #667eea;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      opacity: 0;
+    }
+
+    .code-display:hover .code-copy-btn {
+      opacity: 1;
+    }
+
+    .code-copy-btn:hover {
+      background: rgba(102, 126, 234, 0.2);
+      transform: scale(1.1);
+    }
+
+    .alert {
+      border-radius: var(--radius-md);
+      border: none;
+      padding: 1rem 1.5rem;
+    }
+
+    .btn-add-user {
+      background: var(--success-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.625rem 1.25rem;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-user:hover {
+      box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+    }
+
+    /* Product Image Upload Styles */
+    .product-image-upload-container {
+      border: 2px dashed #cbd5e0;
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      background: #f7fafc;
+      transition: all 0.3s ease;
+    }
+
+    .product-image-upload-container:hover {
+      border-color: #667eea;
+      background: #edf2f7;
+    }
+
+    .image-preview-wrapper {
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .image-placeholder {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    #productImagePreviewImg {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+    }
+
+    /* Product Card Styles */
+    .product-card-admin {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card-admin:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #667eea;
+    }
+
+    .product-card-admin .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      background: #f7fafc;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .product-card-admin img.product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .product-card-admin .card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card-admin .card-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card-admin .card-text {
+      color: #718096;
+      font-size: 0.9rem;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .product-card-admin .product-price {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .product-card-admin .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .product-card-admin .btn-sm {
+      flex: 1;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .flatpickr-input {
+      border-radius: var(--radius-md);
+      border: 2px solid #e2e8f0;
+      padding: 0.875rem 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer !important;
+      background-color: #fff !important;
+    }
+
+    .flatpickr-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+
+    .flatpickr-input[readonly] {
+      background-color: #fff !important;
+      cursor: pointer !important;
+    }
+
+    #purchaseDate,
+    #expiryDate {
+      cursor: pointer !important;
+    }
+
+    /* Toast Container */
+    #toastContainer {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 9999;
+    }
+
+    .toast-custom {
+      background: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      min-width: 300px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast-success {
+      border-left: 4px solid #48bb78;
+    }
+
+    .toast-error {
+      border-left: 4px solid #f56565;
+    }
+
+    .toast-info {
+      border-left: 4px solid #4299e1;
+    }
+
+    /* Mobile Card View */
+    .user-card {
+      display: none;
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid #667eea;
+    }
+
+    .user-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .user-card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #2d3748;
+    }
+
+    .user-card-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .user-card-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-card-label {
+      color: #718096;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .user-card-value {
+      color: #2d3748;
+      font-weight: 600;
+    }
+
+    .user-card-actions {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Mobile Navbar */
+    .mobile-navbar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #e2e8f0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 0.5rem 0;
+    }
+
+    .mobile-navbar-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      text-decoration: none;
+      color: #718096;
+      transition: all 0.2s ease;
+      border-radius: var(--radius-sm);
+      margin: 0 0.25rem;
+    }
+
+    .mobile-nav-item:hover,
+    .mobile-nav-item.active {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .mobile-nav-item i {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .mobile-nav-item span {
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .mobile-nav-item.btn-logout-nav {
+      color: #f56565;
+    }
+
+    .mobile-nav-item.btn-logout-nav:hover,
+    .mobile-nav-item.btn-logout-nav.active {
+      color: #f56565;
+      background: rgba(245, 101, 101, 0.1);
+    }
+
+    /* Add padding to dashboard container on mobile to account for navbar */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding-bottom: 80px;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .dashboard-container {
+        padding: 0.75rem;
+      }
+
+      .dashboard-header {
+        padding: 1rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.25rem;
+      }
+
+      .dashboard-tabs-container {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .dashboard-tabs .nav-link {
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .dashboard-tabs .nav-link i {
+        font-size: 1rem;
+      }
+
+      .dashboard-tab-content {
+        padding: 1.25rem;
+      }
+
+      .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
+      .stat-card {
+        padding: 0.875rem 1rem;
+      }
+
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 1.4rem;
+      }
+
+      .users-table-container {
+        padding: 1rem;
+      }
+
+      .table {
+        min-width: 1000px;
+        font-size: 0.85rem;
+      }
+
+      .table thead th,
+      .table tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      #usersTableContainer {
+        margin: 0 -1rem;
+        padding: 0 1rem;
+      }
+
+      .table thead th,
+      .table tbody td {
+        padding: 0.5rem 0.35rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-navbar {
+        display: block;
+      }
+
+      .login-card {
+        padding: 1.5rem 1.25rem;
+        margin: 1rem;
+      }
+
+      .login-title {
+        font-size: 1.5rem;
+      }
+
+      .dashboard-container {
+        padding: 0.5rem;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.875rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .dashboard-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .btn-logout {
+        width: 100%;
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .dashboard-tabs-container {
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .dashboard-tabs {
+        gap: 0.375rem;
+      }
+
+      .dashboard-tabs .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .dashboard-tabs .nav-link i {
+        font-size: 1.2rem;
+        margin: 0 !important;
+      }
+
+      .dashboard-tab-content {
+        padding: 1rem;
+        min-height: 300px;
+      }
+
+      .stat-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .stats-cards {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .stat-card {
+        padding: 0.75rem 1rem;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+      }
+
+      .users-table-container {
+        padding: 0.5rem;
+      }
+
+      /* Add scroll indicator for table */
+      #usersTableContainer {
+        position: relative;
+      }
+
+      #usersTableContainer::after {
+        content: '← اسحب للجانب | Swipe to scroll →';
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(102, 126, 234, 0.95);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-lg);
+        font-size: 0.75rem;
+        font-weight: 600;
+        white-space: nowrap;
+        z-index: 1000;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        animation: fadeInOutMobile 4s ease-in-out 1;
+      }
+
+      @keyframes fadeInOutMobile {
+
+        0%,
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(10px);
+        }
+
+        15%,
+        85% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+
+      /* Hide table on very small mobile, show cards */
+      .table {
+        display: none;
+      }
+
+      .user-card {
+        display: block;
+      }
+
+      .btn-action {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+        flex: 1;
+        min-width: calc(50% - 0.25rem);
+      }
+
+      .modal-dialog {
+        margin: 0.5rem;
+      }
+
+      .modal-body {
+        padding: 1rem;
+      }
+
+      .code-display {
+        padding: 1rem;
+      }
+
+      .code-display .code-value {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .user-card {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .login-card {
+        padding: 1.25rem 1rem;
+      }
+
+      .btn-login {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.1rem;
+      }
+
+      .stat-value {
+        font-size: 1.35rem;
+      }
+
+      .user-card-body {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-action {
+        width: 100%;
+        margin: 0.25rem 0;
+      }
+
+      #toastContainer {
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+      }
+
+      .toast-custom {
+        min-width: auto;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Page -->
+  <div id="loginPage" class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <i class="bi bi-shield-lock"></i>
+        <h1 class="login-title">لوحة تحكم المالك</h1>
+        <p class="login-subtitle">Owner Control Panel</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="username" placeholder="اسم المستخدم" required
+            autocomplete="username">
+          <label for="username">اسم المستخدم | Username</label>
+        </div>
+
+        <div class="form-floating mb-4">
+          <input type="password" class="form-control" id="password" placeholder="كلمة المرور" required
+            autocomplete="current-password">
+          <label for="password">كلمة المرور | Password</label>
+        </div>
+
+        <div id="loginError" class="alert alert-danger" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-login">
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          <span id="loginBtnText">تسجيل الدخول | Sign In</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div id="dashboardPage" class="dashboard-container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">
+        <i class="bi bi-speedometer2 me-2"></i>
+        لوحة تحكم المالك | Owner Dashboard
+      </h1>
+      <button class="btn btn-logout" id="logoutBtn">
+        <i class="bi bi-box-arrow-right me-2"></i>
+        <span class="d-none d-md-inline">تسجيل الخروج | Logout</span>
+        <span class="d-md-none">خروج</span>
+      </button>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="dashboard-tabs-container">
+      <ul class="nav nav-pills nav-fill dashboard-tabs" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="stats-tab" data-bs-toggle="pill" data-bs-target="#stats-pane"
+            type="button" role="tab" aria-controls="stats-pane" aria-selected="true">
+            <i class="bi bi-graph-up me-2"></i>
+            <span class="d-none d-md-inline">الإحصائيات | Statistics</span>
+            <span class="d-md-none">إحصائيات</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="clients-tab" data-bs-toggle="pill" data-bs-target="#clients-pane" type="button"
+            role="tab" aria-controls="clients-pane" aria-selected="false">
+            <i class="bi bi-people me-2"></i>
+            <span class="d-none d-md-inline">إدارة العملاء | Clients</span>
+            <span class="d-md-none">عملاء</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="products-tab" data-bs-toggle="pill" data-bs-target="#products-pane" type="button"
+            role="tab" aria-controls="products-pane" aria-selected="false">
+            <i class="bi bi-bag me-2"></i>
+            <span class="d-none d-md-inline">إدارة المنتجات | Products</span>
+            <span class="d-md-none">منتجات</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tabs Content -->
+    <div class="tab-content dashboard-tab-content" id="dashboardTabContent">
+
+      <!-- Statistics Tab -->
+      <div class="tab-pane fade show active" id="stats-pane" role="tabpanel" aria-labelledby="stats-tab">
+        <div class="stats-cards">
+          <div class="stat-card primary">
+            <div class="stat-icon">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="stat-value" id="totalUsers">0</div>
+            <div class="stat-label">إجمالي العملاء | Total Clients</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-icon">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+            <div class="stat-value" id="activeUsers">0</div>
+            <div class="stat-label">العملاء النشطين | Active Clients</div>
+          </div>
+          <div class="stat-card warning">
+            <div class="stat-icon">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+            <div class="stat-value" id="pendingUsers">0</div>
+            <div class="stat-label">في الانتظار | Pending</div>
+          </div>
+          <div class="stat-card info">
+            <div class="stat-icon">
+              <i class="bi bi-currency-dollar"></i>
+            </div>
+            <div class="stat-value" id="totalRevenue">0</div>
+            <div class="stat-label">إجمالي الإيرادات | Total Revenue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clients Tab -->
+      <div class="tab-pane fade" id="clients-pane" role="tabpanel" aria-labelledby="clients-tab">
+        <div class="users-table-container">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h3 class="mb-0" style="font-size: 1.25rem; font-weight: 700;">
+              <i class="bi bi-people me-2"></i>
+              إدارة العملاء | Client Management
+            </h3>
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-add-user" id="addUserBtn">
+                <i class="bi bi-person-plus me-1"></i>
+                <span class="d-none d-md-inline">إضافة عميل | Add Client</span>
+                <span class="d-md-none">إضافة | Add</span>
+              </button>
+              <button class="btn btn-primary" id="refreshBtn" style="font-size: 0.9rem; padding: 0.625rem 1.25rem;">
+                <i class="bi bi-arrow-clockwise me-1"></i>
+                <span class="d-none d-md-inline">تحديث | Refresh</span>
+                <span class="d-md-none">تحديث</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="usersTableContainer">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>اسم العميل | Client Name</th>
+                  <th>البريد الإلكتروني | Email</th>
+                  <th>رقم الهاتف | Phone</th>
+                  <th>تاريخ الشراء | Purchase Date</th>
+                  <th>تاريخ الانتهاء | Expiry Date</th>
+                  <th>كود الأدمن | Admin Code</th>
+                  <th>كود المشاهد | Viewer Code</th>
+                  <th>الحالة | Status</th>
+                  <th>الإجراءات | Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr>
+                  <td colspan="10" class="text-center">
+                    <div class="empty-state">
+                      <i class="bi bi-inbox"></i>
+                      <p>لا يوجد عملاء في قاعدة البيانات | No clients in database</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="usersCardsContainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Tab -->
+      <div class="tab-pane fade" id="products-pane" role="tabpanel" aria-labelledby="products-tab">
+        <div class="dashboard-section">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+            <h3 class="mb-0">
+              <i class="bi bi-bag me-2"></i>
+              إدارة المنتجات | Products Management
+            </h3>
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-add-user" id="addProductBtn">
+                <i class="bi bi-plus-circle me-1"></i>
+                <span class="d-none d-md-inline">إضافة منتج | Add Product</span>
+                <span class="d-md-none">إضافة | Add</span>
+              </button>
+              <button class="btn btn-primary" id="refreshProductsBtn"
+                style="font-size: 0.9rem; padding: 0.625rem 1.25rem;">
+                <i class="bi bi-arrow-clockwise me-1"></i>
+                <span class="d-none d-md-inline">تحديث | Refresh</span>
+                <span class="d-md-none">تحديث</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="productsTableContainer">
+            <div class="row g-4" id="productsTableBody">
+              <div class="col-12">
+                <div class="text-center py-5">
+                  <div class="empty-state">
+                    <i class="bi bi-bag" style="font-size: 3rem; color: #cbd5e0;"></i>
+                    <p class="mt-3">لا يوجد منتجات في قاعدة البيانات | No products in database</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Add User -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalTitle">
+            <i class="bi bi-person-plus me-2"></i>
+            إضافة عميل جديد | Add New Client
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addUserForm">
+            <input type="hidden" id="userId" value="">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="userName" class="form-label">الاسم الكامل | Full Name *</label>
+                <input type="text" class="form-control" id="userName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="userEmail" class="form-label">البريد الإلكتروني | Email *</label>
+                <input type="email" class="form-control" id="userEmail" required>
+              </div>
+              <div class="col-md-6">
+                <label for="userPhone" class="form-label">رقم الهاتف | Phone Number *</label>
+                <input type="tel" class="form-control" id="userPhone" required placeholder="+966501234567">
+              </div>
+              <div class="col-md-6">
+                <label for="userProduct" class="form-label">المنتج | Product *</label>
+                <select class="form-select" id="userProduct" required>
+                  <option value="">اختر المنتج | Select Product</option>
+                  <option value="اشتراك 3 أشهر">اشتراك 3 أشهر | 3 Months Subscription</option>
+                  <option value="اشتراك 6 أشهر">اشتراك 6 أشهر | 6 Months Subscription</option>
+                  <option value="اشتراك سنوي">اشتراك سنوي | Yearly Subscription</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="purchaseDate" class="form-label">تاريخ الشراء | Purchase Date *</label>
+                <input type="text" class="form-control flatpickr-input" id="purchaseDate" required
+                  placeholder="اختر التاريخ | Select Date" readonly>
+              </div>
+              <div class="col-md-6">
+                <label for="expiryDate" class="form-label">تاريخ الانتهاء | Expiry Date *</label>
+                <input type="text" class="form-control flatpickr-input" id="expiryDate" required
+                  placeholder="اختر التاريخ | Select Date" readonly>
+              </div>
+              <div class="col-md-6">
+                <label for="userAmount" class="form-label">المبلغ | Amount (EGP) *</label>
+                <input type="number" class="form-control" id="userAmount" required min="0" step="0.01"
+                  placeholder="0.00">
+              </div>
+              <div class="col-md-6">
+                <div class="form-check mt-4 pt-3">
+                  <input class="form-check-input" type="checkbox" id="generateCodesNow" checked>
+                  <label class="form-check-label" for="generateCodesNow">
+                    توليد الأكواد الآن | Generate Codes Now
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert-info mt-3">
+              <i class="bi bi-info-circle me-2"></i>
+              سيتم إنشاء كود الأدمن وكود المشاهد تلقائياً عند إضافة العميل | Admin and Viewer codes will be generated
+              automatically when adding the client
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء | Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveUserBtn">
+            <i class="bi bi-save me-2"></i>
+            حفظ | Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add/Edit Product -->
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: var(--radius-lg); overflow: hidden;">
+        <div class="modal-header" style="background: var(--primary-gradient); color: white; border: none;">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-bag-plus me-2" style="font-size: 1.5rem;"></i>
+            <span id="productModalTitle">إضافة منتج جديد | Add New Product</span>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding: 2rem;">
+          <form id="addProductForm">
+            <input type="hidden" id="productId" name="productId">
+
+            <!-- Product Image Upload -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">صورة المنتج | Product Image *</label>
+              <div class="product-image-upload-container">
+                <div class="image-preview-wrapper" id="productImagePreview">
+                  <img id="productImagePreviewImg" src="" alt="Product Preview"
+                    style="display: none; max-width: 100%; max-height: 300px; border-radius: var(--radius-md); object-fit: cover;">
+                  <div class="image-placeholder" id="productImagePlaceholder">
+                    <i class="bi bi-image" style="font-size: 3rem; color: #cbd5e0;"></i>
+                    <p class="mt-2 text-muted">لا توجد صورة | No image</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <input type="file" class="form-control" id="productImageInput" accept="image/*" required>
+                  <small class="text-muted d-block mt-1">الحد الأقصى للحجم: 5MB | Max size: 5MB</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <!-- Product Name (Arabic) -->
+              <div class="col-md-6">
+                <label for="productNameAr" class="form-label">اسم المنتج (عربي) | Product Name (Arabic) *</label>
+                <input type="text" class="form-control" id="productNameAr" name="productNameAr" required>
+              </div>
+
+              <!-- Product Name (English) -->
+              <div class="col-md-6">
+                <label for="productNameEn" class="form-label">اسم المنتج (إنجليزي) | Product Name (English) *</label>
+                <input type="text" class="form-control" id="productNameEn" name="productNameEn" required>
+              </div>
+
+              <!-- Product Description (Arabic) -->
+              <div class="col-md-6">
+                <label for="productDescAr" class="form-label">الوصف (عربي) | Description (Arabic) *</label>
+                <textarea class="form-control" id="productDescAr" name="productDescAr" rows="3" required></textarea>
+              </div>
+
+              <!-- Product Description (English) -->
+              <div class="col-md-6">
+                <label for="productDescEn" class="form-label">الوصف (إنجليزي) | Description (English) *</label>
+                <textarea class="form-control" id="productDescEn" name="productDescEn" rows="3" required></textarea>
+              </div>
+
+              <!-- Price with Currency Dropdown -->
+              <div class="col-md-6">
+                <label for="productPrice" class="form-label">السعر | Price *</label>
+                <div class="input-group">
+                  <select class="form-select" id="productCurrency" name="productCurrency"
+                    style="flex: 0 0 auto; min-width: 250px; border-radius: 0.375rem 0 0 0.375rem;">
+                    <option value="SAR" selected>ريال | SAR (سيتم تحويله للجنيه المصري)</option>
+                    <option value="USD">دولار أمريكي | USD</option>
+                    <option value="EUR">يورو | EUR</option>
+                    <option value="GBP">جنيه إسترليني | GBP</option>
+                    <option value="EGP">جنيه مصري | EGP</option>
+                    <option value="AED">درهم إماراتي | AED</option>
+                    <option value="KWD">دينار كويتي | KWD</option>
+                    <option value="BHD">دينار بحريني | BHD</option>
+                    <option value="OMR">ريال عماني | OMR</option>
+                    <option value="QAR">ريال قطري | QAR</option>
+                    <option value="JOD">دينار أردني | JOD</option>
+                    <option value="LBP">ليرة لبنانية | LBP</option>
+                    <option value="ILS">شيكل إسرائيلي | ILS</option>
+                    <option value="TRY">ليرة تركية | TRY</option>
+                    <option value="IRR">ريال إيراني | IRR</option>
+                    <option value="IQD">دينار عراقي | IQD</option>
+                    <option value="YER">ريال يمني | YER</option>
+                    <option value="SYP">ليرة سورية | SYP</option>
+                    <option value="JPY">ين ياباني | JPY</option>
+                    <option value="CNY">يوان صيني | CNY</option>
+                    <option value="INR">روبية هندية | INR</option>
+                    <option value="PKR">روبية باكستانية | PKR</option>
+                    <option value="BDT">تاكا بنغلاديشي | BDT</option>
+                    <option value="THB">باهت تايلاندي | THB</option>
+                    <option value="SGD">دولار سنغافوري | SGD</option>
+                    <option value="MYR">رينغيت ماليزي | MYR</option>
+                    <option value="IDR">روبية إندونيسية | IDR</option>
+                    <option value="PHP">بيزو فلبيني | PHP</option>
+                    <option value="VND">دونغ فيتنامي | VND</option>
+                    <option value="KRW">وون كوري جنوبي | KRW</option>
+                    <option value="AUD">دولار أسترالي | AUD</option>
+                    <option value="NZD">دولار نيوزيلندي | NZD</option>
+                    <option value="CAD">دولار كندي | CAD</option>
+                    <option value="CHF">فرنك سويسري | CHF</option>
+                    <option value="SEK">كرونة سويدية | SEK</option>
+                    <option value="NOK">كرونة نرويجية | NOK</option>
+                    <option value="DKK">كرونة دنماركية | DKK</option>
+                    <option value="PLN">زلوتي بولندي | PLN</option>
+                    <option value="CZK">كرونة تشيكية | CZK</option>
+                    <option value="HUF">فورنت مجري | HUF</option>
+                    <option value="RON">ليو روماني | RON</option>
+                    <option value="BGN">ليف بلغاري | BGN</option>
+                    <option value="HRK">كونا كرواتية | HRK</option>
+                    <option value="RUB">روبل روسي | RUB</option>
+                    <option value="UAH">هريفنيا أوكرانية | UAH</option>
+                    <option value="BYN">روبل بيلاروسي | BYN</option>
+                    <option value="ZAR">راند جنوب أفريقي | ZAR</option>
+                    <option value="NGN">نيرة نيجيرية | NGN</option>
+                    <option value="KES">شلن كيني | KES</option>
+                    <option value="ETB">بير إثيوبي | ETB</option>
+                    <option value="GHS">سيدي غاني | GHS</option>
+                    <option value="TZS">شلن تنزاني | TZS</option>
+                    <option value="UGX">شلن أوغندي | UGX</option>
+                    <option value="MAD">درهم مغربي | MAD</option>
+                    <option value="TND">دينار تونسي | TND</option>
+                    <option value="DZD">دينار جزائري | DZD</option>
+                    <option value="LYD">دينار ليبي | LYD</option>
+                    <option value="SDG">جنيه سوداني | SDG</option>
+                    <option value="MXN">بيزو مكسيكي | MXN</option>
+                    <option value="BRL">ريال برازيلي | BRL</option>
+                    <option value="ARS">بيزو أرجنتيني | ARS</option>
+                    <option value="CLP">بيزو تشيلي | CLP</option>
+                    <option value="COP">بيزو كولومبي | COP</option>
+                    <option value="PEN">سول بيروفي | PEN</option>
+                    <option value="UYU">بيزو أوروغواي | UYU</option>
+                  </select>
+                  <input type="number" class="form-control" id="productPrice" name="productPrice" min="0" step="0.01"
+                    required style="border-radius: 0 0.375rem 0.375rem 0;">
+                </div>
+                <small class="text-muted d-block mt-1">سيتم تحويله للجنيه المصري | Will be converted to Egyptian
+                  Pound</small>
+              </div>
+
+              <!-- Category -->
+              <div class="col-md-6">
+                <label for="productCategory" class="form-label">الفئة | Category</label>
+                <input type="text" class="form-control" id="productCategory" name="productCategory"
+                  placeholder="اختياري | Optional">
+              </div>
+
+              <!-- Active Status -->
+              <div class="col-md-12">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="productIsActive" name="productIsActive" checked>
+                  <label class="form-check-label" for="productIsActive">
+                    منتج نشط | Active Product
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء | Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveProductBtn">
+            <i class="bi bi-save me-2"></i>
+            حفظ | Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: View Client Details -->
+  <div class="modal fade" id="viewClientModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: var(--radius-lg); overflow: hidden;">
+        <div class="modal-header" style="background: var(--primary-gradient); color: white; border: none;">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-person-circle me-2" style="font-size: 1.5rem;"></i>
+            <span>معلومات العميل | Client Details</span>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding: 2rem;">
+          <!-- User Info Header -->
+          <div class="user-info-card mb-4 p-3"
+            style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); border-radius: var(--radius-md); border-right: 4px solid #667eea;">
+            <div class="d-flex align-items-center">
+              <div class="user-avatar me-3"
+                style="width: 60px; height: 60px; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.5rem;">
+                <span id="viewClientInitial">-</span>
+              </div>
+              <div>
+                <h5 class="mb-1 fw-bold" id="viewClientName">-</h5>
+                <small class="text-muted" id="viewClientEmail">-</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Client Details -->
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">الاسم الكامل | Full Name</label>
+                <p class="mb-0 fw-semibold" id="viewClientNameValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">البريد الإلكتروني | Email</label>
+                <p class="mb-0 fw-semibold" id="viewClientEmailValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">رقم الهاتف | Phone Number</label>
+                <p class="mb-0 fw-semibold" id="viewClientPhoneValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">المنتج | Product</label>
+                <p class="mb-0 fw-semibold" id="viewClientProductValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">تاريخ الشراء | Purchase Date</label>
+                <p class="mb-0 fw-semibold" id="viewClientPurchaseDateValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">تاريخ الانتهاء | Expiry Date</label>
+                <p class="mb-0 fw-semibold" id="viewClientExpiryDateValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">المبلغ | Amount</label>
+                <p class="mb-0 fw-semibold" id="viewClientAmountValue">-</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">الحالة | Status</label>
+                <p class="mb-0">
+                  <span class="badge" id="viewClientStatusBadge">-</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">كود الأدمن | Admin Code</label>
+                <p class="mb-0">
+                  <span class="badge badge-code bg-primary" id="viewClientAdminCode">-</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-item p-3"
+                style="background: #f8f9fa; border-radius: var(--radius-md); border-right: 3px solid #667eea;">
+                <label class="text-muted small mb-1">كود المشاهد | Viewer Code</label>
+                <p class="mb-0">
+                  <span class="badge badge-code bg-success" id="viewClientViewerCode">-</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid #e2e8f0; padding: 1rem 2rem;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-2"></i>إغلاق | Close
+          </button>
+          <button type="button" class="btn btn-primary" id="editClientFromViewBtn">
+            <i class="bi bi-pencil me-2"></i>تعديل | Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Generate Codes -->
+  <div class="modal fade" id="generateCodesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: var(--radius-lg); overflow: hidden;">
+        <div class="modal-header" style="background: var(--primary-gradient); color: white; border: none;">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-shield-check me-2" style="font-size: 1.5rem;"></i>
+            <span>الأكواد المولدة | Generated Codes</span>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding: 2rem;">
+          <!-- User Info -->
+          <div class="user-info-card mb-4 p-3"
+            style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); border-radius: var(--radius-md); border-right: 4px solid #667eea;">
+            <div class="d-flex align-items-center">
+              <div class="user-avatar me-3"
+                style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.25rem;">
+                <span id="modalUserInitial">-</span>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold" id="modalUserName">-</h6>
+                <small class="text-muted" id="modalUserEmail">-</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div id="codesLoadingState" class="text-center py-4" style="display: none;">
+            <div class="code-loading mx-auto mb-3"></div>
+            <p class="text-muted">جاري توليد الأكواد... | Generating codes...</p>
+          </div>
+
+          <!-- Codes Display -->
+          <div id="codesDisplayState">
+            <div class="code-display admin-code">
+              <button class="code-copy-btn" onclick="copySingleCode('admin')" title="نسخ | Copy">
+                <i class="bi bi-clipboard"></i>
+              </button>
+              <div class="code-icon">
+                <i class="bi bi-shield-lock"></i>
+              </div>
+              <div class="code-label">كود الأدمن | Admin Code</div>
+              <div class="code-value" id="generatedAdminCode">-</div>
+            </div>
+
+            <div class="code-display viewer-code">
+              <button class="code-copy-btn" onclick="copySingleCode('viewer')" title="نسخ | Copy">
+                <i class="bi bi-clipboard"></i>
+              </button>
+              <div class="code-icon">
+                <i class="bi bi-eye"></i>
+              </div>
+              <div class="code-label">كود المشاهد | Viewer Code</div>
+              <div class="code-value" id="generatedViewerCode">-</div>
+            </div>
+          </div>
+
+          <!-- Success Message -->
+          <div class="alert alert-success d-flex align-items-center mt-3" id="codesSuccessAlert"
+            style="display: none; border-right: 4px solid #48bb78;">
+            <i class="bi bi-check-circle-fill me-2"
+              style="font-size: 1.5rem; animation: codePulse 0.5s ease-in-out;"></i>
+            <div>
+              <strong>✅ تم بنجاح | Success!</strong>
+              <p class="mb-0 mt-1">تم حفظ الأكواد بنجاح في قاعدة البيانات | Codes saved successfully to database</p>
+            </div>
+          </div>
+
+          <!-- Info Alert -->
+          <div class="alert alert-info d-flex align-items-start mt-3">
+            <i class="bi bi-info-circle me-2 mt-1"></i>
+            <div>
+              <strong>مهم | Important:</strong>
+              <ul class="mb-0 mt-2" style="padding-right: 1.5rem;">
+                <li>تم حفظ الأكواد تلقائياً | Codes are automatically saved</li>
+                <li>يمكنك إرسالها للمستخدم عبر واتساب | You can send them via WhatsApp</li>
+                <li>الأكواد فريدة وآمنة | Codes are unique and secure</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex gap-2 mt-4 flex-wrap">
+            <button class="btn btn-success flex-fill" id="sendWhatsAppBtn" style="min-width: 150px;">
+              <i class="bi bi-whatsapp me-2"></i>
+              <span class="d-none d-md-inline">إرسال عبر واتساب | Send via WhatsApp</span>
+              <span class="d-md-none">واتساب | WhatsApp</span>
+            </button>
+            <button class="btn btn-primary flex-fill" id="copyCodesBtn" style="min-width: 150px;">
+              <i class="bi bi-clipboard-check me-2"></i>
+              <span class="d-none d-md-inline">نسخ جميع الأكواد | Copy All Codes</span>
+              <span class="d-md-none">نسخ | Copy</span>
+            </button>
+            <button class="btn btn-outline-secondary" id="closeCodesModalBtn" data-bs-dismiss="modal">
+              <i class="bi bi-x-lg me-2"></i>
+              إغلاق | Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navbar -->
+  <nav class="mobile-navbar" id="mobileNavbar">
+    <div class="mobile-navbar-items">
+      <a href="#" class="mobile-nav-item active" id="navDashboard" onclick="scrollToTop(); return false;">
+        <i class="bi bi-speedometer2"></i>
+        <span>لوحة التحكم</span>
+      </a>
+      <a href="#" class="mobile-nav-item" id="navAddUser" onclick="openAddUserFromNav(); return false;">
+        <i class="bi bi-person-plus"></i>
+        <span>إضافة عميل</span>
+      </a>
+      <a href="#" class="mobile-nav-item" id="navStats" onclick="scrollToStats(); return false;">
+        <i class="bi bi-bar-chart"></i>
+        <span>الإحصائيات</span>
+      </a>
+      <a href="#" class="mobile-nav-item btn-logout-nav" id="navLogout" onclick="logout(); return false;">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>تسجيل الخروج</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+  <script>
+    // ===== Configuration =====
+    const OWNER_USERNAME = 'admin'; // Change this to your desired username
+    const OWNER_PASSWORD = 'admin123'; // Change this to your desired password
+    const STORAGE_KEY = 'owner_authenticated';
+    const USERS_STORAGE_KEY = 'owner_users_data';
+
+    // ===== State Management =====
+    let currentUser = null;
+    let usersData = [];
+
+    // ===== Utility Functions =====
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast-custom toast-${type}`;
+      toast.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info-circle'} me-2"></i>
+          <span>${message}</span>
+        </div>
+      `;
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function generateCode(type = 'admin') {
+      const prefix = type === 'admin' ? 'ADM' : 'VWR';
+      const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+      return `${prefix}-${random}`;
+    }
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('ar-EG', {
+        style: 'currency',
+        currency: 'EGP'
+      }).format(amount);
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return '-';
+
+      try {
+        const date = new Date(dateString);
+
+        // Check if date is valid
+        if (isNaN(date.getTime())) {
+          console.warn('Invalid date:', dateString);
+          return '-';
+        }
+
+        // Format in Gregorian calendar: DD-MM-YYYY
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${day}-${month}-${year}`;
+      } catch (error) {
+        console.error('Error formatting date:', dateString, error);
+        return '-';
+      }
+    }
+
+    // ===== Authentication =====
+    async function checkAuth() {
+      try {
+        // Ensure database is initialized
+        if (!db.db) {
+          await db.init();
+        }
+
+        const auth = localStorage.getItem(STORAGE_KEY);
+        const mobileNav = document.getElementById('mobileNavbar');
+        if (auth === 'true') {
+          await showDashboard();
+          if (mobileNav && window.innerWidth <= 768) {
+            mobileNav.style.display = 'block';
+          }
+        } else {
+          showLogin();
+          if (mobileNav) mobileNav.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error in checkAuth:', error);
+        showLogin();
+      }
+    }
+
+    async function login(username, password) {
+      if (username === OWNER_USERNAME && password === OWNER_PASSWORD) {
+        localStorage.setItem(STORAGE_KEY, 'true');
+        await showDashboard();
+        showToast('تم تسجيل الدخول بنجاح | Login successful', 'success');
+        return true;
+      }
+      return false;
+    }
+
+    function logout() {
+      localStorage.removeItem(STORAGE_KEY);
+      showLogin();
+      showToast('تم تسجيل الخروج | Logged out', 'info');
+    }
+
+    async function showDashboard() {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('dashboardPage').style.display = 'block';
+      const mobileNav = document.getElementById('mobileNavbar');
+      if (mobileNav) {
+        // Show navbar only on mobile screens
+        if (window.innerWidth <= 768) {
+          mobileNav.style.display = 'block';
+        } else {
+          mobileNav.style.display = 'none';
+        }
+      }
+      await loadUsersData();
+      await loadProducts();
+      await updateStats();
+    }
+
+    function showLogin() {
+      document.getElementById('loginPage').style.display = 'flex';
+      document.getElementById('dashboardPage').style.display = 'none';
+      const mobileNav = document.getElementById('mobileNavbar');
+      if (mobileNav) mobileNav.style.display = 'none';
+      document.getElementById('loginForm').reset();
+      document.getElementById('loginError').style.display = 'none';
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveNav('navDashboard');
+    }
+
+    function scrollToStats() {
+      const stats = document.querySelector('.stats-cards');
+      if (stats) {
+        stats.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setActiveNav('navStats');
+    }
+
+    function openAddUserFromNav() {
+      openAddUserModal();
+      setActiveNav('navAddUser');
+    }
+
+    function setActiveNav(activeId) {
+      document.querySelectorAll('.mobile-nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const activeItem = document.getElementById(activeId);
+      if (activeItem) activeItem.classList.add('active');
+    }
+
+    // ===== Clients Data Management =====
+    async function loadUsersData() {
+      try {
+        console.log('🔄 Loading clients data from database...');
+
+        // Wait for database to be ready
+        if (!db.db) {
+          console.log('⏳ Initializing database...');
+          await db.init();
+        }
+
+        // Small delay to ensure database is fully ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        console.log('📊 Fetching all clients from database...');
+
+        // Ensure database is ready
+        if (!db.db) {
+          console.log('⚠️ Database not initialized, initializing now...');
+          await db.init();
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
+
+        // Try to get all users
+        let allUsers = [];
+        try {
+          allUsers = await db.getAllUsers();
+          console.log(`✅ Found ${allUsers.length} clients in database`);
+          console.log('📋 Clients data:', allUsers);
+        } catch (error) {
+          console.error('❌ Error fetching users:', error);
+          showToast('خطأ في جلب البيانات من قاعدة البيانات | Error fetching data: ' + error.message, 'error');
+          allUsers = [];
+        }
+
+        // If still empty, try direct query
+        if (allUsers.length === 0) {
+          console.log('⚠️ No users found, trying direct database query...');
+          try {
+            const directQuery = await db.getAll('users');
+            console.log(`🔍 Direct query result: ${directQuery.length} users`);
+            if (directQuery.length > 0) {
+              allUsers = directQuery;
+              console.log('✅ Found users via direct query:', allUsers);
+            }
+          } catch (directError) {
+            console.error('❌ Direct query also failed:', directError);
+          }
+        }
+
+        usersData = [];
+
+        for (const user of allUsers) {
+          console.log(`📝 Processing client: ${user.name} (ID: ${user.id})`);
+
+          // Get codes for user
+          const codes = await db.getUserCodes(user.id);
+          console.log(`   Codes found: ${codes.length}`);
+
+          // Find active codes
+          const adminCodeObj = codes.find(c => c.type === 'admin' && c.isActive);
+          const viewerCodeObj = codes.find(c => c.type === 'viewer' && c.isActive);
+
+          const clientData = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            product: user.product,
+            purchaseDate: user.purchaseDate,
+            expiryDate: user.expiryDate,
+            amount: user.amount,
+            status: user.status,
+            adminCode: adminCodeObj ? adminCodeObj.code : '',
+            viewerCode: viewerCodeObj ? viewerCodeObj.code : ''
+          };
+
+          console.log(`   Client data prepared:`, clientData);
+          usersData.push(clientData);
+        }
+
+        console.log(`✅ Loaded ${usersData.length} clients into memory`);
+        console.log('📊 Final usersData array:', usersData);
+
+        // Always render the table, even if empty
+        console.log('🎨 Rendering clients table...');
+        renderUsersTable();
+        await updateStats();
+
+        if (usersData.length === 0) {
+          console.log('ℹ️ No clients found in database. Add clients using the "Add Client" button.');
+          // Only add demo data on first load (optional - remove if you don't want demo data)
+          // Uncomment the following lines if you want demo data automatically:
+          // console.log('📝 Adding demo data...');
+          // await addDemoData();
+          // await loadUsersData();
+          // return;
+        } else {
+          console.log('✅ Clients data loaded and displayed successfully');
+        }
+      } catch (error) {
+        console.error('❌ Error loading clients:', error);
+        showToast('خطأ في تحميل بيانات العملاء | Error loading clients data: ' + error.message, 'error');
+
+        // Show empty state if there's an error
+        const tbody = document.getElementById('usersTableBody');
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="10" class="text-center">
+                <div class="empty-state">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <p>خطأ في تحميل البيانات | Error loading data</p>
+                  <button class="btn btn-primary mt-2" onclick="location.reload()">إعادة المحاولة | Retry</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+      }
+    }
+
+    async function addDemoData() {
+      const user1 = await db.addUser({
+        name: 'أحمد محمد',
+        email: 'ahmed@example.com',
+        phone: '+966501234567',
+        product: 'اشتراك 3 أشهر',
+        status: 'pending',
+        purchaseDate: new Date().toISOString(),
+        expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+        amount: 150
+      });
+
+      const user2 = await db.addUser({
+        name: 'سارة علي',
+        email: 'sara@example.com',
+        phone: '+966507654321',
+        product: 'اشتراك 6 أشهر',
+        status: 'active',
+        purchaseDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        expiryDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(),
+        amount: 270
+      });
+
+      // Add codes for user2
+      await db.generateCodesForUser(user2);
+    }
+
+    async function saveUsersData() {
+      // Data is automatically saved to database
+      // This function kept for compatibility
+    }
+
+    async function updateStats() {
+      try {
+        if (!db.db) {
+          await db.init();
+        }
+
+        const stats = await db.getStats();
+        document.getElementById('totalUsers').textContent = stats.totalUsers;
+        document.getElementById('activeUsers').textContent = stats.activeUsers;
+        document.getElementById('pendingUsers').textContent = stats.pendingUsers;
+        document.getElementById('totalRevenue').textContent = formatCurrency(stats.totalRevenue);
+      } catch (error) {
+        console.error('Error updating stats:', error);
+        // Fallback to local calculation
+        const total = usersData.length;
+        const active = usersData.filter(u => u.status === 'active').length;
+        const pending = usersData.filter(u => u.status === 'pending').length;
+        const revenue = usersData.reduce((sum, u) => sum + (u.amount || 0), 0);
+
+        document.getElementById('totalUsers').textContent = total;
+        document.getElementById('activeUsers').textContent = active;
+        document.getElementById('pendingUsers').textContent = pending;
+        document.getElementById('totalRevenue').textContent = formatCurrency(revenue);
+      }
+    }
+
+    function renderUsersTable() {
+      console.log('🎨 renderUsersTable called with', usersData.length, 'clients');
+      const tbody = document.getElementById('usersTableBody');
+      const cardsContainer = document.getElementById('usersCardsContainer');
+
+      if (!tbody) {
+        console.error('❌ usersTableBody element not found!');
+        return;
+      }
+
+      if (usersData.length === 0) {
+        console.log('⚠️ No clients to render, showing empty state');
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" class="text-center">
+              <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p>لا يوجد عملاء في قاعدة البيانات | No clients in database</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        if (cardsContainer) cardsContainer.innerHTML = '';
+        return;
+      }
+
+      console.log('✅ Rendering', usersData.length, 'clients in table');
+
+      // Render table
+      tbody.innerHTML = usersData.map((user, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.phone}</td>
+          <td>${formatDate(user.purchaseDate)}</td>
+          <td>${formatDate(user.expiryDate)}</td>
+          <td>
+            ${user.adminCode ? `<span class="badge badge-code bg-primary">${user.adminCode}</span>` : '<span class="text-muted">-</span>'}
+          </td>
+          <td>
+            ${user.viewerCode ? `<span class="badge badge-code bg-success">${user.viewerCode}</span>` : '<span class="text-muted">-</span>'}
+          </td>
+          <td>
+            <span class="badge bg-${user.status === 'active' ? 'success' : 'warning'}">
+              ${user.status === 'active' ? 'نشط | Active' : 'في الانتظار | Pending'}
+            </span>
+          </td>
+          <td>
+            ${!user.adminCode || !user.viewerCode ? `
+              <button class="btn btn-action btn-generate" onclick="generateCodesForUser(${user.id})" id="generateBtn-${user.id}">
+                <span><i class="bi bi-key"></i> توليد | Generate</span>
+              </button>
+            ` : ''}
+            ${user.adminCode && user.viewerCode ? `
+              <button class="btn btn-action btn-whatsapp" onclick="sendCodesViaWhatsApp(${user.id})">
+                <i class="bi bi-whatsapp"></i> واتساب | WhatsApp
+              </button>
+            ` : ''}
+            <button class="btn btn-action btn-edit" onclick="editUser(${user.id})">
+              <i class="bi bi-pencil"></i> تعديل | Edit
+            </button>
+            <button class="btn btn-action btn-view" onclick="viewUserDetails(${user.id})">
+              <i class="bi bi-eye"></i> عرض | View
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Render mobile cards
+      if (cardsContainer) {
+        cardsContainer.innerHTML = usersData.map((user, index) => `
+          <div class="user-card">
+            <div class="user-card-header">
+              <div class="user-card-title">${user.name}</div>
+              <span class="badge bg-${user.status === 'active' ? 'success' : 'warning'}">
+                ${user.status === 'active' ? 'نشط | Active' : 'في الانتظار | Pending'}
+              </span>
+            </div>
+            <div class="user-card-body">
+              <div class="user-card-item">
+                <div class="user-card-label">البريد | Email</div>
+                <div class="user-card-value">${user.email}</div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">الهاتف | Phone</div>
+                <div class="user-card-value">${user.phone}</div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">المنتج | Product</div>
+                <div class="user-card-value">${user.product}</div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">تاريخ الشراء | Purchase</div>
+                <div class="user-card-value">${formatDate(user.purchaseDate)}</div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">تاريخ الانتهاء | Expiry</div>
+                <div class="user-card-value">${formatDate(user.expiryDate)}</div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">كود الأدمن | Admin</div>
+                <div class="user-card-value">
+                  ${user.adminCode ? `<span class="badge badge-code bg-primary">${user.adminCode}</span>` : '<span class="text-muted">-</span>'}
+                </div>
+              </div>
+              <div class="user-card-item">
+                <div class="user-card-label">كود المشاهد | Viewer</div>
+                <div class="user-card-value">
+                  ${user.viewerCode ? `<span class="badge badge-code bg-success">${user.viewerCode}</span>` : '<span class="text-muted">-</span>'}
+                </div>
+              </div>
+            </div>
+            <div class="user-card-actions">
+              ${!user.adminCode || !user.viewerCode ? `
+                <button class="btn btn-action btn-generate" onclick="generateCodesForUser(${user.id})" id="generateBtnCard-${user.id}">
+                  <span><i class="bi bi-key"></i> توليد | Generate</span>
+                </button>
+              ` : ''}
+              ${user.adminCode && user.viewerCode ? `
+                <button class="btn btn-action btn-whatsapp" onclick="sendCodesViaWhatsApp(${user.id})">
+                  <i class="bi bi-whatsapp"></i> واتساب | WhatsApp
+                </button>
+              ` : ''}
+              <button class="btn btn-action btn-edit" onclick="editUser(${user.id})">
+                <i class="bi bi-pencil"></i> تعديل | Edit
+              </button>
+              <button class="btn btn-action btn-view" onclick="viewUserDetails(${user.id})">
+                <i class="bi bi-eye"></i> عرض | View
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // ===== Code Generation =====
+    async function generateCodesForUser(userId) {
+      try {
+        // Disable button and show loading
+        const generateBtn = document.getElementById(`generateBtn-${userId}`) || document.getElementById(`generateBtnCard-${userId}`);
+        if (generateBtn) {
+          generateBtn.classList.add('loading');
+          generateBtn.disabled = true;
+        }
+
+        // Show loading state in modal
+        const modal = new bootstrap.Modal(document.getElementById('generateCodesModal'));
+        document.getElementById('codesLoadingState').style.display = 'block';
+        document.getElementById('codesDisplayState').style.display = 'none';
+        document.getElementById('codesSuccessAlert').style.display = 'none';
+
+        // Get user data
+        if (!db.db) {
+          await db.init();
+        }
+
+        const user = usersData.find(u => u.id === userId);
+        if (!user) {
+          showToast('العميل غير موجود | Client not found', 'error');
+          if (generateBtn) {
+            generateBtn.classList.remove('loading');
+            generateBtn.disabled = false;
+          }
+          return;
+        }
+
+        // Set user info in modal
+        document.getElementById('modalUserName').textContent = user.name;
+        document.getElementById('modalUserEmail').textContent = user.email;
+        const initial = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        document.getElementById('modalUserInitial').textContent = initial || 'U';
+
+        // Show modal
+        modal.show();
+
+        // Generate codes (this will deactivate old codes and create new ones)
+        const { adminCode, viewerCode } = await db.generateCodesForUser(userId);
+
+        // Wait a bit more to ensure database is updated
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // Verify codes were saved by retrieving them
+        const savedCodes = await db.getUserCodes(userId);
+        const savedAdmin = savedCodes.find(c => c.type === 'admin' && c.isActive);
+        const savedViewer = savedCodes.find(c => c.type === 'viewer' && c.isActive);
+
+        if (!savedAdmin || !savedViewer) {
+          console.warn('Codes not immediately available, but generation succeeded. Will refresh...');
+          // Don't throw error, codes might be saved but not yet visible
+          // The refresh will pick them up
+        }
+
+        // Update user status in database
+        await db.updateUser(userId, { status: 'active' });
+
+        // Small delay for better UX
+        await new Promise(resolve => setTimeout(resolve, 600));
+
+        // Hide loading, show codes
+        document.getElementById('codesLoadingState').style.display = 'none';
+        document.getElementById('codesDisplayState').style.display = 'block';
+        document.getElementById('codesSuccessAlert').style.display = 'flex';
+
+        // Display codes with animation
+        const adminCodeEl = document.getElementById('generatedAdminCode');
+        const viewerCodeEl = document.getElementById('generatedViewerCode');
+
+        adminCodeEl.textContent = adminCode;
+        viewerCodeEl.textContent = viewerCode;
+
+        // Add success animation
+        setTimeout(() => {
+          adminCodeEl.closest('.code-display').classList.add('success');
+          viewerCodeEl.closest('.code-display').classList.add('success');
+        }, 100);
+
+        // Update local data
+        user.adminCode = adminCode;
+        user.viewerCode = viewerCode;
+        user.status = 'active';
+        currentUser = user;
+
+        // Refresh UI
+        await loadUsersData();
+        await updateStats();
+
+        // Re-enable button
+        if (generateBtn) {
+          generateBtn.classList.remove('loading');
+          generateBtn.disabled = false;
+        }
+
+        showToast('✅ تم توليد الأكواد بنجاح وحفظها في قاعدة البيانات | Codes generated and saved successfully', 'success');
+      } catch (error) {
+        console.error('Error generating codes:', error);
+        document.getElementById('codesLoadingState').style.display = 'none';
+
+        // Re-enable button on error
+        const generateBtn = document.getElementById(`generateBtn-${userId}`) || document.getElementById(`generateBtnCard-${userId}`);
+        if (generateBtn) {
+          generateBtn.classList.remove('loading');
+          generateBtn.disabled = false;
+        }
+
+        showToast('❌ خطأ في توليد الأكواد | Error generating codes', 'error');
+      }
+    }
+
+    // ===== WhatsApp Integration =====
+    function sendCodesViaWhatsApp(userId) {
+      const user = userId ? usersData.find(u => u.id === userId) : currentUser;
+      if (!user || !user.adminCode || !user.viewerCode) {
+        showToast('يرجى توليد الأكواد أولاً | Please generate codes first', 'error');
+        return;
+      }
+
+      const message = encodeURIComponent(
+        `🎉 مرحباً ${user.name}،\n\n` +
+        `✅ تم تفعيل حسابك بنجاح!\n\n` +
+        `📋 الأكواد المولدة:\n\n` +
+        `🔑 كود الأدمن | Admin Code:\n${user.adminCode}\n\n` +
+        `👁️ كود المشاهد | Viewer Code:\n${user.viewerCode}\n\n` +
+        `📱 استخدم هذه الأكواد للوصول إلى حسابك.\n` +
+        `Use these codes to access your account.\n\n` +
+        `📅 تاريخ الانتهاء | Expiry Date: ${formatDate(user.expiryDate)}\n\n` +
+        `شكراً لك | Thank you! 🙏`
+      );
+
+      const whatsappUrl = `https://wa.me/${user.phone.replace(/[^0-9]/g, '')}?text=${message}`;
+      window.open(whatsappUrl, '_blank');
+
+      showToast('تم فتح واتساب | WhatsApp opened', 'success');
+    }
+
+    // ===== Copy Codes =====
+    function copyCodes() {
+      if (!currentUser || !currentUser.adminCode || !currentUser.viewerCode) {
+        showToast('لا توجد أكواد للنسخ | No codes to copy', 'error');
+        return;
+      }
+
+      const text = `🔐 الأكواد المولدة | Generated Codes\n\n` +
+        `👤 العميل | Client: ${currentUser.name}\n` +
+        `📧 البريد | Email: ${currentUser.email}\n\n` +
+        `🔑 كود الأدمن | Admin Code: ${currentUser.adminCode}\n` +
+        `👁️ كود المشاهد | Viewer Code: ${currentUser.viewerCode}\n\n` +
+        `تاريخ الإنشاء | Created: ${new Date().toLocaleString('ar-SA')}`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyCodesBtn');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check-circle me-2"></i> تم النسخ | Copied';
+        btn.classList.add('btn-success');
+        btn.classList.remove('btn-primary');
+
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-primary');
+        }, 2000);
+
+        showToast('تم نسخ الأكواد بنجاح | Codes copied successfully', 'success');
+      }).catch(() => {
+        showToast('فشل النسخ | Copy failed', 'error');
+      });
+    }
+
+    function copySingleCode(type) {
+      if (!currentUser) return;
+
+      const code = type === 'admin' ? currentUser.adminCode : currentUser.viewerCode;
+      if (!code) {
+        showToast('الكود غير متوفر | Code not available', 'error');
+        return;
+      }
+
+      navigator.clipboard.writeText(code).then(() => {
+        showToast(`تم نسخ ${type === 'admin' ? 'كود الأدمن' : 'كود المشاهد'} | ${type === 'admin' ? 'Admin' : 'Viewer'} code copied`, 'success');
+      });
+    }
+
+    // ===== View User Details =====
+    function viewUserDetails(userId) {
+      const user = usersData.find(u => u.id === userId);
+      if (!user) {
+        showToast('العميل غير موجود | Client not found', 'error');
+        return;
+      }
+
+      // Get user initials
+      const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'U';
+
+      // Fill modal with user data
+      document.getElementById('viewClientInitial').textContent = initials;
+      document.getElementById('viewClientName').textContent = user.name || '-';
+      document.getElementById('viewClientEmail').textContent = user.email || '-';
+      document.getElementById('viewClientNameValue').textContent = user.name || '-';
+      document.getElementById('viewClientEmailValue').textContent = user.email || '-';
+      document.getElementById('viewClientPhoneValue').textContent = user.phone || '-';
+      document.getElementById('viewClientProductValue').textContent = user.product || '-';
+      document.getElementById('viewClientPurchaseDateValue').textContent = formatDate(user.purchaseDate) || '-';
+      document.getElementById('viewClientExpiryDateValue').textContent = formatDate(user.expiryDate) || '-';
+      document.getElementById('viewClientAmountValue').textContent = formatCurrency(user.amount || 0);
+
+      // Status badge
+      const statusBadge = document.getElementById('viewClientStatusBadge');
+      if (user.status === 'active') {
+        statusBadge.className = 'badge bg-success';
+        statusBadge.textContent = 'نشط | Active';
+      } else {
+        statusBadge.className = 'badge bg-warning';
+        statusBadge.textContent = 'في الانتظار | Pending';
+      }
+
+      // Admin Code
+      const adminCodeEl = document.getElementById('viewClientAdminCode');
+      if (user.adminCode) {
+        adminCodeEl.textContent = user.adminCode;
+        adminCodeEl.className = 'badge badge-code bg-primary';
+      } else {
+        adminCodeEl.textContent = 'غير متوفر | Not Available';
+        adminCodeEl.className = 'badge bg-secondary';
+      }
+
+      // Viewer Code
+      const viewerCodeEl = document.getElementById('viewClientViewerCode');
+      if (user.viewerCode) {
+        viewerCodeEl.textContent = user.viewerCode;
+        viewerCodeEl.className = 'badge badge-code bg-success';
+      } else {
+        viewerCodeEl.textContent = 'غير متوفر | Not Available';
+        viewerCodeEl.className = 'badge bg-secondary';
+      }
+
+      // Set edit button onclick
+      const editBtn = document.getElementById('editClientFromViewBtn');
+      if (editBtn) {
+        editBtn.onclick = () => {
+          const modal = bootstrap.Modal.getInstance(document.getElementById('viewClientModal'));
+          if (modal) modal.hide();
+          editUser(userId);
+        };
+      }
+
+      // Show modal
+      const modal = new bootstrap.Modal(document.getElementById('viewClientModal'));
+      modal.show();
+    }
+
+    // ===== Edit User =====
+    async function editUser(userId) {
+      try {
+        if (!db.db) await db.init();
+
+        // Get user from database (not from usersData to ensure we have latest)
+        const user = await db.getUser(userId);
+        if (!user) {
+          showToast('العميل غير موجود | Client not found', 'error');
+          return;
+        }
+
+        // Set editing mode
+        document.getElementById('userId').value = userId;
+        document.getElementById('userModalTitle').innerHTML = '<i class="bi bi-pencil me-2"></i> تعديل العميل | Edit Client';
+
+        // Fill form with user data
+        document.getElementById('userName').value = user.name || '';
+        document.getElementById('userEmail').value = user.email || '';
+        document.getElementById('userPhone').value = user.phone || '';
+        document.getElementById('userProduct').value = user.product || '';
+        document.getElementById('userAmount').value = user.amount || 0;
+
+        // Handle date pickers
+        if (!purchaseDatePicker || !expiryDatePicker) {
+          initDatePickers();
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+
+        // Set dates
+        if (user.purchaseDate) {
+          const purchaseDate = new Date(user.purchaseDate);
+          if (purchaseDatePicker) {
+            purchaseDatePicker.setDate(purchaseDate, false);
+          }
+        }
+
+        if (user.expiryDate) {
+          const expiryDate = new Date(user.expiryDate);
+          if (expiryDatePicker) {
+            expiryDatePicker.setDate(expiryDate, false);
+          }
+        }
+
+        // Disable code generation checkbox (can't regenerate when editing)
+        const generateCheckbox = document.getElementById('generateCodesNow');
+        if (generateCheckbox) {
+          generateCheckbox.disabled = true;
+          generateCheckbox.checked = false;
+        }
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('addUserModal'));
+        modal.show();
+        setActiveNav('navAddUser');
+
+      } catch (error) {
+        console.error('Error loading user for edit:', error);
+        showToast('خطأ في تحميل بيانات العميل | Error loading client data', 'error');
+      }
+    }
+
+    // ===== Add New User =====
+    let purchaseDatePicker, expiryDatePicker;
+
+    function initDatePickers() {
+      try {
+        // Check if flatpickr is available
+        if (typeof flatpickr === 'undefined') {
+          console.error('❌ Flatpickr is not loaded!');
+          showToast('خطأ في تحميل منتقي التاريخ | Date picker library not loaded', 'error');
+          return;
+        }
+
+        // Get input elements
+        const purchaseInput = document.getElementById('purchaseDate');
+        const expiryInput = document.getElementById('expiryDate');
+
+        if (!purchaseInput || !expiryInput) {
+          console.error('❌ Date input elements not found!');
+          return;
+        }
+
+        // Destroy existing pickers if they exist
+        if (purchaseDatePicker && typeof purchaseDatePicker.destroy === 'function') {
+          try {
+            purchaseDatePicker.destroy();
+          } catch (e) {
+            console.warn('Error destroying purchase date picker:', e);
+          }
+        }
+        if (expiryDatePicker && typeof expiryDatePicker.destroy === 'function') {
+          try {
+            expiryDatePicker.destroy();
+          } catch (e) {
+            console.warn('Error destroying expiry date picker:', e);
+          }
+        }
+
+        // Initialize purchase date picker with simpler config
+        purchaseDatePicker = flatpickr(purchaseInput, {
+          dateFormat: "Y-m-d",
+          defaultDate: new Date(),
+          allowInput: true,
+          clickOpens: true,
+          enableTime: false,
+          wrap: false,
+          animate: true
+        });
+
+        // Initialize expiry date picker
+        expiryDatePicker = flatpickr(expiryInput, {
+          dateFormat: "Y-m-d",
+          defaultDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+          allowInput: true,
+          clickOpens: true,
+          enableTime: false,
+          wrap: false,
+          animate: true,
+          minDate: new Date()
+        });
+
+        console.log('✅ Date pickers initialized successfully');
+        console.log('Purchase picker:', purchaseDatePicker);
+        console.log('Expiry picker:', expiryDatePicker);
+      } catch (error) {
+        console.error('❌ Error initializing date pickers:', error);
+        showToast('خطأ في تهيئة منتقي التاريخ | Error initializing date picker: ' + error.message, 'error');
+      }
+    }
+
+    function openAddUserModal() {
+      const modalElement = document.getElementById('addUserModal');
+      if (!modalElement) {
+        console.error('❌ Add user modal not found!');
+        return;
+      }
+
+      // Reset to add mode
+      document.getElementById('userId').value = '';
+      document.getElementById('userModalTitle').innerHTML = '<i class="bi bi-person-plus me-2"></i> إضافة عميل جديد | Add New Client';
+
+      const modal = new bootstrap.Modal(modalElement);
+      const form = document.getElementById('addUserForm');
+      if (form) {
+        form.reset();
+      }
+
+      // Enable code generation checkbox
+      const generateCheckbox = document.getElementById('generateCodesNow');
+      if (generateCheckbox) {
+        generateCheckbox.disabled = false;
+        generateCheckbox.checked = true;
+      }
+
+      // Show modal first
+      modal.show();
+      setActiveNav('navAddUser');
+
+      // Initialize date pickers after modal is fully shown
+      // Use multiple timeouts to ensure it works
+      setTimeout(() => {
+        initDatePickers();
+      }, 200);
+
+      setTimeout(() => {
+        if (!purchaseDatePicker || !expiryDatePicker) {
+          console.log('⚠️ Date pickers still not initialized, retrying...');
+          initDatePickers();
+        } else {
+          // Reset dates
+          try {
+            purchaseDatePicker.setDate(new Date());
+            expiryDatePicker.setDate(new Date(Date.now() + 90 * 24 * 60 * 60 * 1000));
+          } catch (e) {
+            console.warn('Error setting dates:', e);
+          }
+        }
+      }, 500);
+    }
+
+    async function addNewUser() {
+      const form = document.getElementById('addUserForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      try {
+        if (!db.db) {
+          await db.init();
+        }
+
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const phone = document.getElementById('userPhone').value.trim();
+        const product = document.getElementById('userProduct').value;
+        // Ensure date pickers are initialized
+        if (!purchaseDatePicker || !expiryDatePicker) {
+          console.log('⚠️ Date pickers not initialized, initializing now...');
+          initDatePickers();
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
+
+        // Get dates from pickers with fallback
+        let purchaseDate = null;
+        let expiryDate = null;
+
+        if (purchaseDatePicker) {
+          if (purchaseDatePicker.selectedDates && purchaseDatePicker.selectedDates.length > 0) {
+            purchaseDate = purchaseDatePicker.selectedDates[0];
+          } else if (purchaseDatePicker.input && purchaseDatePicker.input.value) {
+            // Try to parse from input value
+            purchaseDate = new Date(purchaseDatePicker.input.value);
+            if (isNaN(purchaseDate.getTime())) {
+              purchaseDate = null;
+            }
+          }
+        }
+
+        if (expiryDatePicker) {
+          if (expiryDatePicker.selectedDates && expiryDatePicker.selectedDates.length > 0) {
+            expiryDate = expiryDatePicker.selectedDates[0];
+          } else if (expiryDatePicker.input && expiryDatePicker.input.value) {
+            // Try to parse from input value
+            expiryDate = new Date(expiryDatePicker.input.value);
+            if (isNaN(expiryDate.getTime())) {
+              expiryDate = null;
+            }
+          }
+        }
+
+        const amount = parseFloat(document.getElementById('userAmount').value) || 0;
+        const generateCodes = document.getElementById('generateCodesNow').checked;
+
+        if (!purchaseDate || !expiryDate) {
+          showToast('يرجى اختيار التواريخ | Please select dates', 'error');
+          // Re-initialize pickers to help user
+          initDatePickers();
+          return;
+        }
+
+        if (expiryDate < purchaseDate) {
+          showToast('تاريخ الانتهاء يجب أن يكون بعد تاريخ الشراء | Expiry date must be after purchase date', 'error');
+          return;
+        }
+
+        const userId = document.getElementById('userId').value;
+        const isEditMode = userId && userId !== '';
+
+        if (isEditMode) {
+          // Edit mode - check if email exists for another user
+          const existingUser = await db.getUserByEmail(email);
+          if (existingUser && existingUser.id !== parseInt(userId)) {
+            showToast('البريد الإلكتروني مستخدم بالفعل | Email already exists', 'error');
+            return;
+          }
+
+          console.log('✏️ Updating client in database...', { userId, name, email, phone, product });
+
+          // Update user in database
+          await db.updateUser(parseInt(userId), {
+            name: name,
+            email: email,
+            phone: phone,
+            product: product,
+            purchaseDate: purchaseDate.toISOString(),
+            expiryDate: expiryDate.toISOString(),
+            amount: amount
+            // Don't update status or codes when editing
+          });
+
+          console.log('✅ Client updated with ID:', userId);
+          showToast('تم تحديث بيانات العميل بنجاح | Client updated successfully', 'success');
+
+          // Close modal and reload data
+          const editModal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+          if (editModal) {
+            editModal.hide();
+          }
+
+          // Reload clients data
+          await loadUsersData();
+          return;
+        } else {
+          // Add mode - check if email already exists
+          const existingUser = await db.getUserByEmail(email);
+          if (existingUser) {
+            showToast('البريد الإلكتروني مستخدم بالفعل | Email already exists', 'error');
+            return;
+          }
+
+          console.log('➕ Adding new client to database...', { name, email, phone, product });
+
+          // Add user to database
+          const newUserId = await db.addUser({
+            name: name,
+            email: email,
+            phone: phone,
+            product: product,
+            purchaseDate: purchaseDate.toISOString(),
+            expiryDate: expiryDate.toISOString(),
+            amount: amount,
+            status: generateCodes ? 'active' : 'pending'
+          });
+
+          console.log('✅ Client added with ID:', newUserId);
+
+          // Wait for transaction to complete - longer wait for IndexedDB
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          // Verify client was saved - try multiple times if needed
+          let savedUser = null;
+          let attempts = 0;
+          while (!savedUser && attempts < 5) {
+            savedUser = await db.getUser(newUserId);
+            if (!savedUser) {
+              console.log(`⏳ Waiting for client to be saved... (attempt ${attempts + 1}/5)`);
+              await new Promise(resolve => setTimeout(resolve, 300));
+              attempts++;
+            }
+          }
+
+          if (!savedUser) {
+            console.error('❌ Client not found after multiple attempts');
+            // Try to get all users to see if it's there
+            const allUsersCheck = await db.getAllUsers();
+            console.log('🔍 Current users in database:', allUsersCheck);
+            throw new Error('Client was not saved to database');
+          }
+          console.log('✅ Client verified in database:', savedUser);
+
+          let adminCode = '';
+          let viewerCode = '';
+
+          // Generate codes if requested
+          if (generateCodes) {
+            console.log('🔑 Generating codes for user...');
+            const codes = await db.generateCodesForUser(newUserId);
+            adminCode = codes.adminCode;
+            viewerCode = codes.viewerCode;
+
+            // Wait a bit to ensure codes are saved in database
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            // Verify codes were saved
+            const savedCodes = await db.getUserCodes(newUserId);
+            const savedAdmin = savedCodes.find(c => c.type === 'admin' && c.isActive);
+            const savedViewer = savedCodes.find(c => c.type === 'viewer' && c.isActive);
+
+            if (!savedAdmin || !savedViewer) {
+              console.warn('⚠️ Codes may not be saved yet, but continuing...');
+            } else {
+              console.log('✅ Codes verified in database');
+            }
+          }
+
+          // Wait longer to ensure database transaction is complete
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          // Reload clients data
+          console.log('🔄 Reloading clients data...');
+          usersData = [];
+
+          // Reload from database with retry
+          let reloadSuccess = false;
+          let reloadAttempts = 0;
+          while (!reloadSuccess && reloadAttempts < 3) {
+            try {
+              await loadUsersData();
+              // Check if the new client appears in the list
+              const clientInList = usersData.find(u => u.id === newUserId);
+              if (clientInList) {
+                console.log('✅ Client found in reloaded data!');
+                reloadSuccess = true;
+              } else {
+                console.log(`⏳ Client not in list yet, retrying... (attempt ${reloadAttempts + 1}/3)`);
+                reloadAttempts++;
+                await new Promise(resolve => setTimeout(resolve, 500));
+                usersData = []; // Clear and retry
+              }
+            } catch (reloadError) {
+              console.error('❌ Error reloading:', reloadError);
+              reloadAttempts++;
+              if (reloadAttempts < 3) {
+                await new Promise(resolve => setTimeout(resolve, 500));
+              }
+            }
+          }
+
+          // Final verification
+          const verifyClient = await db.getUser(newUserId);
+          console.log('🔍 Final verification - Client in database:', verifyClient);
+
+          if (!verifyClient) {
+            console.error('❌ Client not found in database after save!');
+            showToast('تحذير: العميل لم يظهر في قاعدة البيانات | Warning: Client not found in database', 'warning');
+          } else if (!usersData.find(u => u.id === newUserId)) {
+            console.warn('⚠️ Client exists in database but not in displayed list');
+            showToast('العميل محفوظ ولكن لم يظهر في القائمة. يرجى التحديث | Client saved but not displayed. Please refresh', 'warning');
+          } else {
+            console.log('✅ Client confirmed in database and displayed');
+          }
+
+          showToast('تم إضافة العميل بنجاح | Client added successfully', 'success');
+
+          // If codes were generated, show them
+          if (generateCodes) {
+            // Reload to get fresh data
+            await loadUsersData();
+            const newUser = usersData.find(u => u.id === newUserId);
+            if (newUser) {
+              // Set user info
+              document.getElementById('modalUserName').textContent = newUser.name;
+              document.getElementById('modalUserEmail').textContent = newUser.email;
+              const initial = newUser.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+              document.getElementById('modalUserInitial').textContent = initial || 'U';
+
+              // Show loading
+              document.getElementById('codesLoadingState').style.display = 'block';
+              document.getElementById('codesDisplayState').style.display = 'none';
+              document.getElementById('codesSuccessAlert').style.display = 'none';
+
+              const codesModal = new bootstrap.Modal(document.getElementById('generateCodesModal'));
+              codesModal.show();
+
+              // Small delay for UX
+              await new Promise(resolve => setTimeout(resolve, 500));
+
+              // Show codes
+              document.getElementById('codesLoadingState').style.display = 'none';
+              document.getElementById('codesDisplayState').style.display = 'block';
+              document.getElementById('codesSuccessAlert').style.display = 'flex';
+
+              document.getElementById('generatedAdminCode').textContent = adminCode;
+              document.getElementById('generatedViewerCode').textContent = viewerCode;
+
+              // Add success animation
+              document.getElementById('generatedAdminCode').closest('.code-display').classList.add('success');
+              document.getElementById('generatedViewerCode').closest('.code-display').classList.add('success');
+
+              currentUser = newUser;
+            }
+          }
+
+          // Close modal
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+          if (modal) {
+            modal.hide();
+          }
+
+          // Reload clients data
+          await loadUsersData();
+        }
+      } catch (error) {
+        console.error('❌ Error adding/updating user:', error);
+        showToast('خطأ في حفظ بيانات العميل | Error saving client: ' + error.message, 'error');
+
+        // Try to reload users anyway in case it was saved
+        try {
+          await loadUsersData();
+        } catch (reloadError) {
+          console.error('Error reloading users:', reloadError);
+        }
+      }
+    }
+
+    // ===== Event Listeners =====
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('loginError');
+
+      if (await login(username, password)) {
+        errorDiv.style.display = 'none';
+      } else {
+        errorDiv.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة | Invalid username or password';
+        errorDiv.style.display = 'block';
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('refreshBtn').addEventListener('click', async () => {
+      console.log('🔄 Manual refresh triggered');
+      // Clear current data
+      usersData = [];
+      // Force reload
+      await loadUsersData();
+      await updateStats();
+      showToast('تم التحديث | Refreshed', 'success');
+    });
+
+    document.getElementById('sendWhatsAppBtn').addEventListener('click', () => {
+      if (currentUser) {
+        sendCodesViaWhatsApp(currentUser.id);
+      }
+    });
+
+    document.getElementById('copyCodesBtn').addEventListener('click', copyCodes);
+
+    // Reset modal on close
+    document.getElementById('generateCodesModal').addEventListener('hidden.bs.modal', () => {
+      document.getElementById('codesLoadingState').style.display = 'none';
+      document.getElementById('codesDisplayState').style.display = 'block';
+      document.getElementById('codesSuccessAlert').style.display = 'none';
+      document.querySelectorAll('.code-display').forEach(el => el.classList.remove('success'));
+    });
+    document.getElementById('addUserBtn').addEventListener('click', openAddUserModal);
+    document.getElementById('saveUserBtn').addEventListener('click', addNewUser);
+
+    // ===== Products Management =====
+    let productsData = [];
+    let editingProductId = null;
+
+    // Load products from database
+    async function loadProducts() {
+      try {
+        if (!db.db) await db.init();
+        productsData = await db.getAllProducts();
+        renderProducts();
+      } catch (error) {
+        console.error('Error loading products:', error);
+        showToast('خطأ في تحميل المنتجات | Error loading products', 'error');
+      }
+    }
+
+    // Render products in cards
+    function renderProducts() {
+      const container = document.getElementById('productsTableBody');
+      if (!container) return;
+
+      if (!productsData || productsData.length === 0) {
+        container.innerHTML = `
+          <div class="col-12">
+            <div class="text-center py-5">
+              <div class="empty-state">
+                <i class="bi bi-bag" style="font-size: 3rem; color: #cbd5e0;"></i>
+                <p class="mt-3">لا يوجد منتجات في قاعدة البيانات | No products in database</p>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = productsData.map(product => {
+        const nameAr = product.name?.ar || product.name || 'منتج';
+        const nameEn = product.name?.en || product.name || 'Product';
+        const descAr = product.desc?.ar || product.desc || '';
+        const descEn = product.desc?.en || product.desc || '';
+        const price = product.price || 0;
+        const currency = product.currency || 'SAR';
+        const img = product.img || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200"><rect width="100%" height="100%" fill="%236c757d"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23fff" font-family="Cairo" font-size="18">${encodeURIComponent(nameAr)}</text></svg>';
+        const isActive = product.isActive !== false;
+        const category = product.category || '';
+
+        const fallbackImg = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'><rect width='100%' height='100%' fill='%236c757d'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Cairo' font-size='18'>${encodeURIComponent(nameAr)}</text></svg>`;
+
+        return `
+          <div class="col-md-6 col-lg-4">
+            <div class="product-card-admin">
+              <div style="width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                <img src="${img}" 
+                     class="product-image" 
+                     alt="${nameAr}" 
+                     loading="lazy"
+                     onerror="this.onerror=null;this.src='${fallbackImg}'">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">${nameAr} | ${nameEn}</h5>
+                <p class="card-text">${descAr} | ${descEn}</p>
+                ${category ? `<small class="text-muted d-block mb-2">${category}</small>` : ''}
+                <div class="product-price">
+                  ${(() => {
+            // Display price in selected currency
+            return (price || 0).toLocaleString('ar-EG', {
+              style: 'currency',
+              currency: currency,
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            });
+          })()}
+                </div>
+                <div class="card-actions">
+                  <button class="btn btn-sm btn-primary" onclick="editProduct(${product.id})">
+                    <i class="bi bi-pencil"></i> تعديل
+                  </button>
+                  <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
+                    <i class="bi bi-trash"></i> حذف
+                  </button>
+                </div>
+                <div class="mt-2">
+                  <span class="badge ${isActive ? 'bg-success' : 'bg-secondary'}">${isActive ? 'نشط | Active' : 'غير نشط | Inactive'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Open add product modal
+    function openAddProductModal() {
+      editingProductId = null;
+      document.getElementById('productModalTitle').textContent = 'إضافة منتج جديد | Add New Product';
+      document.getElementById('addProductForm').reset();
+      document.getElementById('productId').value = '';
+      document.getElementById('productImagePreviewImg').style.display = 'none';
+      document.getElementById('productImagePlaceholder').style.display = 'block';
+      document.getElementById('productIsActive').checked = true;
+      document.getElementById('productCurrency').value = 'SAR';
+      // Make image required when adding new product
+      const imageInput = document.getElementById('productImageInput');
+      if (imageInput) {
+        imageInput.required = true;
+        imageInput.removeAttribute('data-has-existing-image');
+      }
+      new bootstrap.Modal(document.getElementById('addProductModal')).show();
+    }
+
+    // Handle image upload preview
+    document.getElementById('productImageInput')?.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // Validate file size (5MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('حجم الصورة كبير جداً (الحد الأقصى 5MB) | Image size too large (max 5MB)', 'error');
+        e.target.value = '';
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        showToast('الملف يجب أن يكون صورة | File must be an image', 'error');
+        e.target.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = document.getElementById('productImagePreviewImg');
+        const placeholder = document.getElementById('productImagePlaceholder');
+        img.src = event.target.result;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        // When user selects a new image, remove the existing image flag
+        e.target.removeAttribute('data-has-existing-image');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Convert image to base64
+    function getImageBase64() {
+      const fileInput = document.getElementById('productImageInput');
+      if (!fileInput.files || !fileInput.files[0]) {
+        return document.getElementById('productImagePreviewImg').src || '';
+      }
+
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.readAsDataURL(fileInput.files[0]);
+      });
+    }
+
+    // Save product
+    async function saveProduct() {
+      const form = document.getElementById('addProductForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      try {
+        const nameAr = document.getElementById('productNameAr').value.trim();
+        const nameEn = document.getElementById('productNameEn').value.trim();
+        const descAr = document.getElementById('productDescAr').value.trim();
+        const descEn = document.getElementById('productDescEn').value.trim();
+        const price = parseFloat(document.getElementById('productPrice').value);
+        const currency = document.getElementById('productCurrency').value || 'SAR';
+        const category = document.getElementById('productCategory').value.trim();
+        const isActive = document.getElementById('productIsActive').checked;
+        const imageInput = document.getElementById('productImageInput');
+        const hasExistingImage = imageInput?.getAttribute('data-has-existing-image') === 'true';
+        const imageBase64 = await getImageBase64();
+
+        // Only require image if adding new product or editing without existing image
+        if (!imageBase64 || imageBase64 === '') {
+          if (!editingProductId || !hasExistingImage) {
+            showToast('يرجى اختيار صورة للمنتج | Please select a product image', 'error');
+            return;
+          }
+        }
+
+        const productData = {
+          name: { ar: nameAr, en: nameEn },
+          desc: { ar: descAr, en: descEn },
+          price: price,
+          currency: currency,
+          img: imageBase64,
+          category: category,
+          isActive: isActive
+        };
+
+        if (editingProductId) {
+          // Update existing product
+          await db.updateProduct(editingProductId, productData);
+          showToast('تم تحديث المنتج بنجاح | Product updated successfully', 'success');
+        } else {
+          // Add new product
+          await db.addProduct(productData);
+          showToast('تم إضافة المنتج بنجاح | Product added successfully', 'success');
+        }
+
+        // Close modal and reload products
+        bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+        await loadProducts();
+      } catch (error) {
+        console.error('Error saving product:', error);
+        showToast('خطأ في حفظ المنتج | Error saving product: ' + error.message, 'error');
+      }
+    }
+
+    // Edit product
+    async function editProduct(productId) {
+      try {
+        if (!db.db) await db.init();
+        const product = await db.getProduct(productId);
+        if (!product) {
+          showToast('المنتج غير موجود | Product not found', 'error');
+          return;
+        }
+
+        editingProductId = productId;
+        document.getElementById('productModalTitle').textContent = 'تعديل المنتج | Edit Product';
+        document.getElementById('productId').value = productId;
+        document.getElementById('productNameAr').value = product.name?.ar || product.name || '';
+        document.getElementById('productNameEn').value = product.name?.en || product.name || '';
+        document.getElementById('productDescAr').value = product.desc?.ar || product.desc || '';
+        document.getElementById('productDescEn').value = product.desc?.en || product.desc || '';
+        document.getElementById('productPrice').value = product.price || 0;
+        document.getElementById('productCurrency').value = product.currency || 'SAR';
+        document.getElementById('productCategory').value = product.category || '';
+        document.getElementById('productIsActive').checked = product.isActive !== false;
+
+        // Show existing image
+        const img = document.getElementById('productImagePreviewImg');
+        const placeholder = document.getElementById('productImagePlaceholder');
+        const imageInput = document.getElementById('productImageInput');
+
+        if (product.img) {
+          img.src = product.img;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          // Make image input optional when editing (existing image available)
+          if (imageInput) {
+            imageInput.required = false;
+            imageInput.setAttribute('data-has-existing-image', 'true');
+          }
+        } else {
+          img.style.display = 'none';
+          placeholder.style.display = 'block';
+          // Make image required if no existing image
+          if (imageInput) {
+            imageInput.required = true;
+            imageInput.removeAttribute('data-has-existing-image');
+          }
+        }
+
+        new bootstrap.Modal(document.getElementById('addProductModal')).show();
+      } catch (error) {
+        console.error('Error loading product:', error);
+        showToast('خطأ في تحميل المنتج | Error loading product', 'error');
+      }
+    }
+
+    // Delete product
+    async function deleteProduct(productId) {
+      if (!confirm('هل أنت متأكد من حذف هذا المنتج؟ | Are you sure you want to delete this product?')) {
+        return;
+      }
+
+      try {
+        if (!db.db) await db.init();
+        await db.delete('products', productId);
+        showToast('تم حذف المنتج بنجاح | Product deleted successfully', 'success');
+        await loadProducts();
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        showToast('خطأ في حذف المنتج | Error deleting product', 'error');
+      }
+    }
+
+    // Event listeners for products
+    document.getElementById('addProductBtn')?.addEventListener('click', openAddProductModal);
+    document.getElementById('saveProductBtn')?.addEventListener('click', saveProduct);
+    document.getElementById('refreshProductsBtn')?.addEventListener('click', loadProducts);
+
+    // Make functions global
+    window.editProduct = editProduct;
+    window.deleteProduct = deleteProduct;
+
+    // Make functions global for onclick handlers
+    window.generateCodesForUser = generateCodesForUser;
+    window.sendCodesViaWhatsApp = sendCodesViaWhatsApp;
+    window.viewUserDetails = viewUserDetails;
+    window.editUser = editUser;
+    window.scrollToTop = scrollToTop;
+    window.scrollToStats = scrollToStats;
+    window.openAddUserFromNav = openAddUserFromNav;
+    window.setActiveNav = setActiveNav;
+    window.copySingleCode = copySingleCode;
+
+    // ===== Initialize =====
+    // Initialize database first and wait for it to be ready
+    (async () => {
+      try {
+        console.log('🚀 Starting application initialization...');
+
+        // Wait for database to be ready (it might already be initializing)
+        if (!db.db) {
+          console.log('⏳ Waiting for database initialization...');
+          await db.init();
+          console.log('✅ Database ready');
+        } else {
+          console.log('✅ Database already initialized');
+        }
+
+        // Small delay to ensure everything is ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Then check auth and load data
+        await checkAuth();
+        console.log('✅ Application initialized successfully');
+      } catch (error) {
+        console.error('❌ Initialization error:', error);
+        showToast('خطأ في تهيئة قاعدة البيانات | Database initialization error: ' + error.message, 'error');
+      }
+    })();
+
+    // Handle window resize for mobile navbar
+    window.addEventListener('resize', () => {
+      const mobileNav = document.getElementById('mobileNavbar');
+      const isLoggedIn = localStorage.getItem(STORAGE_KEY) === 'true';
+      if (mobileNav && isLoggedIn) {
+        if (window.innerWidth <= 768) {
+          mobileNav.style.display = 'block';
+        } else {
+          mobileNav.style.display = 'none';
+        }
+      }
+    });
+
+    // Initialize date pickers when modal is shown
+    const addUserModal = document.getElementById('addUserModal');
+    if (addUserModal) {
+      addUserModal.addEventListener('shown.bs.modal', () => {
+        console.log('📅 Modal shown, initializing date pickers...');
+        // Wait a bit longer to ensure modal is fully rendered and inputs are accessible
+        setTimeout(() => {
+          initDatePickers();
+        }, 300);
+      });
+
+      // Also initialize when modal is about to show
+      addUserModal.addEventListener('show.bs.modal', () => {
+        console.log('📅 Modal opening, preparing date pickers...');
+      });
+    }
+  </script>
+</body>
+
+</html>
