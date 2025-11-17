@@ -3862,7 +3862,7 @@
       const modal = document.createElement('div');
       modal.className = 'modal fade';
       modal.innerHTML = `
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">تفاصيل الطلب | Order Details</h5>
@@ -3872,6 +3872,9 @@
               ${details}
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-warning" id="editClientInfoBtn" onclick="editOrderClientInfo(${order.id})">
+                <i class="bi bi-pencil me-1"></i> تعديل بيانات العميل | Edit Client Info
+              </button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق | Close</button>
             </div>
           </div>
@@ -3994,6 +3997,111 @@
       }
     }
 
+    async function editOrderClientInfo(orderId) {
+      const order = ordersData.find(o => o.id === orderId);
+      if (!order) {
+        showToast('الطلب غير موجود | Order not found', 'error');
+        return;
+      }
+
+      // Get the actual user from database
+      if (!db.db) await db.init();
+      const allUsers = await db.getAllUsers();
+      const orderUser = allUsers.find(u => u.id === orderId);
+
+      if (!orderUser) {
+        showToast('العميل غير موجود | Client not found', 'error');
+        return;
+      }
+
+      const currentName = orderUser.name || '';
+      const currentEmail = orderUser.email || '';
+      const currentPhone = orderUser.phone || '';
+
+      const modal = document.createElement('div');
+      modal.className = 'modal fade';
+      modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">تعديل بيانات العميل | Edit Client Info</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">اسم العميل | Client Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="editClientName" value="${currentName.replace(/"/g, '&quot;')}" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">البريد الإلكتروني | Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="editClientEmail" value="${currentEmail.replace(/"/g, '&quot;')}" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">رقم الهاتف | Phone</label>
+                <input type="text" class="form-control" id="editClientPhone" value="${currentPhone.replace(/"/g, '&quot;')}">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء | Cancel</button>
+              <button type="button" class="btn btn-primary" id="saveClientInfoBtn">حفظ | Save</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+
+      document.getElementById('saveClientInfoBtn').addEventListener('click', async () => {
+        const newName = document.getElementById('editClientName').value.trim();
+        const newEmail = document.getElementById('editClientEmail').value.trim();
+        const newPhone = document.getElementById('editClientPhone').value.trim();
+
+        if (!newName || !newEmail) {
+          showToast('يرجى إدخال الاسم والبريد الإلكتروني | Please enter name and email', 'error');
+          return;
+        }
+
+        // Check if email is already used by another user
+        const existingUser = await db.getUserByEmail(newEmail);
+        if (existingUser && existingUser.id !== orderId) {
+          showToast('البريد الإلكتروني مستخدم بالفعل | Email already exists', 'error');
+          return;
+        }
+
+        try {
+          if (!db.db) await db.init();
+          await db.updateUser(orderId, {
+            name: newName,
+            email: newEmail,
+            phone: newPhone
+          });
+
+          showToast('تم تحديث بيانات العميل بنجاح | Client info updated successfully', 'success');
+          bsModal.hide();
+
+          // Close the order details modal if it's open
+          const orderDetailsModal = document.querySelector('.modal.show');
+          if (orderDetailsModal) {
+            const orderDetailsBsModal = bootstrap.Modal.getInstance(orderDetailsModal);
+            if (orderDetailsBsModal) {
+              orderDetailsBsModal.hide();
+            }
+          }
+
+          // Reload orders to reflect changes
+          await loadOrders();
+        } catch (error) {
+          console.error('Error updating client info:', error);
+          showToast('خطأ في تحديث بيانات العميل | Error updating client info', 'error');
+        }
+      });
+
+      modal.addEventListener('hidden.bs.modal', () => {
+        document.body.removeChild(modal);
+      });
+    }
+
     // Event listeners for orders
     document.getElementById('refreshOrdersBtn')?.addEventListener('click', loadOrders);
 
@@ -4001,6 +4109,7 @@
     window.viewOrderDetails = viewOrderDetails;
     window.editOrderStatus = editOrderStatus;
     window.deleteOrder = deleteOrder;
+    window.editOrderClientInfo = editOrderClientInfo;
 
     // Make functions global
     window.editProduct = editProduct;
