@@ -1381,6 +1381,14 @@
             <span class="d-md-none">منتجات</span>
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders-pane" type="button"
+            role="tab" aria-controls="orders-pane" aria-selected="false">
+            <i class="bi bi-cart-check me-2"></i>
+            <span class="d-none d-md-inline">الطلبات | Orders</span>
+            <span class="d-md-none">طلبات</span>
+          </button>
+        </li>
       </ul>
     </div>
 
@@ -1508,6 +1516,56 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div class="tab-pane fade" id="orders-pane" role="tabpanel" aria-labelledby="orders-tab">
+        <div class="users-table-container">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h3 class="mb-0" style="font-size: 1.25rem; font-weight: 700;">
+              <i class="bi bi-cart-check me-2"></i>
+              إدارة الطلبات | Orders Management
+            </h3>
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-primary" id="refreshOrdersBtn"
+                style="font-size: 0.9rem; padding: 0.625rem 1.25rem;">
+                <i class="bi bi-arrow-clockwise me-1"></i>
+                <span class="d-none d-md-inline">تحديث | Refresh</span>
+                <span class="d-md-none">تحديث</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="ordersTableContainer">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>رقم الطلب | Order ID</th>
+                    <th>العميل | Customer</th>
+                    <th>المنتجات | Products</th>
+                    <th>المبلغ | Amount</th>
+                    <th>تاريخ الطلب | Order Date</th>
+                    <th>الحالة | Status</th>
+                    <th>طريقة الدفع | Payment Method</th>
+                    <th>الإجراءات | Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                  <tr>
+                    <td colspan="9" class="text-center">
+                      <div class="empty-state">
+                        <i class="bi bi-cart-x"></i>
+                        <p>لا توجد طلبات في قاعدة البيانات | No orders in database</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -2136,8 +2194,9 @@
       }
       await loadUsersData();
       await loadProducts();
+      await loadOrders();
       await updateStats();
-      
+
       // Check for URL parameter to open specific tab
       const urlParams = new URLSearchParams(window.location.search);
       const tab = urlParams.get('tab');
@@ -2148,7 +2207,19 @@
           const tabTrigger = new bootstrap.Tab(productsTab);
           tabTrigger.show();
         }
+      } else if (tab === 'orders') {
+        // Switch to orders tab
+        const ordersTab = document.getElementById('orders-tab');
+        if (ordersTab) {
+          const tabTrigger = new bootstrap.Tab(ordersTab);
+          tabTrigger.show();
+        }
       }
+
+      // Load orders when orders tab is clicked
+      document.getElementById('orders-tab')?.addEventListener('shown.bs.tab', () => {
+        loadOrders();
+      });
     }
 
     function showLogin() {
@@ -3555,6 +3626,311 @@
     document.getElementById('addProductBtn')?.addEventListener('click', openAddProductModal);
     document.getElementById('saveProductBtn')?.addEventListener('click', saveProduct);
     document.getElementById('refreshProductsBtn')?.addEventListener('click', loadProducts);
+
+    // ===== Orders Management =====
+    let ordersData = [];
+
+    async function loadOrders() {
+      try {
+        if (!db.db) await db.init();
+        ordersData = await db.getAllPurchases();
+        // Also get users to match with orders
+        const allUsers = await db.getAllUsers();
+        // Enrich orders with user data
+        ordersData = ordersData.map(order => {
+          const user = allUsers.find(u => u.id === order.userId);
+          return {
+            ...order,
+            userName: user?.name || 'Unknown',
+            userEmail: user?.email || order.email || 'N/A',
+            userPhone: user?.phone || 'N/A'
+          };
+        });
+        // Sort by date (newest first)
+        ordersData.sort((a, b) => {
+          const dateA = new Date(a.purchaseDate || a.createdAt || 0);
+          const dateB = new Date(b.purchaseDate || b.createdAt || 0);
+          return dateB - dateA;
+        });
+        renderOrders();
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        showToast('خطأ في تحميل الطلبات | Error loading orders', 'error');
+        ordersData = [];
+        renderOrders();
+      }
+    }
+
+    function renderOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      if (!tbody) return;
+
+      if (!ordersData || ordersData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" class="text-center">
+              <div class="empty-state">
+                <i class="bi bi-cart-x"></i>
+                <p>لا توجد طلبات في قاعدة البيانات | No orders in database</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = ordersData.map((order, index) => {
+        const orderDate = order.purchaseDate || order.createdAt || '';
+        const formattedDate = orderDate ? new Date(orderDate).toLocaleDateString('ar-EG', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }) : 'N/A';
+
+        const amount = parseFloat(order.amount || 0);
+        const formattedAmount = amount.toLocaleString('ar-EG', {
+          style: 'currency',
+          currency: 'SAR',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+
+        const status = order.status || 'pending';
+        const statusClass = status === 'completed' ? 'success' :
+          status === 'pending' ? 'warning' :
+            status === 'cancelled' ? 'danger' : 'secondary';
+        const statusText = status === 'completed' ? 'مكتمل | Completed' :
+          status === 'pending' ? 'في الانتظار | Pending' :
+            status === 'cancelled' ? 'ملغي | Cancelled' :
+              'غير معروف | Unknown';
+
+        const paymentMethod = order.paymentMethod || 'N/A';
+        const productInfo = order.productId ? `Product ID: ${order.productId}` : 'N/A';
+
+        return `
+          <tr>
+            <td>${index + 1}</td>
+            <td><strong>#${order.id || 'N/A'}</strong></td>
+            <td>
+              <div>
+                <strong>${order.userName || 'Unknown'}</strong><br>
+                <small class="text-muted">${order.userEmail || 'N/A'}</small>
+              </div>
+            </td>
+            <td>${productInfo}</td>
+            <td><strong class="text-primary">${formattedAmount}</strong></td>
+            <td>${formattedDate}</td>
+            <td>
+              <span class="badge bg-${statusClass}">${statusText}</span>
+            </td>
+            <td>${paymentMethod}</td>
+            <td>
+              <div class="d-flex gap-1 flex-wrap">
+                <button class="btn btn-sm btn-info" onclick="viewOrderDetails(${order.id})" title="عرض التفاصيل | View Details">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning" onclick="editOrderStatus(${order.id})" title="تعديل الحالة | Edit Status">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteOrder(${order.id})" title="حذف | Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function viewOrderDetails(orderId) {
+      const order = ordersData.find(o => o.id === orderId);
+      if (!order) {
+        showToast('الطلب غير موجود | Order not found', 'error');
+        return;
+      }
+
+      const orderDate = order.purchaseDate || order.createdAt || '';
+      const formattedDate = orderDate ? new Date(orderDate).toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      }) : 'N/A';
+
+      const amount = parseFloat(order.amount || 0);
+      const formattedAmount = amount.toLocaleString('ar-EG', {
+        style: 'currency',
+        currency: 'SAR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      const details = `
+        <div class="order-details">
+          <h5 class="mb-3">تفاصيل الطلب | Order Details</h5>
+          <div class="row mb-2">
+            <div class="col-4"><strong>رقم الطلب | Order ID:</strong></div>
+            <div class="col-8">#${order.id}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>العميل | Customer:</strong></div>
+            <div class="col-8">${order.userName || 'Unknown'}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>البريد الإلكتروني | Email:</strong></div>
+            <div class="col-8">${order.userEmail || 'N/A'}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>رقم الهاتف | Phone:</strong></div>
+            <div class="col-8">${order.userPhone || 'N/A'}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>المنتج | Product ID:</strong></div>
+            <div class="col-8">${order.productId || 'N/A'}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>المبلغ | Amount:</strong></div>
+            <div class="col-8"><strong class="text-primary">${formattedAmount}</strong></div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>تاريخ الطلب | Order Date:</strong></div>
+            <div class="col-8">${formattedDate}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>الحالة | Status:</strong></div>
+            <div class="col-8">
+              <span class="badge bg-${order.status === 'completed' ? 'success' : order.status === 'pending' ? 'warning' : 'danger'}">
+                ${order.status === 'completed' ? 'مكتمل | Completed' : order.status === 'pending' ? 'في الانتظار | Pending' : 'ملغي | Cancelled'}
+              </span>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-4"><strong>طريقة الدفع | Payment Method:</strong></div>
+            <div class="col-8">${order.paymentMethod || 'N/A'}</div>
+          </div>
+        </div>
+      `;
+
+      // Create and show modal
+      const modal = document.createElement('div');
+      modal.className = 'modal fade';
+      modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">تفاصيل الطلب | Order Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              ${details}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق | Close</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+      modal.addEventListener('hidden.bs.modal', () => {
+        document.body.removeChild(modal);
+      });
+    }
+
+    async function editOrderStatus(orderId) {
+      const order = ordersData.find(o => o.id === orderId);
+      if (!order) {
+        showToast('الطلب غير موجود | Order not found', 'error');
+        return;
+      }
+
+      const currentStatus = order.status || 'pending';
+      const statusOptions = ['pending', 'completed', 'cancelled'];
+      const statusLabels = {
+        pending: 'في الانتظار | Pending',
+        completed: 'مكتمل | Completed',
+        cancelled: 'ملغي | Cancelled'
+      };
+
+      const optionsHtml = statusOptions.map(status =>
+        `<option value="${status}" ${status === currentStatus ? 'selected' : ''}>${statusLabels[status]}</option>`
+      ).join('');
+
+      const modal = document.createElement('div');
+      modal.className = 'modal fade';
+      modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">تعديل حالة الطلب | Edit Order Status</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">الحالة | Status</label>
+                <select class="form-select" id="orderStatusSelect">
+                  ${optionsHtml}
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء | Cancel</button>
+              <button type="button" class="btn btn-primary" id="saveOrderStatusBtn">حفظ | Save</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+
+      document.getElementById('saveOrderStatusBtn').addEventListener('click', async () => {
+        const newStatus = document.getElementById('orderStatusSelect').value;
+        try {
+          if (!db.db) await db.init();
+          await db.update('purchases', {
+            ...order,
+            status: newStatus
+          });
+          showToast('تم تحديث حالة الطلب بنجاح | Order status updated successfully', 'success');
+          bsModal.hide();
+          await loadOrders();
+        } catch (error) {
+          console.error('Error updating order status:', error);
+          showToast('خطأ في تحديث حالة الطلب | Error updating order status', 'error');
+        }
+      });
+
+      modal.addEventListener('hidden.bs.modal', () => {
+        document.body.removeChild(modal);
+      });
+    }
+
+    async function deleteOrder(orderId) {
+      if (!confirm('هل أنت متأكد من حذف هذا الطلب؟ | Are you sure you want to delete this order?')) {
+        return;
+      }
+
+      try {
+        if (!db.db) await db.init();
+        await db.delete('purchases', orderId);
+        showToast('تم حذف الطلب بنجاح | Order deleted successfully', 'success');
+        await loadOrders();
+      } catch (error) {
+        console.error('Error deleting order:', error);
+        showToast('خطأ في حذف الطلب | Error deleting order', 'error');
+      }
+    }
+
+    // Event listeners for orders
+    document.getElementById('refreshOrdersBtn')?.addEventListener('click', loadOrders);
+
+    // Make functions global
+    window.viewOrderDetails = viewOrderDetails;
+    window.editOrderStatus = editOrderStatus;
+    window.deleteOrder = deleteOrder;
 
     // Make functions global
     window.editProduct = editProduct;
