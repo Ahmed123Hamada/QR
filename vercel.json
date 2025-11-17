@@ -2,6 +2,10 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/owner-panel.html",
+      "destination": "/owner-panel.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
