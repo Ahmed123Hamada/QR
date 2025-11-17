@@ -2284,8 +2284,8 @@
         let allUsers = [];
         try {
           allUsers = await db.getAllUsers();
-          console.log(`✅ Found ${allUsers.length} clients in database`);
-          console.log('📋 Clients data:', allUsers);
+          console.log(`✅ Found ${allUsers.length} users in database`);
+          console.log('📋 Users data:', allUsers);
         } catch (error) {
           console.error('❌ Error fetching users:', error);
           showToast('خطأ في جلب البيانات من قاعدة البيانات | Error fetching data: ' + error.message, 'error');
@@ -2307,9 +2307,17 @@
           }
         }
 
+        // Filter out orders - only show actual clients (not "Customer Order" entries)
+        const clientsOnly = allUsers.filter(user =>
+          user.name !== 'Customer Order' &&
+          !(user.email && user.email.startsWith('order_') && user.email.endsWith('@temp.com'))
+        );
+
+        console.log(`📊 Filtered ${allUsers.length} users to ${clientsOnly.length} clients (removed ${allUsers.length - clientsOnly.length} orders)`);
+
         usersData = [];
 
-        for (const user of allUsers) {
+        for (const user of clientsOnly) {
           console.log(`📝 Processing client: ${user.name} (ID: ${user.id})`);
 
           // Get codes for user
