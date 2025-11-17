@@ -3633,25 +3633,63 @@
     async function loadOrders() {
       try {
         if (!db.db) await db.init();
-        ordersData = await db.getAllPurchases();
-        // Also get users to match with orders
+
+        // Get all users - orders are stored as users with name "Customer Order"
         const allUsers = await db.getAllUsers();
-        // Enrich orders with user data
-        ordersData = ordersData.map(order => {
-          const user = allUsers.find(u => u.id === order.userId);
+
+        // Filter for order users (users with name "Customer Order" or email matching order pattern)
+        const orderUsers = allUsers.filter(user =>
+          user.name === 'Customer Order' ||
+          (user.email && user.email.startsWith('order_') && user.email.endsWith('@temp.com'))
+        );
+
+        // Also get purchases from purchases table
+        const purchases = await db.getAllPurchases();
+
+        // Convert order users to order format
+        ordersData = orderUsers.map(user => {
+          // Extract product info from user.product field
+          const products = user.product || 'N/A';
+
           return {
-            ...order,
-            userName: user?.name || 'Unknown',
-            userEmail: user?.email || order.email || 'N/A',
-            userPhone: user?.phone || 'N/A'
+            id: user.id,
+            userId: user.id,
+            userName: user.name || 'Customer Order',
+            userEmail: user.email || 'N/A',
+            userPhone: user.phone || '',
+            productId: null,
+            products: products,
+            amount: parseFloat(user.amount || 0),
+            purchaseDate: user.purchaseDate || user.createdAt || new Date().toISOString(),
+            status: user.status || 'pending',
+            paymentMethod: 'N/A',
+            createdAt: user.createdAt || user.purchaseDate || new Date().toISOString()
           };
         });
+
+        // Add purchases from purchases table (if any)
+        purchases.forEach(purchase => {
+          const existingOrder = ordersData.find(o => o.id === purchase.id);
+          if (!existingOrder) {
+            // Find user for this purchase
+            const user = allUsers.find(u => u.id === purchase.userId);
+            ordersData.push({
+              ...purchase,
+              userName: user?.name || 'Unknown',
+              userEmail: user?.email || 'N/A',
+              userPhone: user?.phone || 'N/A',
+              products: purchase.productId ? `Product ID: ${purchase.productId}` : 'N/A'
+            });
+          }
+        });
+
         // Sort by date (newest first)
         ordersData.sort((a, b) => {
           const dateA = new Date(a.purchaseDate || a.createdAt || 0);
           const dateB = new Date(b.purchaseDate || b.createdAt || 0);
           return dateB - dateA;
         });
+
         renderOrders();
       } catch (error) {
         console.error('Error loading orders:', error);
@@ -3705,7 +3743,7 @@
               'غير معروف | Unknown';
 
         const paymentMethod = order.paymentMethod || 'N/A';
-        const productInfo = order.productId ? `Product ID: ${order.productId}` : 'N/A';
+        const productInfo = order.products || (order.productId ? `Product ID: ${order.productId}` : 'N/A');
 
         return `
           <tr>
@@ -3786,8 +3824,8 @@
             <div class="col-8">${order.userPhone || 'N/A'}</div>
           </div>
           <div class="row mb-2">
-            <div class="col-4"><strong>المنتج | Product ID:</strong></div>
-            <div class="col-8">${order.productId || 'N/A'}</div>
+            <div class="col-4"><strong>المنتجات | Products:</strong></div>
+            <div class="col-8">${order.products || (order.productId ? `Product ID: ${order.productId}` : 'N/A')}</div>
           </div>
           <div class="row mb-2">
             <div class="col-4"><strong>المبلغ | Amount:</strong></div>
@@ -3890,10 +3928,22 @@
         const newStatus = document.getElementById('orderStatusSelect').value;
         try {
           if (!db.db) await db.init();
-          await db.update('purchases', {
-            ...order,
-            status: newStatus
-          });
+
+          // Check if this is a user-based order (Customer Order)
+          const allUsers = await db.getAllUsers();
+          const orderUser = allUsers.find(u => u.id === order.userId || u.id === order.id);
+
+          if (orderUser && (orderUser.name === 'Customer Order' || (orderUser.email && orderUser.email.startsWith('order_')))) {
+            // Update user status
+            await db.updateUser(orderUser.id, { status: newStatus });
+          } else {
+            // Update purchase status
+            await db.update('purchases', {
+              ...order,
+              status: newStatus
+            });
+          }
+
           showToast('تم تحديث حالة الطلب بنجاح | Order status updated successfully', 'success');
           bsModal.hide();
           await loadOrders();
@@ -3915,7 +3965,19 @@
 
       try {
         if (!db.db) await db.init();
-        await db.delete('purchases', orderId);
+
+        // Check if this is a user-based order (Customer Order)
+        const allUsers = await db.getAllUsers();
+        const orderUser = allUsers.find(u => u.id === orderId);
+
+        if (orderUser && (orderUser.name === 'Customer Order' || (orderUser.email && orderUser.email.startsWith('order_')))) {
+          // Delete user (order)
+          await db.deleteUser(orderId);
+        } else {
+          // Delete purchase
+          await db.delete('purchases', orderId);
+        }
+
         showToast('تم حذف الطلب بنجاح | Order deleted successfully', 'success');
         await loadOrders();
       } catch (error) {
