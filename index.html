@@ -4219,16 +4219,18 @@
           <table class="table table-bordered align-middle">
             <thead>
               <tr>
-                <th id="thName">اسم المنتج</th>
-                <th id="thQty">الكمية</th>
-                <th id="thPrice">السعر</th>
-                <th id="thTotal">الإجمالي</th>
                 <th></th>
+                <th id="thTotal">الإجمالي | Total</th>
+                <th id="thPrice">السعر | Price</th>
+                <th id="thQty">الكمية | Quantity</th>
+                <th id="thName">اسم المنتج | Product Name</th>
               </tr>
             </thead>
             <tbody id="cart-modal-body"></tbody>
           </table>
-          <div class="text-end fw-bold"><span id="cartTotalTitle">الإجمالي:</span> <span id="cart-total">0 ر.س</span>
+          <div class="text-end fw-bold mt-3 pt-3 border-top">
+            <span id="cartTotalTitle">الإجمالي | Total:</span> 
+            <span id="cart-total" class="text-primary fs-5">0.00 ر.س</span>
           </div>
         </div>
         <div class="modal-footer">
@@ -4724,24 +4726,38 @@
 
     function renderCartModal() {
       const lang = document.documentElement.lang;
-      const fmt = n => n.toLocaleString(lang === 'ar' ? 'ar-SA' : 'en-US', { style: 'currency', currency: 'SAR' }); // ✅ تنسيق عملة
+      // Consistent price formatting - use same format as products
+      const fmt = (n) => {
+        const num = parseFloat(n) || 0;
+        return num.toLocaleString('ar-EG', {
+          style: 'currency',
+          currency: 'SAR',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      };
       let html = '', total = 0;
 
       cart.forEach((item, idx) => {
-        const itemTotal = item.price * item.qty;
+        // Ensure price is a number
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.qty) || 1;
+        const itemTotal = price * qty;
         total += itemTotal;
 
+        // Reorder columns to match image: Delete | Total | Price | Quantity | Product Name
         html += `<tr>
-      <td>${esc(item.name)}</td>
-      <td><input type="number" min="1" value="${item.qty}" data-idx="${idx}" class="form-control form-control-sm cart-qty" style="width:70px;"></td>
-      <td>${fmt(item.price)}</td>
-      <td>${fmt(itemTotal)}</td>
-      <td><button class="btn btn-danger btn-sm remove-cart-item" data-idx="${idx}"><i class="bi bi-trash"></i></button></td>
+      <td><button class="btn btn-danger btn-sm remove-cart-item" data-idx="${idx}" title="${combineTexts('حذف', 'Delete', 'Delete')}"><i class="bi bi-trash"></i></button></td>
+      <td class="fw-bold">${fmt(itemTotal)}</td>
+      <td>${fmt(price)}</td>
+      <td><input type="number" min="1" value="${qty}" data-idx="${idx}" class="form-control form-control-sm cart-qty text-center" style="width:70px;"></td>
+      <td>${esc(item.name || '')}</td>
     </tr>`;
       });
 
-      document.getElementById('cart-modal-body').innerHTML = html || `<tr><td colspan="5" class="text-center">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</td></tr>`;
+      document.getElementById('cart-modal-body').innerHTML = html || `<tr><td colspan="5" class="text-center py-4">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</td></tr>`;
       document.getElementById('cart-total').textContent = fmt(total);
+      updateCartBadge();
     }
 
     function addToCart(id) {
@@ -4752,19 +4768,38 @@
       if (isProduct) {
         const pid = parseInt(id, 10);
         item = products.find(p => p.id === pid);
-        if (!item) return;
+        if (!item) {
+          console.warn('Product not found:', id);
+          return;
+        }
       }
       else if (typeof id === 'string' && id.startsWith('sub-')) {
         const subId = parseInt(id.split('-')[1], 10);
         item = subscriptions.find(s => s.id === subId);
-        if (!item) return;
+        if (!item) {
+          console.warn('Subscription not found:', id);
+          return;
+        }
       }
-      else return;
+      else {
+        console.warn('Invalid cart item ID:', id);
+        return;
+      }
+
+      // Ensure price is a valid number
+      const price = parseFloat(item.price) || 0;
+      if (price <= 0) {
+        console.warn('Invalid price for item:', id, price);
+        return;
+      }
 
       const existing = cart.find(x => String(x.id) === String(id));
 
-      if (existing) existing.qty++;
-      else {
+      if (existing) {
+        existing.qty = (parseInt(existing.qty) || 0) + 1;
+        // Update price in case it changed
+        existing.price = price;
+      } else {
         const displayName = isProduct
           ? combineTexts(item.name?.ar, item.name?.en, item.name?.[lang])
           : combineTexts(`${item.months} أشهر`, `${item.months} Months`, `${item.months} ${(lang === 'ar') ? 'أشهر' : 'Months'}`);
@@ -4773,12 +4808,13 @@
           id: String(id),
           qty: 1,
           name: displayName,
-          price: item.price
+          price: price
         });
       }
 
       saveCart();
       updateCartBadge();
+      renderCartModal();
     }
 
     // ===== QR Main =====
@@ -7702,16 +7738,29 @@
     });
     document.getElementById('cart-modal-body')?.addEventListener('input', (e) => {
       if (e.target.classList.contains('cart-qty')) {
-        const idx = +e.target.getAttribute('data-idx');
-        const val = Math.max(1, +e.target.value || 1);
-        if (cart[idx]) { cart[idx].qty = val; saveCart(); renderCartModal(); updateCartBadge(); }
+        const idx = parseInt(e.target.getAttribute('data-idx'), 10);
+        const val = Math.max(1, parseInt(e.target.value, 10) || 1);
+        if (cart[idx]) { 
+          cart[idx].qty = val;
+          // Ensure price is still a number
+          cart[idx].price = parseFloat(cart[idx].price) || 0;
+          saveCart(); 
+          renderCartModal(); 
+          updateCartBadge(); 
+        }
       }
     });
     document.getElementById('cart-modal-body')?.addEventListener('click', (e) => {
       const rm = e.target.closest('.remove-cart-item');
       if (rm) {
-        const idx = +rm.getAttribute('data-idx');
-        cart.splice(idx, 1); saveCart(); renderCartModal(); updateCartBadge();
+        const idx = parseInt(rm.getAttribute('data-idx'), 10);
+        if (idx >= 0 && idx < cart.length) {
+          cart.splice(idx, 1); 
+          saveCart(); 
+          renderCartModal(); 
+          updateCartBadge();
+          showToast(document.documentElement.lang === 'ar' ? 'تم حذف المنتج من السلة' : 'Item removed from cart', 'info');
+        }
       }
     });
     // Payment configuration
