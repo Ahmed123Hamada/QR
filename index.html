@@ -660,199 +660,6 @@
       }
     }
 
-    /* Modern Cart Items Styling */
-    .cart-items-container {
-      max-height: 60vh;
-      overflow-y: auto;
-      padding-right: 0.5rem;
-    }
-
-    .cart-items-container::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .cart-items-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-
-    .cart-items-container::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 10px;
-    }
-
-    .cart-items-container::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-
-    .cart-item-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      background: #fff;
-      border: 1px solid #e9ecef;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s ease;
-    }
-
-    .cart-item-card:hover {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .cart-item-image {
-      flex-shrink: 0;
-      width: 100px;
-      height: 100px;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #f8f9fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cart-item-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .cart-item-details {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .cart-item-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #212529;
-    }
-
-    .cart-item-desc {
-      font-size: 0.875rem;
-      line-height: 1.4;
-      margin-bottom: 0.5rem;
-    }
-
-    .cart-item-price-info {
-      margin-top: 0.5rem;
-    }
-
-    .cart-item-unit-price {
-      font-size: 0.9rem;
-      color: #6c757d;
-    }
-
-    .cart-item-controls {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.75rem;
-      flex-shrink: 0;
-    }
-
-    .cart-item-quantity {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cart-item-quantity .btn {
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      line-height: 1;
-    }
-
-    .cart-item-quantity .cart-qty {
-      border: 1px solid #dee2e6;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-
-    .cart-item-quantity .cart-qty:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-    }
-
-    .cart-item-total {
-      font-size: 1.2rem;
-    }
-
-    .cart-item-card .remove-cart-item {
-      width: 36px;
-      height: 36px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .cart-item-card .remove-cart-item:hover {
-      transform: scale(1.1);
-      box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
-    }
-
-    .cart-empty-state {
-      padding: 3rem 1rem;
-    }
-
-    .cart-empty-state i {
-      opacity: 0.5;
-    }
-
-    .cart-summary {
-      background: #f8f9fa;
-      padding: 1.25rem;
-      border-radius: 10px;
-      margin-top: 1.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .cart-item-card {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
-
-      .cart-item-image {
-        width: 80px;
-        height: 80px;
-      }
-
-      .cart-item-controls {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .cart-item-quantity {
-        order: 1;
-      }
-
-      .cart-item-total {
-        order: 2;
-        font-size: 1.1rem;
-      }
-
-      .cart-item-card .remove-cart-item {
-        order: 3;
-      }
-    }
-
     /* Products Section Header */
     #products-pane {
       padding: 2rem 0;
@@ -1377,92 +1184,416 @@
       color: white;
     }
 
-    /* التقرير - Modern */
+    /* التقرير - Modern Enhanced UI/UX */
     .report-tab-section {
       margin-bottom: 2.5rem;
-      padding: 1.75rem;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
       position: relative;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(102, 126, 234, 0.1);
+      overflow: hidden;
+    }
+
+    .report-tab-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .report-tab-section:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-      transform: translateY(-2px);
+      box-shadow: 0 12px 48px rgba(102, 126, 234, 0.15);
+      transform: translateY(-4px);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .report-tab-section:hover::before {
+      opacity: 1;
     }
 
     .report-tab-section h4 {
       font-weight: 700;
-      color: #2d3748;
-      margin-bottom: 1.25rem;
+      color: #1a202c;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
+      font-size: 1.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .report-tab-section h4::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 2px;
+    }
+
+    .report-section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      margin-left: 0.5rem;
     }
 
     .report-tab-section h4 i {
       color: #667eea;
-      font-size: 1.5rem;
+      font-size: 1.75rem;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      padding: 0.5rem;
+      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .report-content-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+
+    .report-content-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .report-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .report-info-item {
+      padding: 1rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: 12px;
+      border-right: 3px solid #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .report-info-item:hover {
+      background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+      transform: translateX(-4px);
+    }
+
+    .report-info-item strong {
+      display: block;
+      color: #667eea;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .report-info-item span {
+      color: #2d3748;
+      font-size: 1rem;
+      font-weight: 500;
     }
 
     .report-qr-container {
       text-align: center;
-      margin: 1.5rem 0;
-      padding: 2rem;
+      margin: 2rem 0;
+      padding: 2.5rem;
       background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      border: 2px solid rgba(102, 126, 234, 0.1);
-      transition: all 0.3s ease;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
+      border: 2px solid rgba(102, 126, 234, 0.15);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .report-qr-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
     .report-qr-container:hover {
-      border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.15);
+      border-color: rgba(102, 126, 234, 0.4);
+      box-shadow: 0 12px 48px rgba(102, 126, 234, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .report-qr-container:hover::before {
+      opacity: 1;
     }
 
     .report-qr {
       display: inline-block;
       margin: 0 auto;
-      padding: 1.25rem;
+      padding: 1.5rem;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
     }
 
     .report-qr:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.25);
     }
 
     .report-comment {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       font-style: italic;
-      color: #6c757d;
-      padding: 0.75rem 1rem;
-      background: linear-gradient(135deg, rgba(108, 117, 125, 0.05) 0%, rgba(108, 117, 125, 0.1) 100%);
-      border-radius: 10px;
+      color: #4a5568;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+      border-radius: 12px;
       display: inline-block;
-      border-left: 3px solid #667eea;
+      border-right: 4px solid #667eea;
+      font-size: 1rem;
+      line-height: 1.6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .report-comment::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      font-size: 3rem;
+      color: rgba(102, 126, 234, 0.2);
+      font-family: serif;
     }
 
     .report-accordion-section {
-      margin-bottom: 2rem;
-      padding: 1.75rem;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2.5rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(102, 126, 234, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .report-accordion-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .report-accordion-section:hover {
+      box-shadow: 0 12px 48px rgba(102, 126, 234, 0.15);
+      transform: translateY(-4px);
     }
 
     .report-accordion-section h4 {
       font-weight: 700;
-      color: #2d3748;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
+      color: #1a202c;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
       border-bottom: 2px solid #e9ecef;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .report-accordion-section h4::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 2px;
+    }
+
+    .report-data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      background: white;
+    }
+
+    .report-data-table thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .report-data-table th {
+      padding: 1rem 1.25rem;
+      text-align: right;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .report-data-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #e9ecef;
+      color: #2d3748;
+      transition: background 0.2s ease;
+    }
+
+    .report-data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .report-data-table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    }
+
+    .report-image-container {
+      text-align: center;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+
+    .report-image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .report-image-container:hover img {
+      transform: scale(1.02);
+    }
+
+    .report-file-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .report-file-item {
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: 12px;
+      border-right: 3px solid #667eea;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .report-file-item:hover {
+      transform: translateX(-4px);
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+      border-right-color: #764ba2;
+    }
+
+    .report-file-item i {
+      font-size: 1.5rem;
+      color: #667eea;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 8px;
+    }
+
+    .report-social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .report-social-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .report-social-card:hover {
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+      transform: translateY(-4px);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .report-social-icon {
+      font-size: 2rem;
+      color: #667eea;
+      margin-bottom: 1rem;
+      display: inline-block;
+      padding: 0.75rem;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border-radius: 12px;
+    }
+
+    .report-social-link {
+      display: block;
+      margin-top: 1rem;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      word-break: break-all;
+      transition: color 0.3s ease;
+    }
+
+    .report-social-link:hover {
+      color: #764ba2;
+      text-decoration: underline;
     }
 
     @media (max-width: 768px) {
@@ -1498,6 +1629,37 @@
       .report-tab-section {
         padding: 1.25rem;
       }
+
+      .report-tab-section h4 {
+        font-size: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      .report-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .report-social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .report-qr-container {
+        padding: 1.5rem;
+      }
+
+      .report-content-card {
+        padding: 1rem;
+      }
+
+      .report-accordion-section {
+        padding: 1.5rem;
+      }
+
+      .report-section-badge {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+      }
     }
 
     /* صفحة الطباعة A2 */
@@ -1523,30 +1685,69 @@
         margin: 0;
       }
 
-      /* ✅ مضافة */
+      /* Hide everything except report content */
       body * {
-        visibility: hidden;
+        visibility: hidden !important;
       }
 
+      /* Show modal and report content */
+      #reportModal,
+      #reportModal *,
       .a2-page,
       .a2-page * {
-        visibility: visible;
+        visibility: visible !important;
+      }
+
+      /* Hide modal backdrop, header, and footer */
+      .modal-backdrop,
+      .modal-header,
+      .modal-footer,
+      .btn-close {
+        display: none !important;
+      }
+
+      /* Position modal content for printing */
+      .modal {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .modal-dialog {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      .modal-content {
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .modal-body {
+        padding: 0 !important;
       }
 
       .a2-page {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        box-shadow: none;
-        margin: 0;
-        padding: 15mm;
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 15mm !important;
+        transform: none !important;
       }
 
       .print-header,
       .print-footer {
-        display: flex;
+        display: flex !important;
         justify-content: space-between;
         align-items: center;
         padding: 5mm;
@@ -3753,6 +3954,11 @@
           <button id="open-code-modal-btn" class="btn btn-dark" style="white-space: nowrap;">
             <i class="bi bi-key"></i> <span id="enter-code-text">إدخال الكود</span>
           </button>
+
+          <a href="owner-panel.html" class="btn btn-outline-secondary icon-btn" aria-label="Owner Panel"
+            title="لوحة تحكم المالك | Owner Panel" style="opacity: 0.6; font-size: 0.85rem; display: none;">
+            <i class="bi bi-shield-lock"></i>
+          </a>
         </div>
 
         <!-- Mobile: Show only essential buttons -->
@@ -3760,10 +3966,6 @@
           <button id="open-code-modal-btn-mobile" class="btn btn-dark btn-sm">
             <i class="bi bi-key"></i>
           </button>
-          <a href="owner-panel.html?tab=products" class="btn btn-outline-success btn-sm" aria-label="Products"
-            title="المنتجات | Products">
-            <i class="bi bi-bag"></i>
-          </a>
         </div>
       </div>
 
@@ -4404,12 +4606,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <div id="cart-modal-body" class="cart-items-container"></div>
-          <div class="cart-summary mt-4 pt-3 border-top">
-            <div class="d-flex justify-content-between align-items-center">
-              <span id="cartTotalTitle" class="fs-5 fw-semibold">الإجمالي | Total:</span>
-              <span id="cart-total" class="text-primary fs-4 fw-bold">0.00 ر.س</span>
-            </div>
+          <table class="table table-bordered align-middle">
+            <thead>
+              <tr>
+                <th></th>
+                <th id="thTotal">الإجمالي | Total</th>
+                <th id="thPrice">السعر | Price</th>
+                <th id="thQty">الكمية | Quantity</th>
+                <th id="thName">اسم المنتج | Product Name</th>
+              </tr>
+            </thead>
+            <tbody id="cart-modal-body"></tbody>
+          </table>
+          <div class="text-end fw-bold mt-3 pt-3 border-top">
+            <span id="cartTotalTitle">الإجمالي | Total:</span>
+            <span id="cart-total" class="text-primary fs-5">0.00 ر.س</span>
           </div>
         </div>
         <div class="modal-footer">
@@ -4917,172 +5128,38 @@
       };
       let html = '', total = 0;
 
-      if (cart.length === 0) {
-        html = `
-          <div class="cart-empty-state text-center py-5">
-            <i class="bi bi-cart-x" style="font-size: 4rem; color: #dee2e6;"></i>
-            <p class="mt-3 text-muted fs-5">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</p>
-            <p class="text-muted">${combineTexts('أضف منتجات إلى السلة للبدء', 'Add products to cart to get started', 'Add products to cart to get started')}</p>
-          </div>`;
-      } else {
-        let cartNeedsUpdate = false;
+      cart.forEach((item, idx) => {
+        // Ensure price is a number
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.qty) || 1;
+        const itemTotal = price * qty;
+        total += itemTotal;
 
-        cart.forEach((item, idx) => {
-          // Ensure price is a number
-          const price = parseFloat(item.price) || 0;
-          const qty = parseInt(item.qty) || 1;
-          const itemTotal = price * qty;
-          total += itemTotal;
+        // Reorder columns to match image: Delete | Total | Price | Quantity | Product Name
+        html += `<tr>
+      <td><button class="btn btn-danger btn-sm remove-cart-item" data-idx="${idx}" title="${combineTexts('حذف', 'Delete', 'Delete')}"><i class="bi bi-trash"></i></button></td>
+      <td class="fw-bold">${fmt(itemTotal)}</td>
+      <td>${fmt(price)}</td>
+      <td><input type="number" min="1" value="${qty}" data-idx="${idx}" class="form-control form-control-sm cart-qty text-center" style="width:70px;"></td>
+      <td>${esc(item.name || '')}</td>
+    </tr>`;
+      });
 
-          // Handle legacy cart items that might not have img/desc/name
-          // Try to get product data if missing and update the cart item
-          const isProduct = /^\d+$/.test(String(item.id));
-
-          if (isProduct) {
-            const pid = parseInt(item.id, 10);
-            // Try to find product in allProducts first, then hardcoded products, then database
-            let product = null;
-            if (allProducts && allProducts.length > 0) {
-              product = allProducts.find(p => p.id === pid);
-            }
-            if (!product) {
-              product = products.find(p => p.id === pid);
-            }
-
-            if (product) {
-              // Update missing image
-              if (!item.img || item.img === '' || item.img === 'https://placehold.co/120x120/e9ecef/6c757d?text=Product') {
-                if (product.img && product.img.trim() !== '') {
-                  item.img = product.img;
-                } else {
-                  // Create SVG fallback with product name
-                  const productName = item.name || combineTexts(product.name?.ar, product.name?.en, product.name?.[lang]) || 'Product';
-                  item.img = createSVGImage(productName, 120, 120);
-                }
-                cartNeedsUpdate = true;
-              }
-              // Update missing description
-              if (!item.desc || item.desc === '') {
-                const currentLang = document.documentElement.lang;
-                item.desc = combineTexts(product.desc?.ar, product.desc?.en, product.desc?.[currentLang]) || '';
-                cartNeedsUpdate = true;
-              }
-              // Update missing name
-              if (!item.name || item.name === '') {
-                const currentLang = document.documentElement.lang;
-                item.name = combineTexts(product.name?.ar, product.name?.en, product.name?.[currentLang]) || '';
-                cartNeedsUpdate = true;
-              }
-              // Ensure isProduct flag is set
-              if (item.isProduct === undefined) {
-                item.isProduct = true;
-                cartNeedsUpdate = true;
-              }
-              // Store original item reference
-              if (!item.originalItem) {
-                item.originalItem = product;
-                cartNeedsUpdate = true;
-              }
-            }
-          }
-
-          // Create proper fallback image using SVG
-          const productNameForImg = item.name || 'Product';
-          const fallbackImg = createSVGImage(productNameForImg, 120, 120);
-          const itemImg = (item.img && item.img.trim() !== '' && item.img !== 'https://placehold.co/120x120/e9ecef/6c757d?text=Product')
-            ? item.img
-            : fallbackImg;
-          const itemDesc = item.desc || '';
-
-          html += `
-            <div class="cart-item-card" data-idx="${idx}">
-              <div class="cart-item-image">
-                <img src="${esc(itemImg)}" alt="${esc(item.name || '')}" 
-                     onerror="this.onerror=null;this.src='${fallbackImg}'" 
-                     loading="lazy">
-              </div>
-              <div class="cart-item-details">
-                <h6 class="cart-item-name">${esc(item.name || '')}</h6>
-                ${itemDesc ? `<p class="cart-item-desc text-muted small mb-2">${esc(itemDesc)}</p>` : ''}
-                <div class="cart-item-price-info">
-                  <span class="cart-item-unit-price">${fmt(price)} ${combineTexts('لكل', 'each', 'each')}</span>
-                </div>
-              </div>
-              <div class="cart-item-controls">
-                <div class="cart-item-quantity">
-                  <button class="btn btn-sm btn-outline-secondary qty-decrease" data-idx="${idx}" type="button">−</button>
-                  <input type="number" min="1" value="${qty}" data-idx="${idx}" 
-                         class="form-control form-control-sm cart-qty text-center" 
-                         style="width: 60px;">
-                  <button class="btn btn-sm btn-outline-secondary qty-increase" data-idx="${idx}" type="button">+</button>
-                </div>
-                <div class="cart-item-total">
-                  <span class="fw-bold text-primary">${fmt(itemTotal)}</span>
-                </div>
-                <button class="btn btn-sm btn-danger remove-cart-item" data-idx="${idx}" 
-                        title="${combineTexts('حذف', 'Delete', 'Delete')}">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </div>`;
-        });
-
-        // Save cart if we updated any legacy items
-        if (cartNeedsUpdate) {
-          saveCart();
-        }
-      }
-
-      document.getElementById('cart-modal-body').innerHTML = html;
+      document.getElementById('cart-modal-body').innerHTML = html || `<tr><td colspan="5" class="text-center py-4">${combineTexts('السلة فارغة', 'Cart is empty', 'السلة فارغة')}</td></tr>`;
       document.getElementById('cart-total').textContent = fmt(total);
       updateCartBadge();
     }
 
-    // Helper function to get product by ID (checks database, allProducts, and hardcoded array)
-    async function getProductById(pid) {
-      // First, try allProducts (contains database products loaded by renderProducts)
-      if (allProducts && allProducts.length > 0) {
-        const found = allProducts.find(p => p.id === pid);
-        if (found) return found;
-      }
-
-      // Second, try hardcoded products array
-      const hardcoded = products.find(p => p.id === pid);
-      if (hardcoded) return hardcoded;
-
-      // Third, try database directly
-      if (typeof db !== 'undefined' && db) {
-        try {
-          if (!db.db) await db.init();
-          const dbProduct = await db.getProduct(pid);
-          if (dbProduct && dbProduct.isActive !== false) {
-            return dbProduct;
-          }
-        } catch (error) {
-          console.warn('Error loading product from database:', error);
-        }
-      }
-
-      return null;
-    }
-
-    // Helper function to create SVG fallback image
-    function createSVGImage(text, width = 120, height = 120) {
-      const encodedText = encodeURIComponent(text || 'Product');
-      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'><rect width='100%' height='100%' fill='%23e9ecef'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%236c757d' font-family='Arial, sans-serif' font-size='14' font-weight='bold'>${encodedText}</text></svg>`;
-    }
-
-    async function addToCart(id) {
+    function addToCart(id) {
       const lang = document.documentElement.lang;
       let item;
 
       const isProduct = /^\d+$/.test(String(id));
       if (isProduct) {
         const pid = parseInt(id, 10);
-        item = await getProductById(pid);
+        item = products.find(p => p.id === pid);
         if (!item) {
           console.warn('Product not found:', id);
-          showToast(lang === 'ar' ? 'المنتج غير موجود' : 'Product not found', 'error');
           return;
         }
       }
@@ -5091,7 +5168,6 @@
         item = subscriptions.find(s => s.id === subId);
         if (!item) {
           console.warn('Subscription not found:', id);
-          showToast(lang === 'ar' ? 'الاشتراك غير موجود' : 'Subscription not found', 'error');
           return;
         }
       }
@@ -5109,50 +5185,21 @@
 
       const existing = cart.find(x => String(x.id) === String(id));
 
-      // Prepare display data
-      const displayName = isProduct
-        ? combineTexts(item.name?.ar, item.name?.en, item.name?.[lang])
-        : combineTexts(`${item.months} أشهر`, `${item.months} Months`, `${item.months} ${(lang === 'ar') ? 'أشهر' : 'Months'}`);
-
-      const displayDesc = isProduct
-        ? combineTexts(item.desc?.ar, item.desc?.en, item.desc?.[lang])
-        : (item.features ? combineTexts(item.features.ar?.join(', '), item.features.en?.join(', '), item.features[lang]?.join(', ')) : '');
-
-      // Get image with proper fallback
-      let displayImg = '';
-      if (isProduct) {
-        displayImg = item.img || '';
-        // If no image or image is empty, create SVG fallback with product name
-        if (!displayImg || displayImg.trim() === '') {
-          const productName = displayName || combineTexts(item.name?.ar, item.name?.en, item.name?.[lang]) || 'Product';
-          displayImg = createSVGImage(productName, 120, 120);
-        }
-      }
-
       if (existing) {
         existing.qty = (parseInt(existing.qty) || 0) + 1;
-        // Update all product data to ensure it's current
+        // Update price in case it changed
         existing.price = price;
-        existing.name = displayName;
-        existing.desc = displayDesc;
-        if (isProduct) {
-          existing.img = displayImg;
-          existing.isProduct = true;
-          existing.originalItem = item;
-        }
       } else {
-        const cartItem = {
+        const displayName = isProduct
+          ? combineTexts(item.name?.ar, item.name?.en, item.name?.[lang])
+          : combineTexts(`${item.months} أشهر`, `${item.months} Months`, `${item.months} ${(lang === 'ar') ? 'أشهر' : 'Months'}`);
+
+        cart.push({
           id: String(id),
           qty: 1,
           name: displayName,
-          price: price,
-          desc: displayDesc,
-          img: displayImg,
-          isProduct: isProduct,
-          originalItem: isProduct ? item : null
-        };
-
-        cart.push(cartItem);
+          price: price
+        });
       }
 
       saveCart();
@@ -5426,8 +5473,6 @@
     // تهيئة عند التحميل
     document.addEventListener('DOMContentLoaded', () => {
       applyGenderStyle(genderStyle);
-      // Initialize cart badge on page load
-      updateCartBadge();
     });
 
     // Accordion state
@@ -6923,13 +6968,15 @@
 
         html += `<div class="report-tab-section">`;
         html += `<h4><i class="bi bi-link-45deg"></i> ${title}</h4>`;
-        html += `<div class="p-2 bg-light rounded"><a href="${safeUrl}" target="_blank" rel="noopener">${safeUrl}</a></div>`;
-        html += `<div class="report-qr-container mt-4"><div class="report-qr" id="url-report-qr"></div>`;
+        html += `<div class="report-content-card">`;
+        html += `<div class="report-info-item"><strong>${lang === "ar" ? "الرابط" : "URL"}</strong><span><a href="${safeUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: none;">${safeUrl}</a></span></div>`;
+        html += `</div>`;
+        html += `<div class="report-qr-container"><div class="report-qr" id="url-report-qr"></div></div>`;
 
         const urlComment = esc(document.getElementById("url-comment").value || '');
         if (urlComment) html += `<div class="report-comment">${urlComment}</div>`;
 
-        html += `</div></div>`;
+        html += `</div>`;
       }
 
       // === Wi-Fi ===
@@ -6945,17 +6992,19 @@
 
         html += `<div class="report-tab-section">`;
         html += `<h4><i class="bi bi-wifi"></i> ${title}</h4>`;
-        html += `<div class="row">`;
-        html += `<div class="col-6"><strong>${lang === "ar" ? "الاسم:" : "SSID:"}</strong> ${esc(ssid)}</div>`;
-        html += `<div class="col-6"><strong>${lang === "ar" ? "كلمة المرور:" : "Password:"}</strong> ${esc(wtype === 'nopass' ? '—' : pwd)}</div>`;
-        html += `<div class="col-6"><strong>${lang === "ar" ? "مخفي:" : "Hidden:"}</strong> ${hidden ? 'نعم' : 'لا'}</div>`;
-        html += `</div>`;
-        html += `<div class="report-qr-container mt-4"><div class="report-qr" id="wifi-report-qr"></div>`;
+        html += `<div class="report-content-card">`;
+        html += `<div class="report-info-grid">`;
+        html += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "SSID"}</strong><span>${esc(ssid)}</span></div>`;
+        html += `<div class="report-info-item"><strong>${lang === "ar" ? "كلمة المرور" : "Password"}</strong><span>${esc(wtype === 'nopass' ? (lang === "ar" ? "بدون كلمة مرور" : "No Password") : pwd)}</span></div>`;
+        html += `<div class="report-info-item"><strong>${lang === "ar" ? "النوع" : "Type"}</strong><span>${esc(wtype)}</span></div>`;
+        html += `<div class="report-info-item"><strong>${lang === "ar" ? "مخفي" : "Hidden"}</strong><span>${hidden ? (lang === "ar" ? "نعم" : "Yes") : (lang === "ar" ? "لا" : "No")}</span></div>`;
+        html += `</div></div>`;
+        html += `<div class="report-qr-container"><div class="report-qr" id="wifi-report-qr"></div></div>`;
 
         const wifiComment = esc(document.getElementById("wifi-comment").value || '');
         if (wifiComment) html += `<div class="report-comment">${wifiComment}</div>`;
 
-        html += `</div></div>`;
+        html += `</div>`;
       }
 
       // === vCard ===
@@ -6978,23 +7027,26 @@
 
         html += `<div class="report-tab-section">`;
         html += `<h4><i class="bi bi-person-badge"></i> ${title}</h4>`;
-        html += `<ul class="mb-1">`;
+        html += `<div class="report-content-card">`;
+        html += `<div class="report-info-grid">`;
 
-        if (vName) html += `<li><strong>${lang === "ar" ? "الاسم:" : "Name:"}</strong> ${esc(vName)}</li>`;
-        if (vTitle) html += `<li><strong>${lang === "ar" ? "المسمى:" : "Title:"}</strong> ${esc(vTitle)}</li>`;
-        if (vEmail) html += `<li><strong>${lang === "ar" ? "الإيميل:" : "Email:"}</strong> ${esc(vEmail)}</li>`;
-        if (vOrg) html += `<li><strong>${lang === "ar" ? "الشركة:" : "Company:"}</strong> ${esc(vOrg)}</li>`;
-        if (vNote) html += `<li><strong>${lang === "ar" ? "ملاحظة:" : "Note:"}</strong> ${esc(vNote)}</li>`;
+        if (vName) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "Name"}</strong><span>${esc(vName)}</span></div>`;
+        if (vTitle) html += `<div class="report-info-item"><strong>${lang === "ar" ? "المسمى" : "Title"}</strong><span>${esc(vTitle)}</span></div>`;
+        if (vEmail) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الإيميل" : "Email"}</strong><span><a href="mailto:${esc(vEmail)}" style="color: #667eea; text-decoration: none;">${esc(vEmail)}</a></span></div>`;
+        if (vOrg) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الشركة" : "Company"}</strong><span>${esc(vOrg)}</span></div>`;
+        if (vNote) html += `<div class="report-info-item" style="grid-column: 1 / -1;"><strong>${lang === "ar" ? "ملاحظة" : "Note"}</strong><span>${esc(vNote)}</span></div>`;
 
-        vPhones.forEach(ph => html += `<li><strong>${lang === "ar" ? "هاتف:" : "Phone:"}</strong> ${esc(ph)}</li>`);
+        vPhones.forEach((ph, idx) => {
+          html += `<div class="report-info-item"><strong>${lang === "ar" ? "هاتف" : "Phone"} ${vPhones.length > 1 ? (idx + 1) : ""}</strong><span><a href="tel:${esc(ph)}" style="color: #667eea; text-decoration: none;">${esc(ph)}</a></span></div>`;
+        });
 
-        html += `</ul>`;
-        html += `<div class="report-qr-container mt-4"><div class="report-qr" id="vcard-report-qr"></div>`;
+        html += `</div></div>`;
+        html += `<div class="report-qr-container"><div class="report-qr" id="vcard-report-qr"></div></div>`;
 
         const vComment = esc(document.getElementById("vcard-comment").value || '');
         if (vComment) html += `<div class="report-comment">${vComment}</div>`;
 
-        html += `</div></div>`;
+        html += `</div>`;
       }
 
       // === Social Media ===
@@ -7010,7 +7062,7 @@
 
         html += `<div class="report-tab-section">`;
         html += `<h4><i class="bi bi-share"></i> ${title}</h4>`;
-        html += `<div class="row g-3">`;
+        html += `<div class="report-social-grid">`;
 
         socials.forEach(acc => {
           let meta = socialTypes.find(s => s.value === acc.type);
@@ -7020,13 +7072,11 @@
           const href = safeHref(link);
 
           html += `
-        <div class="col-12 col-md-6">
-          <div class="d-flex align-items-center gap-2 border rounded p-2 bg-light">
-            <span class="social-icon"><i class="bi ${socialIcon}"></i></span>
-            <span class="fw-bold">${esc(name)}</span>
-            ${href ? `<a href="${esc(href)}" target="_blank" class="text-break ms-2" rel="noopener">${esc(link)}</a>` : `<span class="text-break ms-2">${esc(link)}</span>`}
-          </div>
-          <div class="text-center mt-3"><div class="social-qr-report" style="display:inline-block; width:150px; height:150px;" data-link="${esc(link)}"></div></div>
+        <div class="report-social-card">
+          <div class="report-social-icon"><i class="bi ${socialIcon}"></i></div>
+          <h5 style="font-weight: 600; color: #2d3748; margin-bottom: 0.75rem;">${esc(name)}</h5>
+          ${href ? `<a href="${esc(href)}" target="_blank" class="report-social-link" rel="noopener">${esc(link)}</a>` : `<span class="report-social-link" style="color: #6c757d;">${esc(link)}</span>`}
+          <div class="report-qr-container" style="margin-top: 1.5rem; padding: 1.5rem;"><div class="social-qr-report" style="display:inline-block; width:150px; height:150px;" data-link="${esc(link)}"></div></div>
         </div>
       `;
         });
@@ -7161,38 +7211,41 @@
           const hasCards = generalCards.some(c => c);
           if (!hasCards) continue;
 
-          html += `<div class="report-accordion-section"><h4>${esc(title)}</h4>`;
+          html += `<div class="report-accordion-section"><h4><span class="report-section-badge">1</span>${esc(title.replace('1️⃣ ', ''))}</h4>`;
 
-          generalCards.forEach((card) => {
+          generalCards.forEach((card, cardIdx) => {
             if (!card) return;
 
-            html += `<div class="mb-3 p-3 border rounded">`;
+            html += `<div class="report-content-card">`;
+            html += `<div class="report-info-grid">`;
 
             if (card.date) {
-              html += `<div><strong>${lang === "ar" ? "التاريخ:" : "Date:"}</strong> ${esc(card.date)}</div>`;
+              html += `<div class="report-info-item"><strong>${lang === "ar" ? "التاريخ" : "Date"}</strong><span>${esc(card.date)}</span></div>`;
             }
 
             if (card.description) {
-              html += `<div><strong>${lang === "ar" ? "الوصف:" : "Description:"}</strong> ${esc(card.description)}</div>`;
+              html += `<div class="report-info-item" style="grid-column: 1 / -1;"><strong>${lang === "ar" ? "الوصف" : "Description"}</strong><span>${esc(card.description)}</span></div>`;
             }
 
+            html += `</div>`;
+
             if (card.files && card.files.length > 0) {
-              html += `<div><strong>${lang === "ar" ? "الملفات:" : "Files:"}</strong><ul class="list-unstyled ms-3">`;
+              html += `<div style="margin-top: 1rem;"><strong style="display: block; color: #667eea; margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase;">${lang === "ar" ? "الملفات" : "Files"}</strong>`;
 
               card.files.forEach(file => {
                 if (file.type === 'image') {
-                  html += `<li><img src="${file.preview}" class="img-preview shadow-sm" alt="${esc(file.name)}"> ${esc(file.name)}</li>`;
+                  html += `<div class="report-image-container" style="margin-bottom: 1rem;"><img src="${file.preview}" alt="${esc(file.name)}"><div style="margin-top: 0.5rem; color: #2d3748; font-size: 0.9rem;">${esc(file.name)}</div></div>`;
                 } else {
                   let iconClass = file.type === 'pdf' ? 'bi-file-earmark-pdf-fill' : 'bi-file-earmark-word-fill';
-                  html += `<li><i class="bi ${iconClass}"></i> ${esc(file.name)}</li>`;
+                  html += `<div class="report-file-item"><i class="bi ${iconClass}"></i><span>${esc(file.name)}</span></div>`;
                 }
               });
 
-              html += `</ul></div>`;
+              html += `</div>`;
             }
 
             if (card.notes) {
-              html += `<div><strong>${lang === "ar" ? "الملاحظات:" : "Notes:"}</strong> <div class="p-2 bg-light rounded">${esc(card.notes)}</div></div>`;
+              html += `<div style="margin-top: 1rem;"><strong style="display: block; color: #667eea; margin-bottom: 0.5rem; font-size: 0.875rem; text-transform: uppercase;">${lang === "ar" ? "الملاحظات" : "Notes"}</strong><div class="report-comment" style="margin-top: 0;">${esc(card.notes)}</div></div>`;
             }
 
             html += `</div>`;
@@ -7212,14 +7265,17 @@
 
         if (!hasContent) continue;
 
-        html += `<div class="report-accordion-section"><h4>${esc(title)}</h4>`;
+        const badgeNum = i === 2 ? '2' : '3';
+        html += `<div class="report-accordion-section"><h4><span class="report-section-badge">${badgeNum}</span>${esc(title.replace(/[2️⃣3️⃣]\s*/, ''))}</h4>`;
+
+        html += `<div class="report-content-card">`;
 
         if (i === 2 && data.image) {
-          html += `<div class="text-center mb-3"><img src="${data.image}" class="img-preview shadow-sm" alt="الصورة المرفوعة"></div>`;
+          html += `<div class="report-image-container"><img src="${data.image}" alt="${lang === "ar" ? "الصورة المرفوعة" : "Uploaded Image"}"></div>`;
         }
 
         if (i === 2 && data.text) {
-          html += `<div class="mb-3 p-2 bg-light rounded">${esc(data.text)}</div>`;
+          html += `<div style="padding: 1.25rem; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 12px; margin: 1rem 0; border-right: 3px solid #667eea; line-height: 1.8; color: #2d3748;">${esc(data.text)}</div>`;
         }
 
         if (i === 2 && data.table.length > 0) {
@@ -7235,9 +7291,11 @@
             const descLabel = lang === "ar" ? "الوصف" : "Description";
             const detailLabel = lang === "ar" ? "التفاصيل" : "Details";
 
-            html += `<table class="table table-bordered mb-3"><thead><tr><th>${descLabel}</th><th>${detailLabel}</th></tr></thead><tbody>${tableRows}</tbody></table>`;
+            html += `<table class="report-data-table"><thead><tr><th>${descLabel}</th><th>${detailLabel}</th></tr></thead><tbody>${tableRows}</tbody></table>`;
           }
         }
+
+        html += `</div>`;
 
         html += `<div class="report-qr-container"><div class="report-qr" id="report-accordion-qr-${i}"></div></div>`;
 
@@ -7279,7 +7337,29 @@
       alert('تصدير DOCX غير متاح حالياً، سيتم تفعيله في إصدارات لاحقة.');
     };
     document.getElementById('report-print').onclick = function () {
-      window.print();
+      // Get the report page element
+      const reportPage = document.querySelector('.a2-page');
+      if (!reportPage) {
+        console.error('Report page not found');
+        return;
+      }
+
+      // Store original transform
+      const originalTransform = reportPage.style.transform;
+
+      // Remove transform for printing
+      reportPage.style.transform = 'none';
+
+      // Small delay to ensure styles are applied
+      setTimeout(() => {
+        // Print
+        window.print();
+
+        // Restore original transform after print dialog closes
+        setTimeout(() => {
+          reportPage.style.transform = originalTransform;
+        }, 100);
+      }, 100);
     };
     // إظهار/إخفاء معاينة QR حسب التبويب
     document.querySelectorAll('#dataTabs button').forEach(button => {
@@ -7435,7 +7515,7 @@
 
     // قراءة/كتابة الحالة
     function getRole() { return lsGet(LS_ROLE) || ''; }
-    function setRole(r) { lsSet(LS_ROLE, r || ''); applyUserRole(r || ''); }
+    function setRole(r, showNotification = true) { lsSet(LS_ROLE, r || ''); applyUserRole(r || '', showNotification); }
 
     // Get subscription from database based on current code
     async function getSubs() {
@@ -7572,15 +7652,15 @@
     function setLockUntil(ts) { lsSet(LS_LOCK_UNTIL, String(ts || 0)); }
 
     // تطبيق الدور على الواجهة
-    function applyUserRole(role) {
+    function applyUserRole(role, showNotification = false) {
       document.body.classList.remove('role-viewer');
       if (role === 'viewer') document.body.classList.add('role-viewer');
 
       // الجديد: تأكيد قفل/فتح الواجهة
       lockViewerUI();
 
-      // توست لطيف
-      if (role) showToast(role === 'admin'
+      // توست لطيف - only show if showNotification is true
+      if (role && showNotification) showToast(role === 'admin'
         ? (document.documentElement.lang === 'ar' ? 'تم تفعيل صلاحيات المشرف.' : 'Admin privileges enabled.')
         : (document.documentElement.lang === 'ar' ? 'تم تفعيل وضع المشاهدة.' : 'Viewer mode enabled.')
         , 'primary');
@@ -8040,9 +8120,9 @@
       const role = resp.role || 'viewer';
       // If user doesn't have admin code, they must be viewer
       if (role === 'admin' && (!resp.codes || !resp.codes.admin)) {
-        setRole('viewer');
+        setRole('viewer', !auto);
       } else {
-        setRole(role);
+        setRole(role, !auto);
       }
 
       await renderSubscriptionUI();
@@ -8077,11 +8157,8 @@
     document.addEventListener('click', (e) => {
       const addBtn = e.target.closest('.add-to-cart');
       if (addBtn) {
-        addToCart(addBtn.getAttribute('data-id')).then(() => {
-          showToast(document.documentElement.lang === 'ar' ? 'أضيف للسلة.' : 'Added to cart.', 'success');
-        }).catch(err => {
-          console.error('Error adding to cart:', err);
-        });
+        addToCart(addBtn.getAttribute('data-id'));
+        showToast(document.documentElement.lang === 'ar' ? 'أضيف للسلة.' : 'Added to cart.', 'success');
       }
     });
     document.getElementById('cart-modal-body')?.addEventListener('input', (e) => {
@@ -8099,35 +8176,6 @@
       }
     });
     document.getElementById('cart-modal-body')?.addEventListener('click', (e) => {
-      // Handle quantity increase
-      const increaseBtn = e.target.closest('.qty-increase');
-      if (increaseBtn) {
-        const idx = parseInt(increaseBtn.getAttribute('data-idx'), 10);
-        if (cart[idx]) {
-          cart[idx].qty = (parseInt(cart[idx].qty) || 1) + 1;
-          saveCart();
-          renderCartModal();
-          updateCartBadge();
-        }
-        e.preventDefault();
-        return;
-      }
-
-      // Handle quantity decrease
-      const decreaseBtn = e.target.closest('.qty-decrease');
-      if (decreaseBtn) {
-        const idx = parseInt(decreaseBtn.getAttribute('data-idx'), 10);
-        if (cart[idx] && cart[idx].qty > 1) {
-          cart[idx].qty = Math.max(1, (parseInt(cart[idx].qty) || 1) - 1);
-          saveCart();
-          renderCartModal();
-          updateCartBadge();
-        }
-        e.preventDefault();
-        return;
-      }
-
-      // Handle remove item
       const rm = e.target.closest('.remove-cart-item');
       if (rm) {
         const idx = parseInt(rm.getAttribute('data-idx'), 10);
@@ -8138,8 +8186,6 @@
           updateCartBadge();
           showToast(document.documentElement.lang === 'ar' ? 'تم حذف المنتج من السلة' : 'Item removed from cart', 'info');
         }
-        e.preventDefault();
-        return;
       }
     });
     // Payment configuration
@@ -8365,15 +8411,15 @@
 
       // If no valid subscription or role, set to viewer mode by default
       if (!subs?.until || subs.until <= Date.now() || !currentRole) {
-        setRole('viewer');
-        applyUserRole('viewer');
+        setRole('viewer', false);
+        applyUserRole('viewer', false);
         // Don't show subscription UI if no valid subscription
         if (subs?.until && subs.until > Date.now()) {
           await renderSubscriptionUI();
         }
       } else {
         // Valid subscription exists, apply saved role
-        applyUserRole(currentRole);
+        applyUserRole(currentRole, false);
         await renderSubscriptionUI();
       }
 
