@@ -84,7 +84,8 @@
     .custom-accordion-1 .accordion-button:not(.collapsed) {
       background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on open */
     }
 
     .custom-accordion-2 .accordion-button {
@@ -97,7 +98,8 @@
     .custom-accordion-2 .accordion-button:not(.collapsed) {
       background: linear-gradient(135deg, #dee2e6 0%, #ced4da 100%);
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on open */
     }
 
     .custom-accordion-3 .accordion-button {
@@ -110,7 +112,8 @@
     .custom-accordion-3 .accordion-button:not(.collapsed) {
       background: linear-gradient(135deg, #ced4da 0%, #adb5bd 100%);
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on open */
     }
 
     .custom-accordion-4 .accordion-button {
@@ -123,10 +126,20 @@
     .custom-accordion-4 .accordion-button:not(.collapsed) {
       background: linear-gradient(135deg, #a3cfbb 0%, #75b798 100%);
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on open */
     }
 
     /* أنماط QR - Modern */
+    .accordion-qr-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px;
+      margin: 20px 0;
+    }
+
     .accordion-qr {
       margin: 20px auto;
       max-width: 300px;
@@ -135,11 +148,24 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
       transition: all var(--transition-base);
+      display: none;
+    }
+
+    .accordion-qr[style*="display: block"],
+    .accordion-qr[style*="display:block"] {
+      display: block !important;
+    }
+
+    .accordion-qr canvas,
+    .accordion-qr svg {
+      max-width: 100%;
+      height: auto;
     }
 
     .accordion-qr:hover {
       box-shadow: var(--shadow-xl);
-      transform: translateY(-4px);
+      /* transform: translateY(-4px); */
+      /* REMOVED - no motion on hover */
     }
 
     .accordion-qr-comment {
@@ -204,7 +230,8 @@
     }
 
     .card-attachment:hover {
-      transform: translateX(-4px);
+      /* transform: translateX(-4px); */
+      /* REMOVED - no motion on hover */
       box-shadow: var(--shadow-md);
       background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
     }
@@ -276,10 +303,9 @@
       transition: all 0.6s;
     }
 
-    .subscription-card:hover .card-header::before {
-      animation: shine 1.5s infinite;
-    }
+    /* .subscription-card:hover .card-header::before - animation DISABLED */
 
+    /* @keyframes shine - DISABLED
     @keyframes shine {
       0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
@@ -289,6 +315,7 @@
         transform: translateX(100%) translateY(100%) rotate(45deg);
       }
     }
+    */
 
     .subscription-card .card-body {
       padding: 2rem 1.5rem;
@@ -407,9 +434,11 @@
       width: 200%;
       height: 200%;
       background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-      animation: shimmer 3s infinite;
+      /* animation: shimmer 3s infinite; */
+      /* DISABLED */
     }
 
+    /* @keyframes shimmer - DISABLED
     @keyframes shimmer {
 
       0%,
@@ -421,6 +450,7 @@
         transform: rotate(180deg);
       }
     }
+    */
 
     .btn-grace {
       background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
@@ -578,14 +608,13 @@
     }
 
     .product-card .btn:hover {
-      transform: translateY(-3px) scale(1.02);
+      /* transform: translateY(-3px) scale(1.02); */
+      /* REMOVED - no motion on hover */
       box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
       background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
 
-    .product-card .btn:active {
-      transform: translateY(-1px) scale(0.98);
-    }
+    /* .product-card .btn:active - transform REMOVED (no motion on click) */
 
     /* البادجات */
     .admin-badge,
@@ -645,9 +674,11 @@
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem;
       min-width: 24px;
-      animation: pulse 2s infinite;
+      /* animation: pulse 2s infinite; */
+      /* DISABLED */
     }
 
+    /* @keyframes pulse - DISABLED
     @keyframes pulse {
 
       0%,
@@ -659,6 +690,7 @@
         transform: scale(1.1);
       }
     }
+    */
 
     /* Products Section Header */
     #products-pane {
@@ -691,20 +723,23 @@
 
     /* Products Container */
     #products-container {
-      animation: fadeInUp 0.6s ease-out;
+      /* animation: fadeInUp 0.6s ease-out; */
+      /* DISABLED */
       width: 100%;
       margin: 0;
       padding: 0;
     }
 
     #products-container .product-card {
-      animation: fadeInUp 0.6s ease-out backwards;
+      /* animation: fadeInUp 0.6s ease-out backwards; */
+      /* DISABLED */
       width: 100%;
       max-width: 100%;
       margin-left: 0;
       margin-right: 0;
     }
 
+    /* Animation delays - DISABLED
     #products-container .product-card:nth-child(1) {
       animation-delay: 0.1s;
     }
@@ -732,7 +767,9 @@
     #products-container .product-card:nth-child(n+7) {
       animation-delay: 0.7s;
     }
+    */
 
+    /* @keyframes fadeInUp - DISABLED
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -744,6 +781,7 @@
         transform: translateY(0) scale(1);
       }
     }
+    */
 
     /* Accordion Header Enhancement */
     #productsAccordion .accordion-button {
@@ -1128,13 +1166,12 @@
     }
 
     .btn-action-report:hover {
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on hover */
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .btn-action-report:active {
-      transform: translateY(0);
-    }
+    /* .btn-action-report:active - transform REMOVED (no motion on click) */
 
     .btn-pdf {
       background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
@@ -1398,6 +1435,47 @@
       font-family: serif;
     }
 
+    .report-main-section {
+      margin-bottom: 3rem;
+      padding: 0;
+    }
+
+    .report-section-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid #667eea;
+      position: relative;
+    }
+
+    .report-section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      right: 0;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 3px;
+    }
+
+    .report-section-header h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .report-section-header h3 i {
+      color: #667eea;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      padding: 0.5rem;
+      border-radius: 12px;
+    }
+
     .report-accordion-section {
       margin-bottom: 2.5rem;
       padding: 2rem;
@@ -1422,7 +1500,8 @@
 
     .report-accordion-section:hover {
       box-shadow: 0 12px 48px rgba(102, 126, 234, 0.15);
-      transform: translateY(-4px);
+      /* transform: translateY(-4px); */
+      /* REMOVED - no motion on hover */
     }
 
     .report-accordion-section h4 {
@@ -1852,7 +1931,8 @@
     .btn-outline-warning:hover,
     .btn-outline-info:hover,
     .btn-outline-secondary:hover {
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
+      /* REMOVED - no motion on hover */
       box-shadow: var(--shadow-md);
     }
 
@@ -1897,7 +1977,8 @@
 
     .card:hover {
       box-shadow: var(--shadow-xl);
-      transform: translateY(-4px);
+      /* transform: translateY(-4px); */
+      /* REMOVED - no motion on hover */
     }
 
     .card-header {
@@ -2155,7 +2236,8 @@
       width: auto;
       max-width: calc(100% - 32px);
       display: none;
-      animation: slideDown 0.3s ease;
+      /* animation: slideDown 0.3s ease; */
+      /* DISABLED */
       max-height: calc(100vh - env(safe-area-inset-top) - 100px);
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
@@ -2344,16 +2426,19 @@
         height: 2.25rem;
       }
 
-      #open-code-modal-btn {
+      #open-code-modal-btn,
+      #logout-btn {
         font-size: 0.85rem;
         padding: 0.4rem 0.7rem;
       }
 
-      #open-code-modal-btn span {
+      #open-code-modal-btn span,
+      #logout-btn span {
         display: none;
       }
 
-      #open-code-modal-btn i {
+      #open-code-modal-btn i,
+      #logout-btn i {
         margin: 0;
       }
 
@@ -2929,6 +3014,7 @@
       }
     }
 
+    /* @keyframes slideDown - DISABLED
     @keyframes slideDown {
       from {
         transform: translateY(-20px);
@@ -2940,6 +3026,7 @@
         opacity: 1;
       }
     }
+    */
 
     #toggle-customizer-btn {
       transition: all var(--transition-base);
@@ -3121,22 +3208,13 @@
       font-size: 1.1rem
     }
 
-    .icon-btn:hover {
-      transform: translateY(-2px)
-    }
+    /* .icon-btn:hover - transform REMOVED (no motion on hover) */
+    /* .icon-btn:active - transform REMOVED (no motion on click) */
 
-    .icon-btn:active {
-      transform: translateY(0) scale(.98)
-    }
+    /* .animate-spin-90 - animation: spin90 DISABLED */
+    /* .animate-pop - animation: pop DISABLED */
 
-    .animate-spin-90 {
-      animation: spin90 .45s ease
-    }
-
-    .animate-pop {
-      animation: pop .35s cubic-bezier(.2, .8, .2, 1)
-    }
-
+    /* @keyframes spin90 - DISABLED
     @keyframes spin90 {
       from {
         transform: rotate(0)
@@ -3146,7 +3224,9 @@
         transform: rotate(90deg)
       }
     }
+    */
 
+    /* @keyframes pop - DISABLED
     @keyframes pop {
       0% {
         transform: scale(.9)
@@ -3160,6 +3240,7 @@
         transform: scale(1)
       }
     }
+    */
 
     /* Header Pro - Modern */
     #site-header {
@@ -3453,8 +3534,8 @@
       background: linear-gradient(135deg, #0a58ca 0%, #084298 100%);
     }
 
-    /* Loading Animation */
-    @keyframes pulse {
+    /* Loading Animation - DISABLED */
+    /* @keyframes pulse {
 
       0%,
       100% {
@@ -3465,13 +3546,17 @@
         opacity: 0.5;
       }
     }
+    */
 
     .loading {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      /* animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+      /* DISABLED */
+      opacity: 0.7;
+      /* Static opacity instead of animation */
     }
 
-    /* Fade In Animation */
-    @keyframes fadeIn {
+    /* Fade In Animation - DISABLED */
+    /* @keyframes fadeIn {
       from {
         opacity: 0;
         transform: translateY(20px);
@@ -3482,9 +3567,13 @@
         transform: translateY(0);
       }
     }
+    */
 
     .fade-in {
-      animation: fadeIn 0.6s ease-out;
+      /* animation: fadeIn 0.6s ease-out; */
+      /* DISABLED */
+      opacity: 1;
+      /* Just show immediately */
     }
 
     /* Accordion Item Modern */
@@ -3499,7 +3588,8 @@
 
     .accordion-item:hover {
       box-shadow: var(--shadow-md);
-      transform: translateX(-4px);
+      /* transform: translateX(-4px); */
+      /* REMOVED - no motion on hover */
     }
 
     /* Input Group Modern */
@@ -3589,9 +3679,11 @@
       color: white;
       font-size: 1.5rem;
       box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-      animation: pulse 2s ease-in-out infinite;
+      /* animation: pulse 2s ease-in-out infinite; */
+      /* DISABLED */
     }
 
+    /* @keyframes pulse - DISABLED
     @keyframes pulse {
 
       0%,
@@ -3603,6 +3695,7 @@
         transform: scale(1.05);
       }
     }
+    */
 
     .subscription-status-label {
       font-size: 0.75rem;
@@ -3797,6 +3890,238 @@
       outline-offset: 2px;
       border-radius: var(--radius-sm);
     }
+
+    /* ===================================
+       Reduced Motion Support
+       ================================ */
+    @media (prefers-reduced-motion: reduce) {
+
+      /* Disable all animations and transitions that use transforms */
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      /* Keep only opacity and color transitions for better UX */
+      .btn,
+      .card,
+      .product-card,
+      .subscription-card,
+      .img-preview,
+      #cartButton,
+      .form-control,
+      .form-select,
+      input,
+      textarea,
+      button,
+      a {
+        transition: opacity 0.2s ease,
+          background-color 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          color 0.2s ease !important;
+      }
+
+      /* Remove all scale transforms */
+      .img-preview:hover,
+      .subscription-card:hover,
+      .product-card:hover .card-img-top .product-img,
+      .product-card .btn:hover,
+      .product-card .btn:active,
+      #cartButton:hover,
+      #cartButton:active {
+        transform: none !important;
+      }
+
+      /* Image preview hover - no scale, enhanced shadow instead */
+      .img-preview:hover {
+        opacity: 0.95;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+        filter: brightness(1.05);
+      }
+
+      /* Subscription card hover - no transform, enhanced effects */
+      .subscription-card:hover {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2) !important;
+        border-color: rgba(102, 126, 234, 0.5) !important;
+        border-width: 3px;
+        opacity: 1;
+      }
+
+      /* Product card hover - no scale */
+      .product-card:hover .card-img-top .product-img {
+        opacity: 0.95;
+        filter: brightness(1.05);
+      }
+
+      /* Product card buttons - no transform, enhanced feedback */
+      .product-card .btn:hover {
+        opacity: 0.9;
+        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5) !important;
+        filter: brightness(1.1);
+      }
+
+      .product-card .btn:active {
+        opacity: 0.85;
+      }
+
+      /* Cart button - no transform/scale, strong feedback */
+      #cartButton:hover {
+        opacity: 0.9;
+        box-shadow: 0 12px 40px rgba(102, 126, 234, 0.5) !important;
+        filter: brightness(1.1);
+      }
+
+      #cartButton:active {
+        opacity: 0.85;
+      }
+
+      /* All buttons - remove transform, add alternative feedback */
+      .btn:hover {
+        transform: none !important;
+        opacity: 0.9;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        filter: brightness(1.05);
+      }
+
+      .btn:active {
+        transform: none !important;
+        opacity: 0.85;
+      }
+
+      /* Cards - remove transform on hover */
+      .card:hover {
+        transform: none !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: rgba(102, 126, 234, 0.3);
+        border-width: 2px;
+      }
+
+      /* Form controls - enhanced focus without transform */
+      .form-control:focus,
+      .form-select:focus,
+      input:focus,
+      textarea:focus {
+        transform: none !important;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.15) !important;
+      }
+
+      /* Remove all translateY transforms */
+      *[style*="translateY"],
+      *[class*="hover"] {
+        transform: none !important;
+      }
+
+      /* Disable background animations */
+      body::before,
+      body::after,
+      .animated-bg,
+      .animated-gradient {
+        animation: none !important;
+      }
+
+      /* Links - alternative hover effect */
+      a:hover {
+        transform: none !important;
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+
+      /* Icons - no rotation or movement */
+      i:hover,
+      svg:hover {
+        transform: none !important;
+      }
+
+      /* Modals and overlays - instant transitions */
+      .modal,
+      .modal-backdrop,
+      .fade {
+        transition: opacity 0.1s ease !important;
+      }
+
+      /* Accordions - instant open/close */
+      .accordion-collapse {
+        transition: height 0.1s ease !important;
+      }
+
+      /* Tooltips and popovers - no animation */
+      .tooltip,
+      .popover {
+        animation: none !important;
+        transition: opacity 0.1s ease !important;
+      }
+
+      /* Remove gradient animations */
+      @keyframes gradientShift {
+
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Disable any pulse or bounce effects */
+      @keyframes pulse {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounce {
+
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* Disable fade effects */
+      @keyframes fadeIn {
+
+        from,
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOut {
+
+        from,
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Disable slide effects */
+      @keyframes slideIn {
+
+        from,
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      /* Remove parallax effects */
+      [data-parallax],
+      .parallax {
+        transform: none !important;
+      }
+
+      /* Ensure accessibility focus remains visible */
+      *:focus-visible {
+        outline: 3px solid var(--primary, #0d6efd) !important;
+        outline-offset: 3px !important;
+        opacity: 1 !important;
+      }
+    }
   </style>
 </head>
 
@@ -3901,13 +4226,29 @@
         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
           <div class="mb-3 qr-logo-row">
             <label id="label-logo">إضافة شعار داخلي:</label>
-            <input type="file" id="qr-logo" class="form-control" disabled>
-            <div class="qr-logo-note" id="logo-note">سيتم تفعيلها لاحقًا من قبل الإدارة</div>
+            <input type="file" id="qr-logo" class="form-control" accept="image/*">
+            <div id="logo-preview" class="mt-2" style="display: none; text-align: center;">
+              <img id="logo-preview-img" src="" alt="Logo Preview"
+                style="max-width: 100px; max-height: 100px; border-radius: 8px; border: 2px solid #ddd; padding: 4px; background: white;">
+              <small class="d-block text-muted mt-1" id="logo-size-note">سيظهر بحجم 50% من رمز QR | Will appear at 50%
+                of QR size</small>
+            </div>
+            <button id="remove-qr-logo" class="btn btn-sm btn-outline-danger mt-2" style="display: none;">
+              <i class="bi bi-x-circle"></i> <span id="remove-logo-text">إزالة الشعار | Remove Logo</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <button class="btn btn-outline-secondary w-100 mt-3" id="close-customizer"><span
+      <div class="row mt-3">
+        <div class="col-12">
+          <button class="btn btn-primary w-100 mb-2" id="save-qr-btn">
+            <i class="bi bi-download"></i> <span id="save-qr-text">حفظ رمز QR | Save QR Code</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-outline-secondary w-100" id="close-customizer"><span
           id="close-customizer-text">إغلاق</span></button>
     </div>
 
@@ -3942,13 +4283,10 @@
             <i class="bi bi-gear"></i>
           </button>
 
-          <button id="toggle-bilingual" class="btn btn-outline-info icon-btn" aria-label="Bilingual Mode"
-            title="Bilingual Mode" data-bilingual="true">
-            <i class="bi bi-translate"></i>
-          </button>
+          <!-- Language and Bilingual buttons removed -->
 
-          <button id="toggle-lang" class="btn btn-outline-primary icon-btn" aria-label="English" title="English">
-            <i class="bi bi-globe"></i>
+          <button id="logout-btn" class="btn btn-outline-danger" style="white-space: nowrap; display: none;">
+            <i class="bi bi-box-arrow-right"></i> <span id="logout-text">تسجيل الخروج | Logout</span>
           </button>
 
           <button id="open-code-modal-btn" class="btn btn-dark" style="white-space: nowrap;">
@@ -3963,6 +4301,9 @@
 
         <!-- Mobile: Show only essential buttons -->
         <div class="header-actions-mobile d-flex align-items-center gap-2 d-lg-none">
+          <button id="logout-btn-mobile" class="btn btn-outline-danger btn-sm" style="display: none;">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
           <button id="open-code-modal-btn-mobile" class="btn btn-dark btn-sm">
             <i class="bi bi-key"></i>
           </button>
@@ -3997,19 +4338,14 @@
             </button>
           </div>
 
-          <div class="mobile-menu-item">
-            <button id="toggle-bilingual-mobile" class="btn btn-link w-100 text-start p-0">
-              <i class="bi bi-translate me-2"></i>
-              <span id="bilingual-text-mobile">Bilingual Mode</span>
+          <div class="mobile-menu-item" id="logout-menu-item" style="display: none;">
+            <button id="logout-btn-mobile-menu" class="btn btn-link w-100 text-start p-0 text-danger">
+              <i class="bi bi-box-arrow-right me-2"></i>
+              <span id="logout-text-mobile">تسجيل الخروج | Logout</span>
             </button>
           </div>
 
-          <div class="mobile-menu-item">
-            <button id="toggle-lang-mobile" class="btn btn-link w-100 text-start p-0">
-              <i class="bi bi-globe me-2"></i>
-              <span id="lang-text-mobile">Switch Language</span>
-            </button>
-          </div>
+          <!-- Language and Bilingual mobile buttons removed -->
         </div>
       </div>
     </header>
@@ -4752,6 +5088,7 @@
     function ns(k) { return `${APP_NS}.${k}`; }
     function lsGet(k, d = null) { const v = localStorage.getItem(ns(k)); return v == null ? d : v; }
     function lsSet(k, v) { localStorage.setItem(ns(k), v); }
+    function lsRemove(k) { localStorage.removeItem(ns(k)); }
 
     // تهيئة التخزين المحلي مع Namespacing
     (function migrateLS() {
@@ -5229,7 +5566,8 @@
       size: 500,
       ecc: "M",
       margin: 4,
-      type: "canvas"
+      type: "canvas",
+      logo: null
     };
 
     // Customizer
@@ -5271,6 +5609,8 @@
       $("#mobile-menu-toggle i").removeClass("bi-x-lg").addClass("bi-list");
     });
 
+    // Language toggle handlers removed - buttons no longer exist
+    /* 
     $("#toggle-bilingual-mobile").click(function () {
       $("#toggle-bilingual").click();
       $("#mobile-menu").removeClass("show");
@@ -5282,9 +5622,84 @@
       $("#mobile-menu").removeClass("show");
       $("#mobile-menu-toggle i").removeClass("bi-x-lg").addClass("bi-list");
     });
+    */
 
     $("#open-code-modal-btn-mobile").click(function () {
       $("#open-code-modal-btn").click();
+    });
+
+    // Logout button functionality
+    function handleLogout() {
+      const lang = document.documentElement.lang;
+      const confirmMessage = lang === 'ar'
+        ? 'هل أنت متأكد من تسجيل الخروج؟ سيتم مسح جميع البيانات والصلاحيات.'
+        : 'Are you sure you want to logout? All data and permissions will be cleared.';
+
+      if (confirm(confirmMessage)) {
+        // Clear all role and subscription data from localStorage
+        lsRemove('current_verified_code');
+        lsRemove('client_name');
+        lsRemove('userRole'); // LS_ROLE
+        lsRemove('userSubs'); // LS_SUBS
+        lsRemove('currentSubId'); // LS_CUR_SUB
+        lsRemove('codeAttempts'); // LS_ATTEMPTS
+        lsRemove('codeLockUntil'); // LS_LOCK_UNTIL
+
+        // Reset role to empty (removes all admin/viewer permissions)
+        if (typeof setRole === 'function') {
+          setRole('', false); // false = don't show notification
+        }
+
+        // Hide logout buttons
+        const logoutBtn = document.getElementById('logout-btn');
+        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+        const logoutMenuItem = document.getElementById('logout-menu-item');
+
+        if (logoutBtn) logoutBtn.style.display = 'none';
+        if (logoutBtnMobile) logoutBtnMobile.style.display = 'none';
+        if (logoutMenuItem) logoutMenuItem.style.display = 'none';
+
+        // Show code input buttons
+        const codeBtn = document.getElementById('open-code-modal-btn');
+        const codeBtnMobile = document.getElementById('open-code-modal-btn-mobile');
+
+        if (codeBtn) codeBtn.style.display = '';
+        if (codeBtnMobile) codeBtnMobile.style.display = '';
+
+        // Remove client name displays if they exist
+        const clientNameDisplay = document.getElementById('client-name-display');
+        const clientNameDisplayMobile = document.getElementById('client-name-display-mobile');
+
+        if (clientNameDisplay) clientNameDisplay.remove();
+        if (clientNameDisplayMobile) clientNameDisplayMobile.remove();
+
+        // Trigger the clear button to clear all data
+        document.getElementById("clear-btn").click();
+
+        // Show success message
+        showToast(
+          lang === 'ar'
+            ? '✅ تم تسجيل الخروج وإزالة جميع الصلاحيات بنجاح'
+            : '✅ Logged out successfully. All permissions removed.',
+          'success'
+        );
+
+        // Reload page to ensure clean state
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    }
+
+    // Desktop logout button
+    $("#logout-btn").click(handleLogout);
+
+    // Mobile logout buttons
+    $("#logout-btn-mobile").click(handleLogout);
+    $("#logout-btn-mobile-menu").click(function () {
+      handleLogout();
+      $("#mobile-menu").removeClass("show");
+      $("#mobile-menu-toggle i").removeClass("bi-x-lg").addClass("bi-list");
     });
 
     // Style menu mobile handler
@@ -5380,6 +5795,13 @@
       qrCustomization.dotsColor = hex;
       qrCode.update({ dotsOptions: { color: hex } });
       pickrDots.hide();
+
+      // Update all accordion QR codes
+      for (let i = 1; i <= 3; i++) {
+        if (typeof updateAccordionQR === 'function') {
+          updateAccordionQR(i);
+        }
+      }
     });
 
     pickrBg.on('save', c => {
@@ -5388,18 +5810,41 @@
       qrCustomization.bgColor = hex;
       qrCode.update({ backgroundOptions: { color: hex } });
       pickrBg.hide();
+
+      // Update all accordion QR codes
+      for (let i = 1; i <= 3; i++) {
+        if (typeof updateAccordionQR === 'function') {
+          updateAccordionQR(i);
+        }
+      }
     });
 
     $("#dots-type").on("change", function () {
       qrOptions.dotsOptions.type = this.value;
       qrCustomization.dotsType = this.value;
       qrCode.update({ dotsOptions: { type: this.value } });
+
+      // Update all accordion QR codes
+      for (let i = 1; i <= 3; i++) {
+        if (typeof updateAccordionQR === 'function') {
+          updateAccordionQR(i);
+        }
+      }
     });
 
     $("#qr-ecc").on("change", function () {
       qrOptions.qrOptions = { errorCorrectionLevel: this.value };
       qrCustomization.ecc = this.value;
       qrCode.update({ qrOptions: qrOptions.qrOptions });
+
+      // Update all accordion QR codes (only if no logo, otherwise use 'H')
+      if (!qrCustomization.logo) {
+        for (let i = 1; i <= 3; i++) {
+          if (typeof updateAccordionQR === 'function') {
+            updateAccordionQR(i);
+          }
+        }
+      }
     });
 
     $("#qr-type").on("change", function () {
@@ -5420,6 +5865,144 @@
       qrOptions.width = qrOptions.height = s;
       qrCustomization.size = s;
       qrCode.update({ width: s, height: s });
+    });
+
+    // QR Logo upload functionality
+    $("#qr-logo").on("change", function (e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const logoUrl = event.target.result;
+          qrCustomization.logo = logoUrl;
+
+          // Preload image to ensure it's ready before adding to QR
+          const img = new Image();
+          img.onload = function () {
+            // Update QR code with logo after image is loaded
+            qrCode.update({
+              image: logoUrl,
+              imageOptions: {
+                hideBackgroundDots: true,
+                imageSize: 0.5,
+                margin: 6,
+                crossOrigin: "anonymous"
+              },
+              // Increase error correction for better readability with logo
+              qrOptions: {
+                errorCorrectionLevel: "H"
+              }
+            });
+
+            // Show logo preview
+            $("#logo-preview-img").attr('src', logoUrl);
+            $("#logo-preview").show();
+
+            // Show remove button
+            $("#remove-qr-logo").show();
+
+            // Update all accordion QR codes with the logo
+            for (let i = 1; i <= 3; i++) {
+              if (typeof updateAccordionQR === 'function') {
+                updateAccordionQR(i);
+              }
+            }
+
+            // Show success message
+            const lang = document.documentElement.lang;
+            showToast(
+              lang === 'ar' ? '✅ تم إضافة الشعار بنجاح' : '✅ Logo added successfully',
+              'success'
+            );
+          };
+          img.onerror = function () {
+            const lang = document.documentElement.lang;
+            showToast(
+              lang === 'ar' ? '❌ فشل تحميل الصورة' : '❌ Failed to load image',
+              'danger'
+            );
+          };
+          img.src = logoUrl;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Remove logo button
+    $("#remove-qr-logo").on("click", function () {
+      qrCustomization.logo = null;
+      $("#qr-logo").val('');
+
+      // Update QR code without logo and restore original error correction
+      const currentEcc = $("#qr-ecc").val() || 'M';
+      const updateObj = {
+        qrOptions: {
+          errorCorrectionLevel: currentEcc
+        }
+      };
+      // Remove image and imageOptions by not including them
+      qrCode.update(updateObj);
+
+      // Hide logo preview and remove button
+      $("#logo-preview").hide();
+      $("#logo-preview-img").attr('src', '');
+      $(this).hide();
+
+      // Update all accordion QR codes to remove the logo
+      for (let i = 1; i <= 3; i++) {
+        if (typeof updateAccordionQR === 'function') {
+          updateAccordionQR(i);
+        }
+      }
+
+      // Show success message
+      const lang = document.documentElement.lang;
+      showToast(
+        lang === 'ar' ? '✅ تم إزالة الشعار' : '✅ Logo removed',
+        'success'
+      );
+    });
+
+    // Save QR Code button
+    $("#save-qr-btn").on("click", function () {
+      const lang = document.documentElement.lang;
+
+      // Check if QR has data
+      if (!qrCode._options.data || qrCode._options.data.trim() === '') {
+        showToast(
+          lang === 'ar'
+            ? '⚠️ الرجاء إدخال بيانات لإنشاء رمز QR أولاً'
+            : '⚠️ Please enter data to generate QR code first',
+          'warning'
+        );
+        return;
+      }
+
+      // Generate filename with timestamp
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+      const extension = qrCustomization.type === 'svg' ? 'svg' : 'png';
+      const filename = `QR-Code-${timestamp}.${extension}`;
+
+      // Download QR code
+      qrCode.download({
+        name: filename,
+        extension: extension
+      }).then(() => {
+        showToast(
+          lang === 'ar'
+            ? '✅ تم حفظ رمز QR بنجاح'
+            : '✅ QR Code saved successfully',
+          'success'
+        );
+      }).catch((error) => {
+        console.error('Download error:', error);
+        showToast(
+          lang === 'ar'
+            ? '❌ حدث خطأ أثناء الحفظ'
+            : '❌ Error occurred while saving',
+          'danger'
+        );
+      });
     });
 
     // Gender style
@@ -5483,19 +6066,44 @@
     };
 
     function initAccordionQR(id) {
+      const el = document.getElementById(`accordion-qr-${id}`);
+      if (!el) {
+        console.error(`Element accordion-qr-${id} not found`);
+        return;
+      }
+
+      // Clear any existing content
+      el.innerHTML = '';
+
       const opts = {
         width: 150,
         height: 150,
         type: "canvas",
         data: "",
-        qrOptions: { errorCorrectionLevel: "M" },
-        margin: 4,
-        dotsOptions: { color: "#000", type: "rounded" },
-        backgroundOptions: { color: "#fff" }
+        qrOptions: { errorCorrectionLevel: qrCustomization.logo ? 'H' : qrCustomization.ecc },
+        margin: qrCustomization.margin,
+        dotsOptions: { color: qrCustomization.dotsColor, type: qrCustomization.dotsType },
+        backgroundOptions: { color: qrCustomization.bgColor }
       };
 
-      accordionData[id].qr = new QRCodeStyling(opts);
-      accordionData[id].qr.append(document.getElementById(`accordion-qr-${id}`));
+      // Add logo if available
+      if (qrCustomization.logo) {
+        opts.image = qrCustomization.logo;
+        opts.imageOptions = {
+          hideBackgroundDots: true,
+          imageSize: 0.5,
+          margin: 6,
+          crossOrigin: "anonymous"
+        };
+      }
+
+      try {
+        accordionData[id].qr = new QRCodeStyling(opts);
+        accordionData[id].qr.append(el);
+        el.style.display = 'none'; // Hidden until data is added
+      } catch (error) {
+        console.error(`Error initializing QR for accordion ${id}:`, error);
+      }
     }
 
     function updateAccordionQR(id) {
@@ -5507,29 +6115,81 @@
       const data = accordionData[id];
       let qrContent = '';
 
-      if (id === 2 && data.table.length > 0) {
-        data.table.forEach(row => {
-          if (row.title || row.value) qrContent += `${row.title}: ${row.value}\n`;
-        });
+      // Accordion 2: Collect content from table, text, and comment
+      if (id === 2) {
+        if (data.table.length > 0) {
+          data.table.forEach(row => {
+            if (row.title || row.value) qrContent += `${row.title}: ${row.value}\n`;
+          });
+        }
+
+        if (data.text) {
+          qrContent += data.text;
+        }
+
+        // If no other content but comment exists, use comment as QR content
+        if (!qrContent.trim() && data.comment) {
+          qrContent = data.comment;
+        }
       }
 
-      if (id === 2 && data.text) {
-        qrContent += data.text;
+      // Accordion 3: Use comment as QR content
+      if (id === 3) {
+        if (data.comment) {
+          qrContent = data.comment;
+        }
       }
 
       const el = document.getElementById(`accordion-qr-${id}`);
-      if (qrContent) {
-        accordionData[id].qr.update({
-          data: qrContent,
+      if (!el) return;
+
+      // Initialize QR if it doesn't exist
+      if (!accordionData[id].qr) {
+        initAccordionQR(id);
+      }
+
+      if (qrContent.trim()) {
+        const updateOptions = {
+          data: qrContent.trim(),
           dotsOptions: { color: qrCustomization.dotsColor, type: qrCustomization.dotsType },
           backgroundOptions: { color: qrCustomization.bgColor },
-          qrOptions: { errorCorrectionLevel: qrCustomization.ecc },
+          qrOptions: { errorCorrectionLevel: qrCustomization.logo ? 'H' : qrCustomization.ecc },
           margin: qrCustomization.margin
-        });
-        el.style.display = 'block';
+        };
+
+        // Add logo if available - only add image and imageOptions if logo exists
+        if (qrCustomization.logo) {
+          updateOptions.image = qrCustomization.logo;
+          updateOptions.imageOptions = {
+            hideBackgroundDots: true,
+            imageSize: 0.5,
+            margin: 6,
+            crossOrigin: "anonymous"
+          };
+        }
+        // Don't add image or imageOptions if no logo - library expects them to be absent, not undefined
+
+        if (accordionData[id] && accordionData[id].qr) {
+          try {
+            accordionData[id].qr.update(updateOptions);
+            el.style.display = 'block';
+            el.style.visibility = 'visible';
+            el.style.opacity = '1';
+          } catch (error) {
+            console.error(`Error updating QR for accordion ${id}:`, error);
+            // Try to recreate QR if update fails
+            el.innerHTML = '';
+            initAccordionQR(id);
+            if (accordionData[id].qr) {
+              accordionData[id].qr.update(updateOptions);
+              el.style.display = 'block';
+              el.style.visibility = 'visible';
+            }
+          }
+        }
       }
       else {
-        el.style.display = 'none';
+        if (el) el.style.display = 'none';
       }
 
       const commentEl = document.getElementById(`accordion-qr-comment-${id}`);
@@ -5797,15 +6457,63 @@
         return;
       }
 
-      accordionData[1].qr.update({
+      const updateOptions = {
         data: content,
         dotsOptions: { color: qrCustomization.dotsColor, type: qrCustomization.dotsType },
         backgroundOptions: { color: qrCustomization.bgColor },
-        qrOptions: { errorCorrectionLevel: qrCustomization.ecc },
+        qrOptions: { errorCorrectionLevel: qrCustomization.logo ? 'H' : qrCustomization.ecc },
         margin: qrCustomization.margin
-      });
+      };
 
-      if (qrEl) qrEl.style.display = 'block';
+      // Add logo if available - only add image and imageOptions if logo exists
+      if (qrCustomization.logo) {
+        updateOptions.image = qrCustomization.logo;
+        updateOptions.imageOptions = {
+          hideBackgroundDots: true,
+          imageSize: 0.5,
+          margin: 6,
+          crossOrigin: "anonymous"
+        };
+      }
+      // Don't add image or imageOptions if no logo - library expects them to be absent, not undefined
+
+      // Initialize QR if it doesn't exist
+      if (!accordionData[1].qr) {
+        initAccordionQR(1);
+      }
+
+      // Update QR code - this should work with or without logo
+      if (accordionData[1].qr) {
+        try {
+          accordionData[1].qr.update(updateOptions);
+          // Force show the QR element
+          if (qrEl) {
+            qrEl.style.display = 'block';
+            qrEl.style.visibility = 'visible';
+            qrEl.style.opacity = '1';
+          }
+        } catch (error) {
+          console.error('Error updating QR code:', error);
+          // If update fails, try to recreate the QR
+          if (qrEl) {
+            qrEl.innerHTML = '';
+            initAccordionQR(1);
+            if (accordionData[1].qr) {
+              accordionData[1].qr.update(updateOptions);
+              qrEl.style.display = 'block';
+              qrEl.style.visibility = 'visible';
+            }
+          }
+        }
+      } else if (qrEl) {
+        // If QR doesn't exist, initialize it
+        initAccordionQR(1);
+        if (accordionData[1].qr) {
+          accordionData[1].qr.update(updateOptions);
+          qrEl.style.display = 'block';
+          qrEl.style.visibility = 'visible';
+        }
+      }
 
       const c = accordionData[1].comment;
       if (c) {
@@ -5848,6 +6556,13 @@
         }
 
         if (data.text) qrContent += data.text;
+      }
+
+      if (id === 3) {
+        // Accordion 3: Use comment as QR content
+        if (data.comment) {
+          qrContent = data.comment;
+        }
       }
 
       return qrContent;
@@ -6180,46 +6895,135 @@
 
     // ===== Clear Button =====
     document.getElementById("clear-btn").addEventListener("click", () => {
-      document.querySelectorAll("input, textarea").forEach(e => e.value = "");
-      document.getElementById("qr-preview").innerHTML = "";
-      document.getElementById("vcard-phones").innerHTML = "";
-      document.getElementById("main-content-preview").innerHTML = "";
-      document.getElementById("qr-comment-show").textContent = "";
+      // Clear all text inputs and textareas
+      document.querySelectorAll("input[type='text'], input[type='email'], input[type='tel'], input[type='url'], input[type='password'], input[type='number'], textarea").forEach(e => e.value = "");
 
+      // Clear all file inputs
+      document.querySelectorAll("input[type='file']").forEach(e => e.value = "");
+
+      // Clear all date inputs
+      document.querySelectorAll("input[type='date']").forEach(e => e.value = "");
+
+      // Clear all checkboxes
+      document.querySelectorAll("input[type='checkbox']").forEach(e => e.checked = false);
+
+      // Clear all radio buttons
+      document.querySelectorAll("input[type='radio']").forEach(e => e.checked = false);
+
+      // Clear all select dropdowns
+      document.querySelectorAll("select").forEach(e => e.selectedIndex = 0);
+
+      // Clear QR preview areas
+      const qrPreview = document.getElementById("qr-preview");
+      if (qrPreview) qrPreview.innerHTML = "";
+
+      const vcardPhones = document.getElementById("vcard-phones");
+      if (vcardPhones) vcardPhones.innerHTML = "";
+
+      const mainContentPreview = document.getElementById("main-content-preview");
+      if (mainContentPreview) mainContentPreview.innerHTML = "";
+
+      const qrCommentShow = document.getElementById("qr-comment-show");
+      if (qrCommentShow) qrCommentShow.textContent = "";
+
+      // Clear all accordion data
       for (let i = 1; i <= 3; i++) {
         accordionData[i] = { image: '', text: '', table: [], comment: '', qr: accordionData[i].qr };
-        document.querySelector(`.accordion-image-preview[data-accordion="${i}"]`).innerHTML = '';
-        document.querySelector(`.accordion-table[data-accordion="${i}"] tbody`).innerHTML = '';
-        document.getElementById(`accordion-qr-${i}`).style.display = 'none';
-        document.getElementById(`accordion-qr-comment-${i}`).style.display = 'none';
+
+        const imagePreview = document.querySelector(`.accordion-image-preview[data-accordion="${i}"]`);
+        if (imagePreview) imagePreview.innerHTML = '';
+
+        const tableBody = document.querySelector(`.accordion-table[data-accordion="${i}"] tbody`);
+        if (tableBody) tableBody.innerHTML = '';
+
+        const qrEl = document.getElementById(`accordion-qr-${i}`);
+        if (qrEl) qrEl.style.display = 'none';
+
+        const commentEl = document.getElementById(`accordion-qr-comment-${i}`);
+        if (commentEl) commentEl.style.display = 'none';
       }
 
+      // Clear general cards
       generalCards.length = 0;
-      document.getElementById("accordion1-cards-container").innerHTML = "";
+      const cardsContainer = document.getElementById("accordion1-cards-container");
+      if (cardsContainer) cardsContainer.innerHTML = "";
       cardColorIndex = 0;
 
-      document.getElementById("social-accounts").innerHTML = "";
-      document.getElementById("social-qrs").innerHTML = "";
+      // Clear saved general cards from localStorage
+      lsRemove('a1_saved');
 
-      qrCode.update({ data: "" });
-      updateGeneralAccordionQr();
-      document.getElementById('qr-result-fields').style.display = 'none';
+      // Clear cart data
+      if (typeof cart !== 'undefined') {
+        cart.length = 0;
+        lsRemove('cart');
+        if (typeof updateCartBadge === 'function') {
+          updateCartBadge();
+        }
+      }
 
-      // ✅ إعادة الإعدادات الافتراضية للـ QR + الألوان
-      pickrDots.setColor('#000'); pickrBg.setColor('#fff');
-      qrCustomization.dotsColor = '#000';
-      qrCustomization.bgColor = '#fff';
-      qrCustomization.dotsType = 'rounded';
-      qrCustomization.ecc = 'M';
-      qrCustomization.margin = 4;
-      qrCustomization.size = 500;
-      qrCode.update({
-        width: 500, height: 500, data: '',
-        dotsOptions: { color: '#000', type: 'rounded' },
-        backgroundOptions: { color: '#fff' },
-        qrOptions: { errorCorrectionLevel: 'M' },
-        margin: 4
-      });
+      // Clear social accounts
+      const socialAccounts = document.getElementById("social-accounts");
+      if (socialAccounts) socialAccounts.innerHTML = "";
+
+      const socialQrs = document.getElementById("social-qrs");
+      if (socialQrs) socialQrs.innerHTML = "";
+
+      // Clear logo
+      const qrLogoInput = document.getElementById("qr-logo");
+      if (qrLogoInput) qrLogoInput.value = '';
+      const removeLogoBtn = document.getElementById("remove-qr-logo");
+      if (removeLogoBtn) removeLogoBtn.style.display = 'none';
+      const logoPreview = document.getElementById("logo-preview");
+      if (logoPreview) logoPreview.style.display = 'none';
+      const logoPreviewImg = document.getElementById("logo-preview-img");
+      if (logoPreviewImg) logoPreviewImg.src = '';
+
+      // Update main QR code
+      if (typeof qrCode !== 'undefined' && qrCode) {
+        // Clear QR - don't include image or imageOptions
+        qrCode.update({
+          data: ""
+        });
+      }
+
+      if (typeof updateGeneralAccordionQr === 'function') {
+        updateGeneralAccordionQr();
+      }
+
+      const qrResultFields = document.getElementById('qr-result-fields');
+      if (qrResultFields) qrResultFields.style.display = 'none';
+
+      // Reset QR customization to defaults
+      if (typeof pickrDots !== 'undefined' && pickrDots) {
+        pickrDots.setColor('#000');
+      }
+      if (typeof pickrBg !== 'undefined' && pickrBg) {
+        pickrBg.setColor('#fff');
+      }
+
+      if (typeof qrCustomization !== 'undefined') {
+        qrCustomization.dotsColor = '#000';
+        qrCustomization.bgColor = '#fff';
+        qrCustomization.dotsType = 'rounded';
+        qrCustomization.ecc = 'M';
+        qrCustomization.margin = 4;
+        qrCustomization.size = 500;
+        qrCustomization.logo = null;
+      }
+
+      if (typeof qrCode !== 'undefined' && qrCode) {
+        qrCode.update({
+          width: 500, height: 500, data: '',
+          dotsOptions: { color: '#000', type: 'rounded' },
+          backgroundOptions: { color: '#fff' },
+          qrOptions: { errorCorrectionLevel: 'M' },
+          margin: 4
+          // Don't include image or imageOptions when clearing
+        });
+      }
+
+      // Show success toast
+      showToast(document.documentElement.lang === 'ar' ? '✅ تم مسح جميع البيانات بنجاح' : '✅ All data cleared successfully', 'success');
     });
 
     // ===== Product Search Functionality =====
@@ -6436,7 +7240,9 @@
         "label-margin": "الحواف (Quiet Zone):",
         "label-qr-size": "حجم QR:",
         "label-logo": "إضافة شعار داخلي:",
-        "logo-note": "سيتم تفعيلها لاحقًا من قبل الإدارة",
+        "remove-logo-text": "إزالة الشعار",
+        "logo-size-note": "سيظهر بحجم 50% من رمز QR",
+        "save-qr-text": "حفظ رمز QR",
         "close-customizer-text": "إغلاق",
         "enter-code-text": "إدخال الكود",
         "alert-text": "مولد رمز QR متعدد الاستخدامات، يدعم العربية والإنجليزية.<br>التحديث فوري بدون زر توليد.",
@@ -6555,7 +7361,9 @@
         "label-margin": "Margin (Quiet Zone):",
         "label-qr-size": "QR Size:",
         "label-logo": "Add Internal Logo:",
-        "logo-note": "Will be activated later by administration",
+        "remove-logo-text": "Remove Logo",
+        "logo-size-note": "Will appear at 50% of QR size",
+        "save-qr-text": "Save QR Code",
         "close-customizer-text": "Close",
         "enter-code-text": "Enter Code",
         "alert-text": "Multi-purpose QR generator, supports Arabic and English.<br>Real-time update without generate button.",
@@ -6847,7 +7655,7 @@
       });
     }
 
-    document.getElementById("toggle-lang").addEventListener("click", function () {
+    document.getElementById("toggle-lang")?.addEventListener("click", function () {
       this.classList.remove('animate-pop'); void this.offsetWidth; this.classList.add('animate-pop');
       const lang = document.documentElement.lang === "ar" ? "en" : "ar";
       setLanguage(lang);
@@ -6862,7 +7670,7 @@
           e.target.value = '';
           return;
         }
-        const accordionId = e.target.getAttribute('data-accordion');
+        const accordionId = parseInt(e.target.getAttribute('data-accordion'));
         const file = e.target.files[0];
         const previewEl = document.querySelector(`.accordion-image-preview[data-accordion="${accordionId}"]`);
 
@@ -6884,15 +7692,15 @@
 
     document.addEventListener('input', function (e) {
       if (e.target && e.target.classList.contains('accordion-text')) {
-        const accordionId = e.target.getAttribute('data-accordion');
-        accordionData[accordionId].text = e.target.value;
+        const accordionId = parseInt(e.target.getAttribute('data-accordion'));
+        accordionData[accordionId].text = e.target.value.trim();
         updateAccordionQR(accordionId);
       }
     });
 
     document.addEventListener('input', function (e) {
       if (e.target && e.target.classList.contains('accordion-comment')) {
-        const accordionId = e.target.getAttribute('data-accordion');
+        const accordionId = parseInt(e.target.getAttribute('data-accordion'));
         accordionData[accordionId].comment = e.target.value;
         updateAccordionQR(accordionId);
       }
@@ -6905,7 +7713,7 @@
           showToast(document.documentElement.lang === 'ar' ? 'غير مُصرّح للمشاهد.' : 'Not allowed for viewer.', 'danger');
           return;
         }
-        const accordionId = e.target.closest('.accordion-add-row').getAttribute('data-accordion');
+        const accordionId = parseInt(e.target.closest('.accordion-add-row').getAttribute('data-accordion'));
         const table = document.querySelector(`.accordion-table[data-accordion="${accordionId}"] tbody`);
 
         table.innerHTML += `
@@ -6923,7 +7731,7 @@
           return;
         }
         const row = e.target.closest('tr');
-        const accordionId = row.closest('.accordion-table').getAttribute('data-accordion');
+        const accordionId = parseInt(row.closest('.accordion-table').getAttribute('data-accordion'));
         row.remove();
         updateTableData(accordionId);
         updateAccordionQR(accordionId);
@@ -6932,7 +7740,7 @@
 
     document.addEventListener('input', function (e) {
       if (e.target && (e.target.classList.contains('desc-title') || e.target.classList.contains('desc-value'))) {
-        const accordionId = e.target.closest('.accordion-table').getAttribute('data-accordion');
+        const accordionId = parseInt(e.target.closest('.accordion-table').getAttribute('data-accordion'));
         updateTableData(accordionId);
         updateAccordionQR(accordionId);
       }
@@ -6955,28 +7763,41 @@
       let html = '';
       const lang = document.documentElement.lang;
 
-      // === Accordions ===
-      html += generateAccordionReport();
+      // === Main Content Section (Accordions) ===
+      const accordionHtml = generateAccordionReport();
+      if (accordionHtml) {
+        html += `<div class="report-main-section">`;
+        html += `<div class="report-section-header">`;
+        html += `<h3><i class="bi bi-file-text"></i> ${lang === "ar" ? "المحتوى الرئيسي" : "Main Content"}</h3>`;
+        html += `</div>`;
+        html += accordionHtml;
+        html += `</div>`;
+      }
+
+      // === Quick Links & Connections Section ===
+      let quickLinksHtml = '';
+      let hasQuickLinks = false;
 
       // === URL ===
       let rawUrl = document.getElementById('qr-input-url').value.trim();
       let url = normalizeUrl(rawUrl);
 
       if (url) {
+        hasQuickLinks = true;
         const title = lang === "ar" ? "الرابط" : "URL";
         const safeUrl = esc(url);
 
-        html += `<div class="report-tab-section">`;
-        html += `<h4><i class="bi bi-link-45deg"></i> ${title}</h4>`;
-        html += `<div class="report-content-card">`;
-        html += `<div class="report-info-item"><strong>${lang === "ar" ? "الرابط" : "URL"}</strong><span><a href="${safeUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: none;">${safeUrl}</a></span></div>`;
-        html += `</div>`;
-        html += `<div class="report-qr-container"><div class="report-qr" id="url-report-qr"></div></div>`;
+        quickLinksHtml += `<div class="report-tab-section">`;
+        quickLinksHtml += `<h4><i class="bi bi-link-45deg"></i> ${title}</h4>`;
+        quickLinksHtml += `<div class="report-content-card">`;
+        quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "الرابط" : "URL"}</strong><span><a href="${safeUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: none;">${safeUrl}</a></span></div>`;
+        quickLinksHtml += `</div>`;
+        quickLinksHtml += `<div class="report-qr-container"><div class="report-qr" id="url-report-qr"></div></div>`;
 
         const urlComment = esc(document.getElementById("url-comment").value || '');
-        if (urlComment) html += `<div class="report-comment">${urlComment}</div>`;
+        if (urlComment) quickLinksHtml += `<div class="report-comment">${urlComment}</div>`;
 
-        html += `</div>`;
+        quickLinksHtml += `</div>`;
       }
 
       // === Wi-Fi ===
@@ -6988,23 +7809,24 @@
       const wifiPayload = (ssid && (wtype === 'nopass' || pwd)) ? buildWifiString() : '';
 
       if (wifiPayload) {
+        hasQuickLinks = true;
         const title = "Wi-Fi";
 
-        html += `<div class="report-tab-section">`;
-        html += `<h4><i class="bi bi-wifi"></i> ${title}</h4>`;
-        html += `<div class="report-content-card">`;
-        html += `<div class="report-info-grid">`;
-        html += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "SSID"}</strong><span>${esc(ssid)}</span></div>`;
-        html += `<div class="report-info-item"><strong>${lang === "ar" ? "كلمة المرور" : "Password"}</strong><span>${esc(wtype === 'nopass' ? (lang === "ar" ? "بدون كلمة مرور" : "No Password") : pwd)}</span></div>`;
-        html += `<div class="report-info-item"><strong>${lang === "ar" ? "النوع" : "Type"}</strong><span>${esc(wtype)}</span></div>`;
-        html += `<div class="report-info-item"><strong>${lang === "ar" ? "مخفي" : "Hidden"}</strong><span>${hidden ? (lang === "ar" ? "نعم" : "Yes") : (lang === "ar" ? "لا" : "No")}</span></div>`;
-        html += `</div></div>`;
-        html += `<div class="report-qr-container"><div class="report-qr" id="wifi-report-qr"></div></div>`;
+        quickLinksHtml += `<div class="report-tab-section">`;
+        quickLinksHtml += `<h4><i class="bi bi-wifi"></i> ${title}</h4>`;
+        quickLinksHtml += `<div class="report-content-card">`;
+        quickLinksHtml += `<div class="report-info-grid">`;
+        quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "SSID"}</strong><span>${esc(ssid)}</span></div>`;
+        quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "كلمة المرور" : "Password"}</strong><span>${esc(wtype === 'nopass' ? (lang === "ar" ? "بدون كلمة مرور" : "No Password") : pwd)}</span></div>`;
+        quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "النوع" : "Type"}</strong><span>${esc(wtype)}</span></div>`;
+        quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "مخفي" : "Hidden"}</strong><span>${hidden ? (lang === "ar" ? "نعم" : "Yes") : (lang === "ar" ? "لا" : "No")}</span></div>`;
+        quickLinksHtml += `</div></div>`;
+        quickLinksHtml += `<div class="report-qr-container"><div class="report-qr" id="wifi-report-qr"></div></div>`;
 
         const wifiComment = esc(document.getElementById("wifi-comment").value || '');
-        if (wifiComment) html += `<div class="report-comment">${wifiComment}</div>`;
+        if (wifiComment) quickLinksHtml += `<div class="report-comment">${wifiComment}</div>`;
 
-        html += `</div>`;
+        quickLinksHtml += `</div>`;
       }
 
       // === vCard ===
@@ -7023,29 +7845,40 @@
       const vHas = vName || vTitle || vEmail || vOrg || vNote || vPhones.length;
 
       if (vHas) {
+        hasQuickLinks = true;
         const title = lang === "ar" ? "بطاقة vCard" : "vCard";
 
-        html += `<div class="report-tab-section">`;
-        html += `<h4><i class="bi bi-person-badge"></i> ${title}</h4>`;
-        html += `<div class="report-content-card">`;
-        html += `<div class="report-info-grid">`;
+        quickLinksHtml += `<div class="report-tab-section">`;
+        quickLinksHtml += `<h4><i class="bi bi-person-badge"></i> ${title}</h4>`;
+        quickLinksHtml += `<div class="report-content-card">`;
+        quickLinksHtml += `<div class="report-info-grid">`;
 
-        if (vName) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "Name"}</strong><span>${esc(vName)}</span></div>`;
-        if (vTitle) html += `<div class="report-info-item"><strong>${lang === "ar" ? "المسمى" : "Title"}</strong><span>${esc(vTitle)}</span></div>`;
-        if (vEmail) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الإيميل" : "Email"}</strong><span><a href="mailto:${esc(vEmail)}" style="color: #667eea; text-decoration: none;">${esc(vEmail)}</a></span></div>`;
-        if (vOrg) html += `<div class="report-info-item"><strong>${lang === "ar" ? "الشركة" : "Company"}</strong><span>${esc(vOrg)}</span></div>`;
-        if (vNote) html += `<div class="report-info-item" style="grid-column: 1 / -1;"><strong>${lang === "ar" ? "ملاحظة" : "Note"}</strong><span>${esc(vNote)}</span></div>`;
+        if (vName) quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "الاسم" : "Name"}</strong><span>${esc(vName)}</span></div>`;
+        if (vTitle) quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "المسمى" : "Title"}</strong><span>${esc(vTitle)}</span></div>`;
+        if (vEmail) quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "الإيميل" : "Email"}</strong><span><a href="mailto:${esc(vEmail)}" style="color: #667eea; text-decoration: none;">${esc(vEmail)}</a></span></div>`;
+        if (vOrg) quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "الشركة" : "Company"}</strong><span>${esc(vOrg)}</span></div>`;
+        if (vNote) quickLinksHtml += `<div class="report-info-item" style="grid-column: 1 / -1;"><strong>${lang === "ar" ? "ملاحظة" : "Note"}</strong><span>${esc(vNote)}</span></div>`;
 
         vPhones.forEach((ph, idx) => {
-          html += `<div class="report-info-item"><strong>${lang === "ar" ? "هاتف" : "Phone"} ${vPhones.length > 1 ? (idx + 1) : ""}</strong><span><a href="tel:${esc(ph)}" style="color: #667eea; text-decoration: none;">${esc(ph)}</a></span></div>`;
+          quickLinksHtml += `<div class="report-info-item"><strong>${lang === "ar" ? "هاتف" : "Phone"} ${vPhones.length > 1 ? (idx + 1) : ""}</strong><span><a href="tel:${esc(ph)}" style="color: #667eea; text-decoration: none;">${esc(ph)}</a></span></div>`;
         });
 
-        html += `</div></div>`;
-        html += `<div class="report-qr-container"><div class="report-qr" id="vcard-report-qr"></div></div>`;
+        quickLinksHtml += `</div></div>`;
+        quickLinksHtml += `<div class="report-qr-container"><div class="report-qr" id="vcard-report-qr"></div></div>`;
 
         const vComment = esc(document.getElementById("vcard-comment").value || '');
-        if (vComment) html += `<div class="report-comment">${vComment}</div>`;
+        if (vComment) quickLinksHtml += `<div class="report-comment">${vComment}</div>`;
 
+        quickLinksHtml += `</div>`;
+      }
+
+      // Add Quick Links Section if it has content
+      if (hasQuickLinks) {
+        html += `<div class="report-main-section">`;
+        html += `<div class="report-section-header">`;
+        html += `<h3><i class="bi bi-link-45deg"></i> ${lang === "ar" ? "الروابط السريعة والاتصالات" : "Quick Links & Connections"}</h3>`;
+        html += `</div>`;
+        html += quickLinksHtml;
         html += `</div>`;
       }
 
@@ -7058,8 +7891,12 @@
       });
 
       if (socials.length) {
-        const title = lang === "ar" ? "وسائل التواصل" : "Social Media";
+        html += `<div class="report-main-section">`;
+        html += `<div class="report-section-header">`;
+        html += `<h3><i class="bi bi-share"></i> ${lang === "ar" ? "وسائل التواصل الاجتماعي" : "Social Media"}</h3>`;
+        html += `</div>`;
 
+        const title = lang === "ar" ? "وسائل التواصل" : "Social Media";
         html += `<div class="report-tab-section">`;
         html += `<h4><i class="bi bi-share"></i> ${title}</h4>`;
         html += `<div class="report-social-grid">`;
@@ -7083,6 +7920,7 @@
 
         const socialComment = esc(document.getElementById("social-comment").value || '');
         html += `</div>${socialComment ? `<div class="report-comment">${socialComment}</div>` : ''}</div>`;
+        html += `</div>`;
       }
 
       // --- A2 wrapper with fixed header/footer on print ---
@@ -7124,26 +7962,47 @@
           host.innerHTML = '';
           const size = big ? 250 : 150;
 
-          const qr = new QRCodeStyling({
+          const qrOptions = {
             width: size,
             height: size,
             type: "canvas",
             data,
             dotsOptions: { color: qrCustomization.dotsColor, type: qrCustomization.dotsType },
             backgroundOptions: { color: qrCustomization.bgColor },
-            qrOptions: { errorCorrectionLevel: qrCustomization.ecc },
+            qrOptions: { errorCorrectionLevel: qrCustomization.logo ? 'H' : qrCustomization.ecc },
             margin: qrCustomization.margin
-          });
+          };
 
+          // Add logo if available
+          if (qrCustomization.logo) {
+            qrOptions.image = qrCustomization.logo;
+            qrOptions.imageOptions = {
+              hideBackgroundDots: true,
+              imageSize: 0.5,
+              margin: 6,
+              crossOrigin: "anonymous"
+            };
+          }
+
+          const qr = new QRCodeStyling(qrOptions);
           qr.append(host);
         };
 
         // أكورديونات
         if (document.querySelector('#report-accordion-qr-1')) {
-          appendQR('#report-accordion-qr-1', getAccordionQRData(1), true);
+          const accordion1Data = getAccordionQRData(1);
+          if (accordion1Data) {
+            appendQR('#report-accordion-qr-1', accordion1Data, true);
+          }
         }
-        appendQR('#report-accordion-qr-2', getAccordionQRData(2), true);
-        appendQR('#report-accordion-qr-3', getAccordionQRData(3), true);
+        const accordion2Data = getAccordionQRData(2);
+        if (accordion2Data && document.querySelector('#report-accordion-qr-2')) {
+          appendQR('#report-accordion-qr-2', accordion2Data, true);
+        }
+        const accordion3Data = getAccordionQRData(3);
+        if (accordion3Data && document.querySelector('#report-accordion-qr-3')) {
+          appendQR('#report-accordion-qr-3', accordion3Data, true);
+        }
 
         // URL / Wi-Fi / vCard
         appendQR('#url-report-qr', url, true);
@@ -7172,17 +8031,29 @@
           if (!link) return;
 
           container.innerHTML = '';
-          const qr = new QRCodeStyling({
+          const qrOptions = {
             width: 150,
             height: 150,
             type: 'canvas',
             data: link,
             dotsOptions: { color: qrCustomization.dotsColor, type: qrCustomization.dotsType },
             backgroundOptions: { color: qrCustomization.bgColor },
-            qrOptions: { errorCorrectionLevel: qrCustomization.ecc },
+            qrOptions: { errorCorrectionLevel: qrCustomization.logo ? 'H' : qrCustomization.ecc },
             margin: qrCustomization.margin
-          });
+          };
 
+          // Add logo if available
+          if (qrCustomization.logo) {
+            qrOptions.image = qrCustomization.logo;
+            qrOptions.imageOptions = {
+              hideBackgroundDots: true,
+              imageSize: 0.5,
+              margin: 6,
+              crossOrigin: "anonymous"
+            };
+          }
+
+          const qr = new QRCodeStyling(qrOptions);
           qr.append(container);
         });
 
@@ -7998,13 +8869,22 @@
       const codeBtn = document.getElementById('open-code-modal-btn');
       const codeBtnMobile = document.getElementById('open-code-modal-btn-mobile');
 
-      // Hide the buttons
+      // Hide the code input buttons
       if (codeBtn) {
         codeBtn.style.display = 'none';
       }
       if (codeBtnMobile) {
         codeBtnMobile.style.display = 'none';
       }
+
+      // Show logout buttons
+      const logoutBtn = document.getElementById('logout-btn');
+      const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+      const logoutMenuItem = document.getElementById('logout-menu-item');
+
+      if (logoutBtn) logoutBtn.style.display = '';
+      if (logoutBtnMobile) logoutBtnMobile.style.display = '';
+      if (logoutMenuItem) logoutMenuItem.style.display = '';
 
       // Check if client name display already exists
       let clientNameDisplay = document.getElementById('client-name-display');
