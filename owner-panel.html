@@ -508,6 +508,17 @@
       box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
     }
 
+    .btn-delete {
+      background: #e53e3e;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background: #c53030;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(229, 62, 62, 0.4);
+    }
+
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
@@ -806,6 +817,7 @@
       font-weight: 800;
       font-size: 1.5rem;
       background: var(--primary-gradient);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
@@ -1014,6 +1026,143 @@
     .mobile-nav-item.btn-logout-nav.active {
       color: #f56565;
       background: rgba(245, 101, 101, 0.1);
+    }
+
+    /* Settings Tab */
+    .settings-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(102, 126, 234, 0.08);
+      height: 100%;
+    }
+
+    .settings-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .settings-card-header i {
+      font-size: 1.6rem;
+      color: #667eea;
+    }
+
+    .brand-logo-preview {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-lg);
+      border: 2px dashed #cbd5e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #f8fafc;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .brand-logo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .brand-logo-preview.has-logo {
+      border-style: solid;
+      background: #fff;
+    }
+
+    .brand-logo-preview.has-logo img {
+      display: block;
+    }
+
+    .brand-logo-preview .placeholder {
+      color: #a0aec0;
+      font-size: 0.85rem;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .settings-preview-card {
+      background: linear-gradient(135deg, #f7f9ff 0%, #fefefe 100%);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      border: 1px solid rgba(102, 126, 234, 0.15);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), var(--shadow-sm);
+    }
+
+    .settings-preview-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .settings-preview-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(102, 126, 234, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #667eea;
+      font-weight: 700;
+      overflow: hidden;
+    }
+
+    .settings-preview-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .settings-preview-modal {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: white;
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .settings-preview-modal h5 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #2d3748;
+    }
+
+    .settings-preview-modal p {
+      font-size: 0.9rem;
+      color: #4a5568;
+      margin-bottom: 0.75rem;
+    }
+
+    .settings-preview-modal .btn {
+      font-size: 0.85rem;
+      padding: 0.35rem 1.25rem;
+      border-radius: var(--radius-md);
+    }
+
+    .form-section-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .form-section-title i {
+      color: #667eea;
     }
 
     /* Add padding to dashboard container on mobile to account for navbar */
@@ -1389,6 +1538,14 @@
             <span class="d-md-none">طلبات</span>
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="settings-tab" data-bs-toggle="pill" data-bs-target="#settings-pane" type="button"
+            role="tab" aria-controls="settings-pane" aria-selected="false">
+            <i class="bi bi-gear-wide-connected me-2"></i>
+            <span class="d-none d-md-inline">الإعدادات | Settings</span>
+            <span class="d-md-none">إعدادات</span>
+          </button>
+        </li>
       </ul>
     </div>
 
@@ -1567,6 +1724,200 @@
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div class="tab-pane fade" id="settings-pane" role="tabpanel" aria-labelledby="settings-tab">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-12 col-xl-5">
+            <div class="settings-card h-100">
+              <div class="settings-card-header">
+                <i class="bi bi-brush"></i>
+                <div>
+                  <h4 class="mb-0">الهوية البصرية | Branding</h4>
+                  <small class="text-muted">خصص اسم الموقع والشعار</small>
+                </div>
+              </div>
+
+              <div class="form-section-title">
+                <i class="bi bi-type"></i>اسم الموقع
+              </div>
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">اسم الموقع (عربي)</label>
+                  <input type="text" class="form-control" id="brandingSiteNameAr" placeholder="مولد رمز QR احترافي">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">اسم الموقع (إنجليزي)</label>
+                  <input type="text" class="form-control" id="brandingSiteNameEn"
+                    placeholder="Professional QR Code Generator">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">وصف مختصر (عربي)</label>
+                  <input type="text" class="form-control" id="brandingSubtitleAr"
+                    placeholder="مولد متطور يدعم العربية والإنجليزية">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Short Tagline (English)</label>
+                  <input type="text" class="form-control" id="brandingSubtitleEn"
+                    placeholder="Advanced dual-language generator">
+                </div>
+              </div>
+
+              <div class="form-section-title mt-2">
+                <i class="bi bi-image"></i>شعار الموقع
+              </div>
+              <div class="brand-logo-preview mb-2" id="brandingLogoPreviewWrapper">
+                <img id="brandingLogoPreview" alt="Brand logo preview" />
+                <span class="placeholder">لم يتم رفع شعار بعد</span>
+              </div>
+              <div class="d-flex flex-wrap gap-2 mb-2">
+                <input type="file" class="form-control" id="brandingLogoInput" accept="image/*"
+                  style="max-width: 260px;">
+                <button type="button" class="btn btn-outline-danger btn-sm" id="brandingRemoveLogo" disabled>
+                  <i class="bi bi-x-circle"></i> إزالة الشعار
+                </button>
+              </div>
+              <small class="text-muted d-block">الحد الأقصى 1MB، سيتم حفظه محلياً.</small>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-4">
+            <div class="settings-card h-100">
+              <div class="settings-card-header">
+                <i class="bi bi-exclamation-triangle"></i>
+                <div>
+                  <h4 class="mb-0">رسالة التنبيه</h4>
+                  <small class="text-muted">تحكم في محتوى نافذة التحذير</small>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">عنوان التنبيه (عربي)</label>
+                  <input type="text" class="form-control" id="brandingAlertTitleAr" placeholder="تنبيه هام">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Alert Title (English)</label>
+                  <input type="text" class="form-control" id="brandingAlertTitleEn" placeholder="Important Notice">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">النص (عربي)</label>
+                  <textarea class="form-control" id="brandingAlertBodyAr" rows="3"
+                    placeholder="يرجى التأكد من صحة البيانات ..."></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Message (English)</label>
+                  <textarea class="form-control" id="brandingAlertBodyEn" rows="3"
+                    placeholder="Please verify the data ..."></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">نص الزر (عربي)</label>
+                  <input type="text" class="form-control" id="brandingAlertButtonAr" placeholder="موافق">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Button Text (English)</label>
+                  <input type="text" class="form-control" id="brandingAlertButtonEn" placeholder="OK">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-3">
+            <div class="settings-card settings-preview-card h-100">
+              <div class="settings-card-header mb-2">
+                <i class="bi bi-eye"></i>
+                <div>
+                  <h4 class="mb-0">معاينة فورية | Live Preview</h4>
+                  <small class="text-muted">يتم تحديثها أثناء الكتابة</small>
+                </div>
+              </div>
+              <div class="settings-preview-header">
+                <div class="settings-preview-logo" id="brandingPreviewLogo">
+                  <i class="bi bi-qr-code"></i>
+                </div>
+                <div>
+                  <div class="fw-bold" id="brandingPreviewTitle">QR احترافي | Professional QR</div>
+                  <small class="text-muted" id="brandingPreviewSubtitle">مولد متطور يدعم العربية والإنجليزية</small>
+                </div>
+              </div>
+              <div class="settings-preview-modal">
+                <h5><i class="bi bi-info-circle"></i><span id="brandingPreviewAlertTitle">تنبيه هام | Important
+                    Notice</span>
+                </h5>
+                <p id="brandingPreviewAlertBody">يرجى التأكد من صحة البيانات المدخلة قبل توليد رمز QR.<br>Please verify
+                  the
+                  entered data before generating QR code.</p>
+                <button type="button" class="btn btn-primary btn-sm" id="brandingPreviewAlertButton">موافق | OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-12 col-xl-6">
+            <div class="settings-card h-100">
+              <div class="settings-card-header">
+                <i class="bi bi-shield-lock"></i>
+                <div>
+                  <h4 class="mb-0">أمان لوحة التحكم | Dashboard Security</h4>
+                  <small class="text-muted">تغيير بيانات تسجيل الدخول للأدمن</small>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="adminNewUsername">اسم المستخدم الجديد | New username</label>
+                  <input type="text" class="form-control" id="adminNewUsername"
+                    placeholder="اكتب اسم المستخدم الجديد (اختياري)">
+                  <small class="text-muted d-block mt-1" id="adminCurrentUsernameHint">
+                    اسم المستخدم الحالي: admin
+                  </small>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="adminCurrentPassword">كلمة المرور الحالية | Current password</label>
+                  <input type="password" class="form-control" id="adminCurrentPassword" placeholder="••••••••">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="adminNewPassword">كلمة المرور الجديدة | New password</label>
+                  <input type="password" class="form-control" id="adminNewPassword" placeholder="حد أدنى 6 أحرف">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="adminConfirmPassword">تأكيد كلمة المرور | Confirm password</label>
+                  <input type="password" class="form-control" id="adminConfirmPassword"
+                    placeholder="أعد كتابة كلمة المرور">
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap gap-2 mt-4">
+                <button type="button" class="btn btn-outline-secondary" id="clearPasswordFieldsBtn">
+                  <i class="bi bi-eraser"></i> مسح الحقول | Clear
+                </button>
+                <button type="button" class="btn btn-danger" id="changePasswordBtn">
+                  <i class="bi bi-key"></i> تحديث بيانات الدخول | Update login
+                </button>
+              </div>
+              <small class="text-muted d-block mt-3">
+                يتم تشفير بيانات تسجيل الدخول وحفظها محلياً في قاعدة البيانات الداخلية. تأكد من حفظ اسم المستخدم
+                وكلمة المرور الجديدة.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-2">
+          <div class="text-muted small">
+            يتم حفظ التعديلات محلياً في هذا المتصفح. استخدم نفس الحساب لتحميل الإعدادات.
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" id="resetBrandingBtn">
+              <i class="bi bi-arrow-counterclockwise"></i> استعادة الإعدادات الافتراضية
+            </button>
+            <button class="btn btn-primary" id="saveBrandingBtn">
+              <i class="bi bi-save2"></i> حفظ إعدادات العلامة التجارية
+            </button>
           </div>
         </div>
       </div>
@@ -2077,9 +2428,43 @@
   <script>
     // ===== Configuration =====
     const OWNER_USERNAME = 'admin'; // Change this to your desired username
-    const OWNER_PASSWORD = 'admin123'; // Change this to your desired password
+    const OWNER_PASSWORD = 'admin123'; // Default password (used if no custom password is set)
     const STORAGE_KEY = 'owner_authenticated';
     const USERS_STORAGE_KEY = 'owner_users_data';
+    const DEFAULT_BRANDING = {
+      siteName: {
+        ar: 'مولد رمز QR احترافي',
+        en: 'Professional QR Code Generator'
+      },
+      siteSubtitle: {
+        ar: 'مولد متطور يدعم العربية والإنجليزية',
+        en: 'Advanced bilingual QR generator'
+      },
+      alert: {
+        title: {
+          ar: 'تنبيه هام',
+          en: 'Important Notice'
+        },
+        body: {
+          ar: 'يرجى التأكد من صحة البيانات المدخلة قبل توليد رمز QR. استخدام هذه الأداة على مسؤوليتك الشخصية.',
+          en: 'Please verify the entered data before generating a QR code. Use this tool at your own responsibility.'
+        },
+        button: {
+          ar: 'موافق',
+          en: 'OK'
+        }
+      },
+      logo: ''
+    };
+    const deepClone = (obj) => (typeof structuredClone === 'function' ? structuredClone(obj) : JSON.parse(JSON.stringify(obj)));
+    let brandingSettings = deepClone(DEFAULT_BRANDING);
+    let brandingLogoData = '';
+    const DEFAULT_ADMIN_CREDENTIALS = {
+      username: OWNER_USERNAME,
+      passwordHash: null
+    };
+    let adminCredentials = { ...DEFAULT_ADMIN_CREDENTIALS };
+    let authSettingsReady = false;
 
     // ===== State Management =====
     let currentUser = null;
@@ -2139,6 +2524,337 @@
       }
     }
 
+    function mergeBranding(base, override = {}) {
+      const merged = deepClone(base);
+      if (!override) return merged;
+      if (override.siteName) merged.siteName = { ...merged.siteName, ...override.siteName };
+      if (override.siteSubtitle) merged.siteSubtitle = { ...merged.siteSubtitle, ...override.siteSubtitle };
+      if (override.alert) {
+        merged.alert = {
+          title: { ...merged.alert.title, ...(override.alert.title || {}) },
+          body: { ...merged.alert.body, ...(override.alert.body || {}) },
+          button: { ...merged.alert.button, ...(override.alert.button || {}) }
+        };
+      }
+      if (typeof override.logo === 'string') merged.logo = override.logo;
+      return merged;
+    }
+
+    async function hashString(input) {
+      try {
+        if (window.crypto?.subtle) {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(input);
+          const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+      } catch (error) {
+        console.warn('hashString: crypto.subtle failed, falling back to base64.', error);
+      }
+      try {
+        return btoa(unescape(encodeURIComponent(input)));
+      } catch {
+        return input;
+      }
+    }
+
+    async function loadAdminCredentials(forceReload = false) {
+      if (authSettingsReady && !forceReload) {
+        return adminCredentials;
+      }
+      try {
+        if (!db.db) await db.init();
+        const stored = await db.getSetting('admin_credentials');
+        if (stored && stored.passwordHash) {
+          adminCredentials = { ...DEFAULT_ADMIN_CREDENTIALS, ...stored };
+        } else {
+          const defaultHash = await hashString(OWNER_PASSWORD);
+          adminCredentials = { ...DEFAULT_ADMIN_CREDENTIALS, passwordHash: defaultHash };
+          await db.setSetting('admin_credentials', adminCredentials);
+        }
+      } catch (error) {
+        console.error('Error loading admin credentials:', error);
+        if (!adminCredentials.passwordHash) {
+          adminCredentials.passwordHash = await hashString(OWNER_PASSWORD);
+        }
+      }
+      authSettingsReady = true;
+      return adminCredentials;
+    }
+
+    function clearPasswordFields() {
+      ['adminCurrentPassword', 'adminNewPassword', 'adminConfirmPassword', 'adminNewUsername'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    }
+
+    function updateSecuritySectionUI() {
+      const hintEl = document.getElementById('adminCurrentUsernameHint');
+      if (hintEl) {
+        const currentUsername = adminCredentials.username || OWNER_USERNAME;
+        hintEl.textContent = `اسم المستخدم الحالي: ${currentUsername}`;
+      }
+    }
+
+    async function handleAdminPasswordChange() {
+      const current = document.getElementById('adminCurrentPassword')?.value || '';
+      const next = document.getElementById('adminNewPassword')?.value || '';
+      const confirm = document.getElementById('adminConfirmPassword')?.value || '';
+      const newUsernameInput = document.getElementById('adminNewUsername')?.value.trim() || '';
+
+      if (!current.trim()) {
+        showToast('يرجى إدخال كلمة المرور الحالية | Please enter current password', 'error');
+        return;
+      }
+
+      const wantsPasswordChange = next.trim().length > 0 || confirm.trim().length > 0;
+      if (!wantsPasswordChange && !newUsernameInput) {
+        showToast('يرجى إدخال اسم مستخدم جديد أو كلمة مرور جديدة | Please enter a new username or password', 'error');
+        return;
+      }
+
+      const nextPassword = next.trim();
+      const confirmPassword = confirm.trim();
+      if (wantsPasswordChange) {
+        if (!nextPassword || !confirmPassword) {
+          showToast('يرجى تعبئة حقلي كلمة المرور الجديدة والتأكيد | Please fill both new password fields', 'error');
+          return;
+        }
+        if (nextPassword.length < 6) {
+          showToast('كلمة المرور الجديدة يجب أن لا تقل عن 6 أحرف | Minimum 6 characters', 'error');
+          return;
+        }
+        if (nextPassword !== confirmPassword) {
+          showToast('كلمات المرور غير متطابقة | Passwords do not match', 'error');
+          return;
+        }
+      }
+
+      const button = document.getElementById('changePasswordBtn');
+      if (button) button.disabled = true;
+
+      try {
+        await loadAdminCredentials();
+        const currentHash = await hashString(current);
+        if (currentHash !== adminCredentials.passwordHash) {
+          showToast('كلمة المرور الحالية غير صحيحة | Current password is incorrect', 'error');
+          return;
+        }
+
+        const currentUsername = adminCredentials.username || OWNER_USERNAME;
+        const wantsUsernameChange = newUsernameInput && newUsernameInput !== currentUsername;
+
+        if (!wantsPasswordChange && !wantsUsernameChange) {
+          showToast('لا توجد تغييرات لتحديثها | No changes to update', 'info');
+          return;
+        }
+
+        if (wantsUsernameChange) {
+          if (newUsernameInput.length < 4) {
+            showToast('اسم المستخدم يجب ألا يقل عن 4 أحرف | Username must be at least 4 characters', 'error');
+            return;
+          }
+          const usernamePattern = /^[A-Za-z0-9._-]+$/;
+          if (!usernamePattern.test(newUsernameInput)) {
+            showToast('يمكن لاسم المستخدم أن يحتوي على أحرف وأرقام ونقطة وشرطة وشرطة سفلية فقط | Username can include letters, numbers, dot, dash, and underscore', 'error');
+            return;
+          }
+        }
+
+        const updatedCredentials = { ...adminCredentials };
+
+        if (wantsPasswordChange) {
+          const newHash = await hashString(nextPassword);
+          updatedCredentials.passwordHash = newHash;
+        }
+
+        if (wantsUsernameChange) {
+          updatedCredentials.username = newUsernameInput;
+        }
+
+        adminCredentials = updatedCredentials;
+
+        if (!db.db) await db.init();
+        await db.setSetting('admin_credentials', adminCredentials);
+        authSettingsReady = true;
+
+        showToast('تم تحديث بيانات الدخول بنجاح | Login credentials updated successfully', 'success');
+        clearPasswordFields();
+        updateSecuritySectionUI();
+      } catch (error) {
+        console.error('Error updating admin credentials:', error);
+        showToast('تعذر تحديث بيانات الدخول | Failed to update credentials', 'error');
+      } finally {
+        if (button) button.disabled = false;
+      }
+    }
+
+    function getBrandingFormValues() {
+      return {
+        siteName: {
+          ar: document.getElementById('brandingSiteNameAr')?.value.trim() || DEFAULT_BRANDING.siteName.ar,
+          en: document.getElementById('brandingSiteNameEn')?.value.trim() || DEFAULT_BRANDING.siteName.en
+        },
+        siteSubtitle: {
+          ar: document.getElementById('brandingSubtitleAr')?.value.trim() || DEFAULT_BRANDING.siteSubtitle.ar,
+          en: document.getElementById('brandingSubtitleEn')?.value.trim() || DEFAULT_BRANDING.siteSubtitle.en
+        },
+        alert: {
+          title: {
+            ar: document.getElementById('brandingAlertTitleAr')?.value.trim() || DEFAULT_BRANDING.alert.title.ar,
+            en: document.getElementById('brandingAlertTitleEn')?.value.trim() || DEFAULT_BRANDING.alert.title.en
+          },
+          body: {
+            ar: document.getElementById('brandingAlertBodyAr')?.value.trim() || DEFAULT_BRANDING.alert.body.ar,
+            en: document.getElementById('brandingAlertBodyEn')?.value.trim() || DEFAULT_BRANDING.alert.body.en
+          },
+          button: {
+            ar: document.getElementById('brandingAlertButtonAr')?.value.trim() || DEFAULT_BRANDING.alert.button.ar,
+            en: document.getElementById('brandingAlertButtonEn')?.value.trim() || DEFAULT_BRANDING.alert.button.en
+          }
+        },
+        logo: brandingLogoData || ''
+      };
+    }
+
+    function populateBrandingForm(values = brandingSettings) {
+      document.getElementById('brandingSiteNameAr').value = values.siteName?.ar || '';
+      document.getElementById('brandingSiteNameEn').value = values.siteName?.en || '';
+      document.getElementById('brandingSubtitleAr').value = values.siteSubtitle?.ar || '';
+      document.getElementById('brandingSubtitleEn').value = values.siteSubtitle?.en || '';
+      document.getElementById('brandingAlertTitleAr').value = values.alert?.title?.ar || '';
+      document.getElementById('brandingAlertTitleEn').value = values.alert?.title?.en || '';
+      document.getElementById('brandingAlertBodyAr').value = values.alert?.body?.ar || '';
+      document.getElementById('brandingAlertBodyEn').value = values.alert?.body?.en || '';
+      document.getElementById('brandingAlertButtonAr').value = values.alert?.button?.ar || '';
+      document.getElementById('brandingAlertButtonEn').value = values.alert?.button?.en || '';
+
+      brandingLogoData = values.logo || '';
+      syncBrandingLogoUI();
+      updateBrandingPreview();
+    }
+
+    function syncBrandingLogoUI() {
+      const previewWrapper = document.getElementById('brandingLogoPreviewWrapper');
+      const previewImg = document.getElementById('brandingLogoPreview');
+      const placeholder = previewWrapper?.querySelector('.placeholder');
+      const removeBtn = document.getElementById('brandingRemoveLogo');
+
+      if (brandingLogoData && previewWrapper && previewImg) {
+        previewWrapper.classList.add('has-logo');
+        previewImg.src = brandingLogoData;
+        previewImg.style.display = 'block';
+        if (placeholder) placeholder.style.display = 'none';
+        if (removeBtn) removeBtn.disabled = false;
+      } else {
+        previewWrapper?.classList.remove('has-logo');
+        if (previewImg) {
+          previewImg.src = '';
+          previewImg.style.display = 'none';
+        }
+        if (placeholder) placeholder.style.display = 'block';
+        if (removeBtn) removeBtn.disabled = true;
+      }
+    }
+
+    function updateBrandingPreview() {
+      const values = getBrandingFormValues();
+      const title = `${values.siteName.ar} | ${values.siteName.en}`;
+      const subtitle = `${values.siteSubtitle.ar} | ${values.siteSubtitle.en}`;
+      const alertTitle = `${values.alert.title.ar} | ${values.alert.title.en}`;
+      const alertBody = `${values.alert.body.ar}<br>${values.alert.body.en}`;
+      const alertButton = `${values.alert.button.ar} | ${values.alert.button.en}`;
+
+      document.getElementById('brandingPreviewTitle').textContent = title;
+      document.getElementById('brandingPreviewSubtitle').textContent = subtitle;
+      document.getElementById('brandingPreviewAlertTitle').textContent = alertTitle;
+      document.getElementById('brandingPreviewAlertBody').innerHTML = alertBody;
+      document.getElementById('brandingPreviewAlertButton').textContent = alertButton;
+
+      const previewLogo = document.getElementById('brandingPreviewLogo');
+      previewLogo.innerHTML = '';
+      if (values.logo) {
+        const img = document.createElement('img');
+        img.src = values.logo;
+        img.alt = title;
+        previewLogo.appendChild(img);
+      } else {
+        previewLogo.innerHTML = '<i class="bi bi-qr-code"></i>';
+      }
+    }
+
+    function handleBrandingLogoInput(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      if (file.size > 1024 * 1024) {
+        showToast('حجم الشعار يجب ألا يتجاوز 1MB', 'error');
+        event.target.value = '';
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        showToast('الملف يجب أن يكون صورة', 'error');
+        event.target.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        brandingLogoData = e.target.result;
+        event.target.value = '';
+        syncBrandingLogoUI();
+        updateBrandingPreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeBrandingLogo() {
+      brandingLogoData = '';
+      document.getElementById('brandingLogoInput').value = '';
+      syncBrandingLogoUI();
+      updateBrandingPreview();
+    }
+
+    async function loadBrandingSettings() {
+      try {
+        if (!db.db) await db.init();
+        const stored = await db.getSetting('branding');
+        brandingSettings = mergeBranding(DEFAULT_BRANDING, stored || {});
+      } catch (error) {
+        console.warn('Branding settings load failed, fallback to defaults:', error);
+        brandingSettings = deepClone(DEFAULT_BRANDING);
+      }
+      populateBrandingForm(brandingSettings);
+    }
+
+    async function saveBrandingSettings() {
+      try {
+        if (!db.db) await db.init();
+        const values = getBrandingFormValues();
+        brandingSettings = mergeBranding(DEFAULT_BRANDING, values);
+        await db.setSetting('branding', brandingSettings);
+        showToast('تم حفظ إعدادات العلامة التجارية', 'success');
+      } catch (error) {
+        console.error('Error saving branding settings:', error);
+        showToast('فشل حفظ الإعدادات', 'error');
+      }
+    }
+
+    async function resetBrandingSettings() {
+      if (!confirm('سيتم استعادة الإعدادات الافتراضية للعلامة التجارية، هل أنت متأكد؟')) return;
+      brandingSettings = deepClone(DEFAULT_BRANDING);
+      brandingLogoData = '';
+      populateBrandingForm(brandingSettings);
+      try {
+        if (!db.db) await db.init();
+        await db.setSetting('branding', brandingSettings);
+        showToast('تمت استعادة الإعدادات الافتراضية', 'info');
+      } catch (error) {
+        console.error('Error resetting branding settings:', error);
+        showToast('فشل استعادة الإعدادات', 'error');
+      }
+    }
+
     // ===== Authentication =====
     async function checkAuth() {
       try {
@@ -2165,7 +2881,10 @@
     }
 
     async function login(username, password) {
-      if (username === OWNER_USERNAME && password === OWNER_PASSWORD) {
+      const creds = await loadAdminCredentials();
+      const hashedInput = await hashString(password);
+      const expectedUsername = creds.username || OWNER_USERNAME;
+      if (username === expectedUsername && hashedInput === creds.passwordHash) {
         localStorage.setItem(STORAGE_KEY, 'true');
         await showDashboard();
         showToast('تم تسجيل الدخول بنجاح | Login successful', 'success');
@@ -2510,6 +3229,9 @@
             <button class="btn btn-action btn-view" onclick="viewUserDetails(${user.id})">
               <i class="bi bi-eye"></i> عرض | View
             </button>
+            <button class="btn btn-action btn-delete" onclick="deleteClient(${user.id})">
+              <i class="bi bi-trash"></i> حذف | Delete
+            </button>
           </td>
         </tr>
       `).join('');
@@ -2574,6 +3296,9 @@
               </button>
               <button class="btn btn-action btn-view" onclick="viewUserDetails(${user.id})">
                 <i class="bi bi-eye"></i> عرض | View
+              </button>
+              <button class="btn btn-action btn-delete" onclick="deleteClient(${user.id})">
+                <i class="bi bi-trash"></i> حذف | Delete
               </button>
             </div>
           </div>
@@ -2894,6 +3619,46 @@
       } catch (error) {
         console.error('Error loading user for edit:', error);
         showToast('خطأ في تحميل بيانات العميل | Error loading client data', 'error');
+      }
+    }
+
+    async function deleteClient(userId) {
+      const user = usersData.find(u => u.id === userId);
+      if (!user) {
+        showToast('العميل غير موجود | Client not found', 'error');
+        return;
+      }
+
+      const confirmation = confirm(`سيتم حذف العميل "${user.name || 'بدون اسم'}" وجميع الأكواد المرتبطة به. هل أنت متأكد؟`);
+      if (!confirmation) {
+        return;
+      }
+
+      try {
+        if (!db.db) {
+          await db.init();
+        }
+
+        // Delete client and related records
+        await db.deleteUser(userId);
+
+        // Attempt to delete related purchases silently
+        try {
+          const purchases = await db.getUserPurchases(userId);
+          if (purchases && purchases.length) {
+            await Promise.all(purchases.map(purchase => db.delete('purchases', purchase.id)));
+          }
+        } catch (cleanupError) {
+          console.warn('Warning: Failed to delete client purchases', cleanupError);
+        }
+
+        usersData = usersData.filter(u => u.id !== userId);
+        renderUsersTable();
+        await updateStats();
+        showToast('تم حذف العميل بنجاح | Client deleted successfully', 'success');
+      } catch (error) {
+        console.error('Error deleting client:', error);
+        showToast('تعذر حذف العميل | Failed to delete client', 'error');
       }
     }
 
@@ -3345,6 +4110,23 @@
     });
     document.getElementById('addUserBtn').addEventListener('click', openAddUserModal);
     document.getElementById('saveUserBtn').addEventListener('click', addNewUser);
+    const brandingInputIds = [
+      'brandingSiteNameAr', 'brandingSiteNameEn',
+      'brandingSubtitleAr', 'brandingSubtitleEn',
+      'brandingAlertTitleAr', 'brandingAlertTitleEn',
+      'brandingAlertBodyAr', 'brandingAlertBodyEn',
+      'brandingAlertButtonAr', 'brandingAlertButtonEn'
+    ];
+    brandingInputIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateBrandingPreview);
+    });
+    document.getElementById('brandingLogoInput')?.addEventListener('change', handleBrandingLogoInput);
+    document.getElementById('brandingRemoveLogo')?.addEventListener('click', removeBrandingLogo);
+    document.getElementById('saveBrandingBtn')?.addEventListener('click', saveBrandingSettings);
+    document.getElementById('resetBrandingBtn')?.addEventListener('click', resetBrandingSettings);
+    document.getElementById('changePasswordBtn')?.addEventListener('click', handleAdminPasswordChange);
+    document.getElementById('clearPasswordFieldsBtn')?.addEventListener('click', clearPasswordFields);
 
     // ===== Products Management =====
     let productsData = [];
@@ -3670,7 +4452,7 @@
             amount: parseFloat(user.amount || 0),
             purchaseDate: user.purchaseDate || user.createdAt || new Date().toISOString(),
             status: user.status || 'pending',
-            paymentMethod: 'N/A',
+            paymentMethod: user.paymentMethod || 'N/A',
             createdAt: user.createdAt || user.purchaseDate || new Date().toISOString()
           };
         });
@@ -3686,7 +4468,8 @@
               userName: user?.name || 'Unknown',
               userEmail: user?.email || 'N/A',
               userPhone: user?.phone || 'N/A',
-              products: purchase.productId ? `Product ID: ${purchase.productId}` : 'N/A'
+              products: purchase.productId ? `Product ID: ${purchase.productId}` : 'N/A',
+              paymentMethod: purchase.paymentMethod || user?.paymentMethod || 'N/A'
             });
           }
         });
@@ -4120,6 +4903,7 @@
     window.sendCodesViaWhatsApp = sendCodesViaWhatsApp;
     window.viewUserDetails = viewUserDetails;
     window.editUser = editUser;
+    window.deleteClient = deleteClient;
     window.scrollToTop = scrollToTop;
     window.scrollToStats = scrollToStats;
     window.openAddUserFromNav = openAddUserFromNav;
@@ -4144,8 +4928,12 @@
         // Small delay to ensure everything is ready
         await new Promise(resolve => setTimeout(resolve, 100));
 
+        // Load admin credentials before checking auth
+        await loadAdminCredentials();
+        updateSecuritySectionUI();
         // Then check auth and load data
         await checkAuth();
+        await loadBrandingSettings();
         console.log('✅ Application initialized successfully');
       } catch (error) {
         console.error('❌ Initialization error:', error);

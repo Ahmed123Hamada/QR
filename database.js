@@ -271,6 +271,7 @@ class DatabaseManager {
       expiryDate: userData.expiryDate || null,
       amount: userData.amount || 0,
       status: userData.status || 'pending',
+      paymentMethod: userData.paymentMethod || '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -677,12 +678,31 @@ class DatabaseManager {
 
   // ===== Settings Operations =====
   async getSetting(key) {
+    if (!this.db) {
+      await this.init();
+    }
     const setting = await this.get('settings', key);
     return setting ? setting.value : null;
   }
 
   async setSetting(key, value) {
-    return this.update('settings', { key, value, updatedAt: new Date().toISOString() });
+    if (!this.db) {
+      await this.init();
+    }
+
+    return new Promise((resolve, reject) => {
+      try {
+        const transaction = this.db.transaction(['settings'], 'readwrite');
+        const store = transaction.objectStore('settings');
+        const request = store.put({ key, value, updatedAt: new Date().toISOString() });
+
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => reject(request.error);
+        transaction.onerror = () => reject(transaction.error);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   // ===== Statistics =====

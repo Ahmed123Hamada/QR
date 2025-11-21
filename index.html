@@ -2086,6 +2086,18 @@
       background: linear-gradient(135deg, #E60000 0%, #FF0000 100%);
     }
 
+    .payment-icon.visa {
+      background: linear-gradient(135deg, #142d8e 0%, #3263c5 100%);
+    }
+
+    .payment-icon.stcpay {
+      background: linear-gradient(135deg, #6f2dbd 0%, #a44cd3 100%);
+    }
+
+    .payment-icon.apple {
+      background: linear-gradient(135deg, #1f1f1f 0%, #3c3c3c 100%);
+    }
+
     .payment-details {
       flex: 1;
       margin-left: 1rem;
@@ -3028,6 +3040,54 @@
     }
     */
 
+    /* Social tab input responsiveness */
+    #social-accounts .input-group {
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+    }
+
+    #social-accounts .input-group .handle {
+      cursor: grab;
+      min-width: 2.5rem;
+      text-align: center;
+      background: #f8f9fa;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    #social-accounts .input-group .social-type {
+      min-width: 220px;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    #social-accounts .input-group .social-value {
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 992px) {
+      #social-accounts .input-group {
+        flex-wrap: wrap;
+      }
+
+      #social-accounts .input-group .handle,
+      #social-accounts .input-group .social-icon,
+      #social-accounts .input-group .social-type,
+      #social-accounts .input-group .social-value,
+      #social-accounts .input-group .remove-social {
+        flex: 1 1 100%;
+      }
+
+      #social-accounts .input-group .social-type {
+        min-width: 100%;
+      }
+
+      #social-accounts .input-group .remove-social {
+        display: inline-flex;
+        justify-content: center;
+      }
+    }
+
     #toggle-customizer-btn {
       transition: all var(--transition-base);
     }
@@ -3258,10 +3318,6 @@
       overflow: visible !important;
     }
 
-    #site-header:hover {
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-2px);
-    }
 
     #site-header .brand {
       gap: .75rem;
@@ -3452,18 +3508,6 @@
       max-width: 100%;
     }
 
-    .site-logo {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-      transition: transform var(--transition-base);
-    }
-
-    .site-logo:hover {
-      transform: rotate(5deg) scale(1.1);
-    }
-
     .gender-icon {
       font-size: 1.8rem;
       transition: all var(--transition-base);
@@ -3487,12 +3531,34 @@
       }
     }
 
+    .site-logo-wrapper {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .site-logo-img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: none;
+      display: none;
+      background: white;
+      transition: transform var(--transition-base);
+    }
+
+
+
     .site-logo-icon {
-      font-size: 36px;
+      font-size: 48px;
       line-height: 1;
       display: inline-flex;
-      width: 36px;
-      height: 36px;
+      width: 56px;
+      height: 56px;
       align-items: center;
       justify-content: center;
       color: var(--primary, #0d6efd);
@@ -4259,7 +4325,10 @@
           <button id="mobile-menu-toggle" class="btn btn-link d-lg-none p-0 me-2 mobile-menu-btn" aria-label="Menu">
             <i class="bi bi-list" style="font-size: 1.5rem;"></i>
           </button>
-          <i id="site-logo" class="bi bi-qr-code site-logo-icon" aria-hidden="true"></i>
+          <div class="site-logo-wrapper" aria-hidden="true">
+            <img id="site-logo-img" class="site-logo-img" alt="Site logo">
+            <i id="site-logo-icon" class="bi bi-qr-code site-logo-icon"></i>
+          </div>
           <span class="brand-title" id="main-title-header">QR احترافي | Professional QR Code Generator</span>
         </div>
 
@@ -4444,7 +4513,7 @@
                   <div class="mb-3">
                     <label class="form-label fw-bold" id="accordion2-text-label">أدخل النص الأساسي:</label>
                     <textarea class="form-control accordion-text viewer-hide" rows="3" data-role="admin-only"
-                      placeholder="أدخل النص هنا..." data-accordion="2"></textarea>
+                      placeholder="أدخل النص هنا... | Enter your text here..." data-accordion="2"></textarea>
                   </div>
                   <div class="mb-3">
                     <label class="form-label fw-bold" id="accordion2-table-label">جدول الوصف والتفاصيل:</label>
@@ -4463,9 +4532,9 @@
                   </div>
                   <div class="mb-3">
                     <label class="form-label fw-bold" id="accordion2-comment-label">تعليق يظهر تحت رمز QR
-                      (اختياري):</label>
+                      (اختياري) | Comment below QR (optional):</label>
                     <input type="text" class="form-control accordion-comment viewer-hide" data-role="admin-only"
-                      placeholder="أدخل تعليقك هنا..." data-accordion="2">
+                      placeholder="أدخل تعليقك هنا... | Enter your comment here..." data-accordion="2">
                   </div>
                   <div class="accordion-qr-container">
                     <div class="accordion-qr" id="accordion-qr-2"></div>
@@ -4489,9 +4558,9 @@
                 <div class="accordion-content-section">
                   <div class="mb-3">
                     <label class="form-label fw-bold" id="accordion3-comment-label">تعليق يظهر تحت رمز QR
-                      (اختياري):</label>
-                    <input type="text" class="form-control accordion-comment" placeholder="أدخل تعليقك هنا..."
-                      data-accordion="3">
+                      (اختياري) | Comment below QR (optional):</label>
+                    <input type="text" class="form-control accordion-comment"
+                      placeholder="أدخل تعليقك هنا... | Enter your comment here..." data-accordion="3">
                   </div>
                   <div class="accordion-qr-container">
                     <div class="accordion-qr" id="accordion-qr-3"></div>
@@ -4780,7 +4849,7 @@
                         <i class="bi bi-search text-muted"></i>
                       </span>
                       <input type="text" class="form-control border-start-0" id="search-products-input"
-                        placeholder="ابحث عن منتج...">
+                        placeholder="ابحث عن منتج... | Search for a product...">
                       <button class="btn btn-primary" type="button" id="search-products-btn">
                         <i class="bi bi-search me-1"></i>
                         <span id="search-text">بحث</span>
@@ -4798,10 +4867,13 @@
 
       <!-- تبويب الرابط -->
       <div class="tab-pane fade" id="url-pane" role="tabpanel" aria-labelledby="url-tab">
-        <textarea id="qr-input-url" class="form-control" rows="3" placeholder="أدخل الرابط هنا..."></textarea>
+        <textarea id="qr-input-url" class="form-control" rows="3"
+          placeholder="أدخل الرابط هنا... | Enter the URL here..."></textarea>
         <div class="mb-3 tab-comment">
-          <label for="url-comment" class="form-label" id="url-comment-label">تعليق يظهر تحت رمز QR (اختياري):</label>
-          <input type="text" id="url-comment" class="form-control" placeholder="أدخل تعليقك هنا...">
+          <label for="url-comment" class="form-label" id="url-comment-label">تعليق يظهر تحت رمز QR (اختياري) | Comment
+            below QR (optional):</label>
+          <input type="text" id="url-comment" class="form-control"
+            placeholder="أدخل تعليقك هنا... | Enter your comment here...">
         </div>
       </div>
 
@@ -4812,32 +4884,35 @@
           <option value="WEP">WEP</option>
           <option value="nopass">بدون كلمة مرور</option>
         </select>
-        <input id="wifi-ssid" class="form-control mb-2" placeholder="اسم الشبكة SSID" />
-        <input id="wifi-password" class="form-control" placeholder="كلمة المرور" />
+        <input id="wifi-ssid" class="form-control mb-2" placeholder="اسم الشبكة SSID | Network name (SSID)" />
+        <input id="wifi-password" class="form-control" placeholder="كلمة المرور | Password" />
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="wifi-hidden">
           <label class="form-check-label" for="wifi-hidden"><span id="hidden-network-text">شبكة مخفية</span></label>
         </div>
         <div class="mb-3 tab-comment">
-          <label for="wifi-comment" class="form-label" id="wifi-comment-label">تعليق يظهر تحت رمز QR (اختياري):</label>
-          <input type="text" id="wifi-comment" class="form-control" placeholder="أدخل تعليقك هنا...">
+          <label for="wifi-comment" class="form-label" id="wifi-comment-label">تعليق يظهر تحت رمز QR (اختياري) | Comment
+            below QR (optional):</label>
+          <input type="text" id="wifi-comment" class="form-control"
+            placeholder="أدخل تعليقك هنا... | Enter your comment here...">
         </div>
       </div>
 
       <!-- تبويب vCard -->
       <div class="tab-pane fade" id="vcard-pane" role="tabpanel" aria-labelledby="vcard-tab">
-        <input id="vcard-name" class="form-control mb-2" placeholder="الاسم الكامل" />
-        <input id="vcard-title" class="form-control mb-2" placeholder="المسمى الوظيفي" />
-        <input id="vcard-email" class="form-control mb-2" placeholder="البريد الإلكتروني" />
-        <input id="vcard-org" class="form-control mb-2" placeholder="الشركة / المؤسسة" />
-        <input id="vcard-note" class="form-control mb-2" placeholder="ملاحظة اختيارية" />
+        <input id="vcard-name" class="form-control mb-2" placeholder="الاسم الكامل | Full name" />
+        <input id="vcard-title" class="form-control mb-2" placeholder="المسمى الوظيفي | Job title" />
+        <input id="vcard-email" class="form-control mb-2" placeholder="البريد الإلكتروني | Email" />
+        <input id="vcard-org" class="form-control mb-2" placeholder="الشركة / المؤسسة | Company / Organization" />
+        <input id="vcard-note" class="form-control mb-2" placeholder="ملاحظة اختيارية | Optional note" />
         <div id="vcard-phones"></div>
         <button id="add-phone" class="btn btn-sm btn-outline-primary mb-2 viewer-hide" data-role="admin-only"><span
             id="btn-add-phone">➕ أضف رقم هاتف</span></button>
         <div class="mb-3 tab-comment">
           <label for="vcard-comment" class="form-label" id="vcard-comment-label">تعليق يظهر تحت رمز QR
-            (اختياري):</label>
-          <input type="text" id="vcard-comment" class="form-control" placeholder="أدخل تعليقك هنا...">
+            (اختياري) | Comment below QR (optional):</label>
+          <input type="text" id="vcard-comment" class="form-control"
+            placeholder="أدخل تعليقك هنا... | Enter your comment here...">
         </div>
       </div>
 
@@ -4862,8 +4937,9 @@
         </div>
         <div class="mb-3 tab-comment">
           <label for="social-comment" class="form-label" id="social-comment-label">تعليق يظهر تحت رمز QR
-            (اختياري):</label>
-          <input type="text" id="social-comment" class="form-control" placeholder="أدخل تعليقك هنا...">
+            (اختياري) | Comment below QR (optional):</label>
+          <input type="text" id="social-comment" class="form-control"
+            placeholder="أدخل تعليقك هنا... | Enter your comment here...">
         </div>
       </div>
     </div><!-- /tab-content -->
@@ -4989,7 +5065,7 @@
               <div class="payment-details">
                 <h6>حساب بنكي | Bank Account</h6>
                 <p class="text-muted mb-2" id="bank-account-details">سيتم عرض تفاصيل الحساب البنكي</p>
-                <div class="bank-info" id="bankInfo" style="display: none;">
+                <div class="bank-info payment-extra" id="bankInfo" style="display: none;">
                   <p class="mb-1"><strong>اسم البنك:</strong> <span id="bankName">-</span></p>
                   <p class="mb-1"><strong>رقم الحساب:</strong> <span id="bankAccount">-</span></p>
                   <p class="mb-0"><strong>IBAN:</strong> <span id="bankIBAN">-</span></p>
@@ -5007,7 +5083,7 @@
               <div class="payment-details">
                 <h6>Instagram Pay</h6>
                 <p class="text-muted mb-2" id="instagram-pay-details">الدفع عبر Instagram Pay</p>
-                <div class="instagram-info" id="instagramInfo" style="display: none;">
+                <div class="instagram-info payment-extra" id="instagramInfo" style="display: none;">
                   <p class="mb-1"><strong>حساب Instagram:</strong> <span id="instagramAccount">-</span></p>
                 </div>
               </div>
@@ -5023,8 +5099,60 @@
               <div class="payment-details">
                 <h6>Vodafone Cash</h6>
                 <p class="text-muted mb-2" id="vodafone-details">الدفع عبر Vodafone Cash</p>
-                <div class="vodafone-info" id="vodafoneInfo" style="display: none;">
+                <div class="vodafone-info payment-extra" id="vodafoneInfo" style="display: none;">
                   <p class="mb-1"><strong>رقم Vodafone Cash:</strong> <span id="vodafoneNumber">-</span></p>
+                </div>
+              </div>
+              <div class="payment-arrow">
+                <i class="bi bi-chevron-left"></i>
+              </div>
+            </div>
+
+            <div class="payment-method-card" data-method="visa">
+              <div class="payment-icon visa">
+                <i class="bi bi-credit-card-2-front"></i>
+              </div>
+              <div class="payment-details">
+                <h6>Visa / MasterCard</h6>
+                <p class="text-muted mb-2">الدفع عبر البطاقة الائتمانية</p>
+                <div class="visa-info payment-extra" id="visaInfo" style="display: none;">
+                  <p class="mb-1"><strong>اسم حامل البطاقة:</strong> <span id="visaHolder">-</span></p>
+                  <p class="mb-1"><strong>رقم البطاقة:</strong> <span id="visaNumber">-</span></p>
+                  <p class="mb-0"><strong>تاريخ الانتهاء:</strong> <span id="visaExpiry">-</span></p>
+                </div>
+              </div>
+              <div class="payment-arrow">
+                <i class="bi bi-chevron-left"></i>
+              </div>
+            </div>
+
+            <div class="payment-method-card" data-method="stcpay">
+              <div class="payment-icon stcpay">
+                <i class="bi bi-wallet2"></i>
+              </div>
+              <div class="payment-details">
+                <h6>STC Pay</h6>
+                <p class="text-muted mb-2">المحفظة الرقمية STC Pay</p>
+                <div class="stcpay-info payment-extra" id="stcPayInfo" style="display: none;">
+                  <p class="mb-1"><strong>اسم الحساب:</strong> <span id="stcPayName">-</span></p>
+                  <p class="mb-0"><strong>رقم المحفظة:</strong> <span id="stcPayWallet">-</span></p>
+                </div>
+              </div>
+              <div class="payment-arrow">
+                <i class="bi bi-chevron-left"></i>
+              </div>
+            </div>
+
+            <div class="payment-method-card" data-method="applepay">
+              <div class="payment-icon apple">
+                <i class="bi bi-apple"></i>
+              </div>
+              <div class="payment-details">
+                <h6>Apple Pay</h6>
+                <p class="text-muted mb-2">الدفع عبر Apple Pay</p>
+                <div class="applepay-info payment-extra" id="applePayInfo" style="display: none;">
+                  <p class="mb-1"><strong>معرّف التاجر:</strong> <span id="applePayMerchant">-</span></p>
+                  <p class="mb-0"><strong>تعليمات:</strong> <span id="applePayNote">-</span></p>
                 </div>
               </div>
               <div class="payment-arrow">
@@ -5079,12 +5207,42 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+  <!-- DOCX Export Libraries - Using jsDelivr for better reliability -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js"></script>
 
   <!-- السكريبت الرئيسي -->
   <script>
     // ===== Namespace + Schema Migration =====
     const APP_NS = 'egf.qr';
     const SCHEMA_VERSION = 2;
+    const BRANDING_DEFAULTS = {
+      siteName: {
+        ar: 'مولد رمز QR احترافي',
+        en: 'Professional QR Code Generator'
+      },
+      siteSubtitle: {
+        ar: 'مولد متطور يدعم العربية والإنجليزية',
+        en: 'Advanced bilingual QR generator'
+      },
+      alert: {
+        title: {
+          ar: 'تنبيه هام',
+          en: 'Important Notice'
+        },
+        body: {
+          ar: 'يرجى التأكد من صحة البيانات المدخلة قبل توليد رمز QR. استخدام هذه الأداة على مسؤوليتك الشخصية.',
+          en: 'Please verify the entered data before generating a QR code. Use this tool at your own responsibility.'
+        },
+        button: {
+          ar: 'موافق',
+          en: 'OK'
+        }
+      },
+      logo: ''
+    };
+    const cloneBranding = (obj) => (typeof structuredClone === 'function' ? structuredClone(obj) : JSON.parse(JSON.stringify(obj)));
+    let cachedBrandingSettings = null;
     function ns(k) { return `${APP_NS}.${k}`; }
     function lsGet(k, d = null) { const v = localStorage.getItem(ns(k)); return v == null ? d : v; }
     function lsSet(k, v) { localStorage.setItem(ns(k), v); }
@@ -6229,24 +6387,24 @@
       <button type="button" class="btn btn-sm btn-outline-danger remove-card viewer-hide" data-card-id="${idx}"><i class="bi bi-trash"></i></button>
     </div>
     <div class="card-body">
-      <div class="mb-3">
-        <label class="form-label fw-bold"><i class="bi bi-calendar"></i> <span class="date-label-text">التاريخ</span></label>
-        <input type="text" class="form-control card-date" data-card-id="${idx}" placeholder="اختر التاريخ">
-      </div>
-      <div class="mb-3">
-        <label class="form-label fw-bold"><i class="bi bi-card-text"></i> <span class="description-label-text">الوصف/الرابط/الرقم/التاريخ</span></label>
-        <textarea class="form-control card-description" data-card-id="${idx}" rows="1" placeholder="أدخل الوصف هنا..."></textarea>
-      </div>
-      <div class="mb-3">
-        <label class="form-label fw-bold"><i class="bi bi-paperclip"></i> <span class="attachments-label-text">المرفقات (بحد أقصى 3 ملفات)</span></label>
-        <input type="file" class="form-control card-attachments" data-card-id="${idx}" multiple>
-        <div class="card-file-error" data-card-id="${idx}" style="display:none;"></div>
-        <div class="card-attachments-preview d-flex flex-wrap" data-card-id="${idx}"></div>
-      </div>
-      <div class="mb-3">
-        <label class="form-label fw-bold"><i class="bi bi-chat-dots"></i> <span class="notes-label-text">الملاحظات</span></label>
-        <textarea class="form-control card-notes" data-card-id="${idx}" rows="1" placeholder="أدخل الملاحظات هنا..."></textarea>
-      </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-calendar"></i> <span class="date-label-text">التاريخ | Date</span></label>
+                <input type="text" class="form-control card-date" data-card-id="${idx}" placeholder="اختر التاريخ | Choose date">
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-card-text"></i> <span class="description-label-text">الوصف/الرابط/الرقم/التاريخ | Description/Link/Number/Date</span></label>
+                <textarea class="form-control card-description" data-card-id="${idx}" rows="1" placeholder="أدخل الوصف هنا... | Enter the description here"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-paperclip"></i> <span class="attachments-label-text">المرفقات (بحد أقصى 3 ملفات) | Attachments (max 3 files)</span></label>
+                <input type="file" class="form-control card-attachments" data-card-id="${idx}" multiple>
+                <div class="card-file-error" data-card-id="${idx}" style="display:none;"></div>
+                <div class="card-attachments-preview d-flex flex-wrap" data-card-id="${idx}"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-chat-dots"></i> <span class="notes-label-text">الملاحظات | Notes</span></label>
+                <textarea class="form-control card-notes" data-card-id="${idx}" rows="1" placeholder="أدخل الملاحظات هنا... | Enter notes here"></textarea>
+              </div>
     </div>
   `;
 
@@ -6704,7 +6862,7 @@
 
       div.innerHTML = `
     <span class="input-group-text handle" style="cursor:grab;">↕️</span>
-    <input type="tel" class="form-control vcard-phone" placeholder="رقم هاتف" />
+    <input type="tel" class="form-control vcard-phone" placeholder="رقم هاتف | Phone number" />
     <button type="button" class="btn btn-outline-danger remove-phone">🗑️</button>
   `;
 
@@ -6789,10 +6947,10 @@
       div.innerHTML = `
     <span class="input-group-text handle" style="cursor:grab;">↕️</span>
     <span class="input-group-text social-icon"><i class="bi bi-link-45deg"></i></span>
-    <select class="form-select social-type" style="max-width:110px;">
-      ${socialTypes.map(t => `<option value="${t.value}">${t.name_ar}</option>`).join("")}
+    <select class="form-select social-type" style="max-width:160px;">
+      ${socialTypes.map(t => `<option value="${t.value}">${t.name_ar} | ${t.name_en}</option>`).join("")}
     </select>
-    <input type="text" class="form-control social-value" placeholder="أدخل اسم المستخدم أو الرابط" />
+    <input type="text" class="form-control social-value" placeholder="أدخل اسم المستخدم أو الرابط | Enter username or link" />
     <button type="button" class="btn btn-outline-danger remove-social">🗑️</button>
   `;
 
@@ -6861,6 +7019,8 @@
 
       accounts.forEach((acc, i) => {
         const link = formatSocialLink(acc.type, acc.value, false);
+        const typeInfo = socialTypes.find(t => t.value === acc.type);
+        const titleText = typeInfo ? `${typeInfo.name_ar} | ${typeInfo.name_en}` : acc.type;
         const id = `social-qr-${i}`;
 
         const col = document.createElement("div");
@@ -6869,7 +7029,7 @@
         col.innerHTML = `
       <div class="card p-3 text-center h-100">
         <div id="${id}"></div>
-        <div class="fw-bold mt-2 mb-1">${esc(socialTypes.find(t => t.value === acc.type)?.name_ar || acc.type)}</div>
+        <div class="fw-bold mt-2 mb-1">${esc(titleText)}</div>
         <div class="text-truncate small">${esc(link)}</div>
       </div>
     `;
@@ -6877,7 +7037,7 @@
         wrap.appendChild(col);
 
         idle(() => {
-          const qr = new QRCodeStyling({
+          const qrOptions = {
             width: 180,
             height: 180,
             type: "canvas",
@@ -6886,7 +7046,19 @@
             backgroundOptions: { color: qrCustomization.bgColor },
             qrOptions: { errorCorrectionLevel: qrCustomization.ecc },
             margin: qrCustomization.margin
-          });
+          };
+
+          if (qrCustomization.logo) {
+            qrOptions.image = qrCustomization.logo;
+            qrOptions.imageOptions = {
+              hideBackgroundDots: true,
+              imageSize: 0.5,
+              margin: 6,
+              crossOrigin: "anonymous"
+            };
+          }
+
+          const qr = new QRCodeStyling(qrOptions);
 
           qr.append(document.getElementById(id));
         });
@@ -7438,7 +7610,7 @@
       }
     };
 
-    let bilingualEnabled = lsGet('egf.qr.bilingual') !== 'false'; // Default: true, can be toggled
+    const bilingualEnabled = true; // Always show Arabic | English together
     const bilingualSeparator = ' | ';
     const hasPipe = value => typeof value === 'string' && value.includes('|');
     const combineTexts = (arVal, enVal, fallback = '') => {
@@ -7449,6 +7621,99 @@
       return arVal || enVal || fallback;
     };
     const both = (arVal, enVal) => combineTexts(arVal, enVal);
+
+    function mergeBrandingDefaults(override = {}) {
+      const merged = cloneBranding(BRANDING_DEFAULTS);
+      if (!override) return merged;
+      if (override.siteName) merged.siteName = { ...merged.siteName, ...override.siteName };
+      if (override.siteSubtitle) merged.siteSubtitle = { ...merged.siteSubtitle, ...override.siteSubtitle };
+      if (override.alert) {
+        merged.alert = {
+          title: { ...merged.alert.title, ...(override.alert.title || {}) },
+          body: { ...merged.alert.body, ...(override.alert.body || {}) },
+          button: { ...merged.alert.button, ...(override.alert.button || {}) }
+        };
+      }
+      if (typeof override.logo === 'string') merged.logo = override.logo;
+      return merged;
+    }
+
+    async function getBrandingSettings(forceReload = false) {
+      if (cachedBrandingSettings && !forceReload) {
+        return cachedBrandingSettings;
+      }
+
+      let stored = null;
+      try {
+        if (typeof db !== 'undefined') {
+          if (!db.db) {
+            await db.init();
+          }
+          stored = await db.getSetting('branding');
+        }
+      } catch (error) {
+        console.warn('Unable to load branding settings', error);
+      }
+
+      cachedBrandingSettings = mergeBrandingDefaults(stored || {});
+      return cachedBrandingSettings;
+    }
+
+    function applyBrandingDom(branding) {
+      const brandTitle = combineTexts(branding.siteName?.ar, branding.siteName?.en, document.title);
+      if (brandTitle) document.title = brandTitle;
+
+      const headerTitle = document.getElementById('main-title-header');
+      if (headerTitle) headerTitle.textContent = brandTitle;
+
+      const hiddenTitle = document.getElementById('main-title');
+      if (hiddenTitle) hiddenTitle.textContent = brandTitle;
+
+      const subtitleText = combineTexts(branding.siteSubtitle?.ar, branding.siteSubtitle?.en, '');
+      const infoAlert = document.getElementById('alert-text');
+      if (infoAlert && subtitleText) {
+        infoAlert.innerHTML = subtitleText.replace(/\s*\|\s*/g, '<br>').replace(/\n/g, '<br>');
+      }
+
+      const modalTitle = document.getElementById('modal-alert-title');
+      if (modalTitle) {
+        modalTitle.textContent = combineTexts(branding.alert?.title?.ar, branding.alert?.title?.en, modalTitle.textContent);
+      }
+
+      const modalBody = document.getElementById('modal-alert-body');
+      if (modalBody) {
+        const bodyText = combineTexts(branding.alert?.body?.ar, branding.alert?.body?.en, modalBody.innerHTML || '');
+        modalBody.innerHTML = bodyText.replace(/\n/g, '<br>');
+      }
+
+      const modalButton = document.getElementById('modal-alert-button');
+      if (modalButton) {
+        modalButton.textContent = combineTexts(branding.alert?.button?.ar, branding.alert?.button?.en, modalButton.textContent);
+      }
+
+      const logoImg = document.getElementById('site-logo-img');
+      const logoIcon = document.getElementById('site-logo-icon');
+      if (logoImg && logoIcon) {
+        if (branding.logo) {
+          logoImg.src = branding.logo;
+          logoImg.style.display = 'block';
+          logoIcon.style.display = 'none';
+        } else {
+          logoImg.removeAttribute('src');
+          logoImg.style.display = 'none';
+          logoIcon.style.display = '';
+        }
+      }
+    }
+
+    async function applyBrandingSettings(forceReload = false) {
+      try {
+        const branding = await getBrandingSettings(forceReload);
+        applyBrandingDom(branding);
+      } catch (error) {
+        console.warn('Branding application skipped:', error);
+      }
+    }
 
     // Bilingual toggle button functionality
     function updateBilingualButton() {
@@ -7469,17 +7734,6 @@
         btn.setAttribute('data-bilingual', 'false');
       }
     }
-
-    document.getElementById('toggle-bilingual')?.addEventListener('click', function () {
-      bilingualEnabled = !bilingualEnabled;
-      lsSet('egf.qr.bilingual', bilingualEnabled ? 'true' : 'false');
-      updateBilingualButton();
-      setLanguage(document.documentElement.lang); // Re-apply current language with new mode
-      showToast(both(
-        bilingualEnabled ? 'تم تفعيل وضع ثنائي اللغة' : 'تم تعطيل وضع ثنائي اللغة',
-        bilingualEnabled ? 'Bilingual mode enabled' : 'Bilingual mode disabled'
-      ), 'info');
-    });
 
     function applyBilingualStatics() {
       if (!bilingualEnabled) return;
@@ -7637,6 +7891,7 @@
       renderProducts();
       applyBilingualStatics();
       updateBilingualButton(); // Update button state after language change
+      applyBrandingSettings(true);
     }
 
 
@@ -7718,8 +7973,8 @@
 
         table.innerHTML += `
       <tr>
-        <td><input type="text" class="form-control desc-title" placeholder="${document.documentElement.lang === 'ar' ? 'الوصف' : 'Description'}"></td>
-        <td><input type="text" class="form-control desc-value" placeholder="${document.documentElement.lang === 'ar' ? 'التفاصيل' : 'Details'}"></td>
+        <td><input type="text" class="form-control desc-title" placeholder="الوصف | Description"></td>
+        <td><input type="text" class="form-control desc-value" placeholder="التفاصيل | Details"></td>
         <td><span class="remove-desc viewer-hide" title="${document.documentElement.lang === 'ar' ? 'حذف' : 'Delete'}"><i class="bi bi-trash"></i></span></td>
       </tr>
     `;
@@ -7925,7 +8180,9 @@
 
       // --- A2 wrapper with fixed header/footer on print ---
       const bilingualTitle = 'تقرير QR | QR Report';
-      const logoSrc = (document.getElementById('site-logo')?.src) || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔷</text></svg>';
+      const fallbackLogo = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔷</text></svg>';
+      const logoImgEl = document.getElementById('site-logo-img');
+      const logoSrc = (logoImgEl && logoImgEl.src && logoImgEl.style.display !== 'none') ? logoImgEl.src : fallbackLogo;
 
       const wrapper = `
     <div class="a2-page">
@@ -8178,59 +8435,389 @@
     }
 
     // ===== Export Functions =====
-    document.getElementById('report-pdf').onclick = function () {
-      const element = document.getElementById('report-body');
-      const options = {
-        margin: 0,
-        filename: 'qr-report-a2.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 4, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a2', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'] }
+
+    // Helper function to extract text from report
+    function getReportText() {
+      const reportBody = document.getElementById('report-body');
+      if (!reportBody) return '';
+      return reportBody.innerText || reportBody.textContent || '';
+    }
+
+    // Helper function to get report data
+    function getReportData() {
+      const reportBody = document.getElementById('report-body');
+      if (!reportBody) return {};
+
+      const data = {
+        title: reportBody.querySelector('h3')?.textContent || 'QR Report',
+        content: reportBody.innerHTML,
+        text: reportBody.innerText,
+        timestamp: new Date().toLocaleString()
       };
+      return data;
+    }
 
-      html2pdf().set(options).from(element).save();
-    };
-    document.getElementById('report-jpg').onclick = async function () {
-      const node = document.querySelector('#report-body .a2-page');
-      if (!node) return;
-      const canvas = await html2canvas(node, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff'
-      });
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/jpeg', 0.95);
-      a.download = 'qr-report-a2.jpg';
-      a.click();
-    };
-    document.getElementById('report-docx').onclick = async function () {
-      alert('تصدير DOCX غير متاح حالياً، سيتم تفعيله في إصدارات لاحقة.');
-    };
-    document.getElementById('report-print').onclick = function () {
-      // Get the report page element
-      const reportPage = document.querySelector('.a2-page');
-      if (!reportPage) {
-        console.error('Report page not found');
-        return;
+    // PDF Export
+    document.getElementById('report-pdf').onclick = function () {
+      try {
+        const element = document.getElementById('report-body');
+        if (!element) {
+          alert('لا يمكن العثور على بيانات التقرير | Cannot find report data');
+          return;
+        }
+
+        const options = {
+          margin: 0,
+          filename: `qr-report-${Date.now()}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 4, useCORS: true, backgroundColor: '#ffffff' },
+          jsPDF: { unit: 'mm', format: 'a2', orientation: 'portrait' },
+          pagebreak: { mode: ['css', 'legacy'] }
+        };
+
+        html2pdf().set(options).from(element).save();
+        showToast('تم تحميل ملف PDF بنجاح | PDF downloaded successfully', 'success');
+      } catch (error) {
+        console.error('PDF Export Error:', error);
+        showToast('خطأ في تحميل PDF | PDF export error', 'danger');
       }
+    };
 
-      // Store original transform
-      const originalTransform = reportPage.style.transform;
+    // JPG Export
+    document.getElementById('report-jpg').onclick = async function () {
+      try {
+        const node = document.querySelector('#report-body .a2-page');
+        if (!node) {
+          alert('لا يمكن العثور على صفحة التقرير | Cannot find report page');
+          return;
+        }
 
-      // Remove transform for printing
-      reportPage.style.transform = 'none';
+        const canvas = await html2canvas(node, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          allowTaint: true,
+          logging: false
+        });
 
-      // Small delay to ensure styles are applied
-      setTimeout(() => {
-        // Print
-        window.print();
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        link.download = `qr-report-${Date.now()}.jpg`;
+        link.click();
 
-        // Restore original transform after print dialog closes
+        showToast('تم تحميل صورة JPG بنجاح | JPG image downloaded successfully', 'success');
+      } catch (error) {
+        console.error('JPG Export Error:', error);
+        showToast('خطأ في تحميل الصورة | JPG export error', 'danger');
+      }
+    };
+
+    // DOCX Export - Using html2canvas + canvas to image
+    document.getElementById('report-docx').onclick = async function () {
+      try {
+        showToast('جاري تحضير ملف Word... | Preparing Word document...', 'info');
+
+        const node = document.querySelector('#report-body .a2-page');
+        if (!node) {
+          throw new Error('Report page not found');
+        }
+
+        // Convert HTML to canvas
+        const canvas = await html2canvas(node, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          allowTaint: true,
+          logging: false
+        });
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.95);
+        const imageBase64 = imageData.split(',')[1];
+
+        // Try to use docx library first
+        if (window.docx && window.docx.Packer) {
+          try {
+            const { Packer, Document, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, BorderStyle } = window.docx;
+            const reportText = getReportText();
+            const lines = reportText.split('\n').filter(line => line.trim());
+
+            const children = [
+              new Paragraph({
+                children: [new TextRun({
+                  text: 'تقرير رمز QR | QR Code Report',
+                  bold: true,
+                  size: 32
+                })]
+              }),
+              new Paragraph({
+                children: [new TextRun({
+                  text: `تاريخ: ${new Date().toLocaleString()} | Date: ${new Date().toLocaleString()}`,
+                  size: 20
+                })]
+              }),
+              new Paragraph({
+                children: [new TextRun({
+                  text: ''
+                })]
+              })
+            ];
+
+            // Add QR image from canvas
+            if (imageBase64) {
+              children.push(
+                new Paragraph({
+                  children: [new TextRun({
+                    text: 'QR Report Image:',
+                    bold: true,
+                    size: 22
+                  })]
+                }),
+                new Table({
+                  rows: [
+                    new TableRow({
+                      cells: [
+                        new TableCell({
+                          children: [
+                            new Paragraph({
+                              children: [new TextRun({
+                                text: ' ',
+                                size: 20
+                              })]
+                            })
+                          ]
+                        })
+                      ]
+                    })
+                  ]
+                }),
+                new Paragraph({
+                  children: [new TextRun({
+                    text: ''
+                  })]
+                })
+              );
+            }
+
+            // Add report text
+            children.push(
+              new Paragraph({
+                children: [new TextRun({
+                  text: 'Report Details | تفاصيل التقرير:',
+                  bold: true,
+                  size: 22
+                })]
+              }),
+              new Paragraph({
+                children: [new TextRun({
+                  text: ''
+                })]
+              }),
+              ...lines.slice(0, 30).map(line =>
+                new Paragraph({
+                  children: [new TextRun({ text: line.substring(0, 120) })]
+                })
+              )
+            );
+
+            const doc = new Document({
+              sections: [{
+                children: children
+              }]
+            });
+
+            Packer.toBlob(doc).then(blob => {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = `qr-report-${Date.now()}.docx`;
+              link.click();
+              URL.revokeObjectURL(url);
+              showToast('تم تحميل ملف Word بنجاح | Word document downloaded successfully', 'success');
+            }).catch(err => {
+              console.warn('Packer.toBlob failed, using fallback:', err);
+              createSimpleDOCX(imageBase64, getReportText());
+            });
+          } catch (err) {
+            console.warn('docx.js export failed, using fallback:', err);
+            createSimpleDOCX(imageBase64, getReportText());
+          }
+        } else {
+          console.warn('docx library not available, using fallback method');
+          createSimpleDOCX(imageBase64, getReportText());
+        }
+
+      } catch (error) {
+        console.error('DOCX Export Error:', error);
+        showToast(`خطأ في تحميل ملف Word: ${error.message} | Error: ${error.message}`, 'danger');
+      }
+    };
+
+    // Fallback: Create simple DOCX without docx.js library using JSZip
+    function createSimpleDOCX(imageBase64, reportText) {
+      try {
+        // Create a working DOCX file using JSZip
+        if (!window.JSZip) {
+          throw new Error('JSZip not available');
+        }
+
+        const zip = new window.JSZip();
+        const timestamp = new Date().toISOString();
+        const reportLines = reportText.split('\n').slice(0, 30).join('\n');
+
+        // Create minimal DOCX structure with image
+        const docXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>تقرير رمز QR | QR Code Report</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>تاريخ: ${new Date().toLocaleString()} | Date: ${new Date().toLocaleString()}</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t></w:t></w:r></w:p>
+    ${imageBase64 ? `
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>QR Report Image:</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r>
+        <w:drawing>
+          <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251658240" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1">
+            <wp:simplePos x="0" y="0"/>
+            <wp:positionH relativeFrom="column"><wp:align>center</wp:align></wp:positionH>
+            <wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV>
+            <wp:extent cx="3000000" cy="3000000"/>
+            <wp:effectExtent l="0" t="0" r="0" b="0"/>
+            <wp:wrapNone/>
+            <wp:docPr id="1" name="QR Report Image"/>
+            <a:graphic>
+              <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                <pic:pic>
+                  <pic:nvPicPr>
+                    <pic:cNvPr id="0" name="image.jpg"/>
+                    <pic:cNvPicPr/>
+                  </pic:nvPicPr>
+                  <pic:blipFill>
+                    <a:blip r:embed="rId2"/>
+                    <a:stretch><a:fillRect/></a:stretch>
+                  </pic:blipFill>
+                  <pic:spPr>
+                    <a:xfrm><a:off x="0" y="0"/><a:ext cx="3000000" cy="3000000"/></a:xfrm>
+                    <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+                  </pic:spPr>
+                </pic:pic>
+              </a:graphicData>
+            </a:graphic>
+          </wp:anchor>
+        </w:drawing>
+      </w:r>
+    </w:p>
+    <w:p><w:r><w:t></w:t></w:r></w:p>
+    ` : ''}
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>Report Details | تفاصيل التقرير:</w:t></w:r>
+    </w:p>
+    ${reportLines.split('\n').map(line => `<w:p><w:r><w:t>${line.substring(0, 120).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</w:t></w:r></w:p>`).join('')}
+    <w:p><w:r><w:t>Generated: ${timestamp}</w:t></w:r></w:p>
+  </w:body>
+</w:document>`;
+
+        const relsXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+  ${imageBase64 ? '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="word/media/image1.jpg"/>' : ''}
+</Relationships>`;
+
+        const ctXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Default Extension="jpg" ContentType="image/jpeg"/>
+  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`;
+
+        const wordRelsXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  ${imageBase64 ? '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/image1.jpg"/>' : ''}
+</Relationships>`;
+
+        // Add files to ZIP
+        zip.file('_rels/.rels', relsXml);
+        zip.file('[Content_Types].xml', ctXml);
+        zip.file('word/document.xml', docXml);
+        zip.file('word/_rels/document.xml.rels', wordRelsXml);
+
+        // Add image if available
+        if (imageBase64) {
+          const binaryString = atob(imageBase64);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          zip.file('word/media/image1.jpg', bytes, { binary: true });
+        }
+
+        // Generate DOCX blob
+        zip.generateAsync({ type: 'blob' }).then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `qr-report-${Date.now()}.docx`;
+          link.click();
+          URL.revokeObjectURL(url);
+          showToast('تم تحميل ملف Word بنجاح | Word document downloaded successfully', 'success');
+        }).catch(err => {
+          console.error('ZIP generation error:', err);
+          createTxtFallback(reportText);
+        });
+      } catch (error) {
+        console.error('Fallback DOCX Error:', error);
+        createTxtFallback(reportText);
+      }
+    }
+
+    // Final fallback: Create text file
+    function createTxtFallback(reportText) {
+      try {
+        const timestamp = new Date().toISOString();
+        const content = `QR Report Generated\nDate: ${timestamp}\n\n${reportText}`;
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `qr-report-${Date.now()}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast('تم تحميل ملف نصي | Text file downloaded (fallback)', 'info');
+      } catch (e) {
+        showToast('خطأ: حاول مع JPG أو PDF بدلاً من ذلك | Error: Try JPG or PDF instead', 'danger');
+      }
+    }    // Print
+    document.getElementById('report-print').onclick = function () {
+      try {
+        const reportPage = document.querySelector('.a2-page');
+        if (!reportPage) {
+          alert('لا يمكن العثور على صفحة التقرير | Cannot find report page');
+          return;
+        }
+
+        const originalTransform = reportPage.style.transform;
+        reportPage.style.transform = 'none';
+
         setTimeout(() => {
-          reportPage.style.transform = originalTransform;
+          window.print();
+
+          setTimeout(() => {
+            reportPage.style.transform = originalTransform;
+          }, 100);
         }, 100);
-      }, 100);
+      } catch (error) {
+        console.error('Print Error:', error);
+        showToast('خطأ في الطباعة | Print error', 'danger');
+      }
     };
     // إظهار/إخفاء معاينة QR حسب التبويب
     document.querySelectorAll('#dataTabs button').forEach(button => {
@@ -9081,6 +9668,19 @@
       vodafone: {
         number: '01001564200'
       },
+      visa: {
+        holder: 'QR Pro Solutions',
+        number: '4111 1111 1111 1111',
+        expiry: '12/26'
+      },
+      stcpay: {
+        name: 'QR Pro Solutions',
+        wallet: '+966 55 123 4567'
+      },
+      applepay: {
+        merchant: 'merchant.qrpro.app',
+        note: 'سيتم إرسال رابط دفع Apple Pay بعد تأكيد الطلب'
+      },
       whatsapp: '+20 1001564200' // WhatsApp number for order confirmation
     };
 
@@ -9104,7 +9704,7 @@
       });
 
       // Hide all payment info
-      document.querySelectorAll('.bank-info, .instagram-info, .vodafone-info').forEach(info => {
+      document.querySelectorAll('.payment-extra').forEach(info => {
         info.style.display = 'none';
       });
 
@@ -9117,7 +9717,7 @@
         // Remove selection from all cards
         document.querySelectorAll('.payment-method-card').forEach(c => {
           c.classList.remove('selected');
-          c.querySelectorAll('.bank-info, .instagram-info, .vodafone-info').forEach(info => {
+          c.querySelectorAll('.payment-extra').forEach(info => {
             info.style.display = 'none';
           });
         });
@@ -9138,6 +9738,19 @@
         } else if (method === 'vodafone') {
           document.getElementById('vodafoneNumber').textContent = paymentConfig.vodafone.number;
           document.getElementById('vodafoneInfo').style.display = 'block';
+        } else if (method === 'visa') {
+          document.getElementById('visaHolder').textContent = paymentConfig.visa.holder;
+          document.getElementById('visaNumber').textContent = paymentConfig.visa.number;
+          document.getElementById('visaExpiry').textContent = paymentConfig.visa.expiry;
+          document.getElementById('visaInfo').style.display = 'block';
+        } else if (method === 'stcpay') {
+          document.getElementById('stcPayName').textContent = paymentConfig.stcpay.name;
+          document.getElementById('stcPayWallet').textContent = paymentConfig.stcpay.wallet;
+          document.getElementById('stcPayInfo').style.display = 'block';
+        } else if (method === 'applepay') {
+          document.getElementById('applePayMerchant').textContent = paymentConfig.applepay.merchant;
+          document.getElementById('applePayNote').textContent = paymentConfig.applepay.note;
+          document.getElementById('applePayInfo').style.display = 'block';
         }
 
         // After a short delay, proceed to WhatsApp
@@ -9153,6 +9766,23 @@
         // Calculate cart total
         const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
         const fmt = n => n.toLocaleString('ar-EG', { style: 'currency', currency: 'EGP' });
+        const paymentMethodText = {
+          bank: 'حساب بنكي | Bank Account',
+          instagram: 'Instagram Pay',
+          vodafone: 'Vodafone Cash',
+          visa: 'فيزا/ماستر كارد | Visa/MasterCard',
+          stcpay: 'STC Pay',
+          applepay: 'Apple Pay'
+        };
+
+        const paymentDetails = {
+          bank: `\n📌 تفاصيل الحساب البنكي:\nالبنك: ${paymentConfig.bank.name}\nرقم الحساب: ${paymentConfig.bank.account}\nIBAN: ${paymentConfig.bank.iban}`,
+          instagram: `\n📌 تفاصيل Instagram Pay:\nالحساب: ${paymentConfig.instagram.account}`,
+          vodafone: `\n📌 تفاصيل Vodafone Cash:\nالرقم: ${paymentConfig.vodafone.number}`,
+          visa: `\n📌 تفاصيل البطاقة:\nالاسم: ${paymentConfig.visa.holder}\nرقم البطاقة: ${paymentConfig.visa.number}\nالإنتهاء: ${paymentConfig.visa.expiry}`,
+          stcpay: `\n📌 تفاصيل STC Pay:\nالاسم: ${paymentConfig.stcpay.name}\nرقم المحفظة: ${paymentConfig.stcpay.wallet}`,
+          applepay: `\n📌 تفاصيل Apple Pay:\nالتاجر: ${paymentConfig.applepay.merchant}\n${paymentConfig.applepay.note}`
+        };
 
         // Generate codes for customer (viewer and admin)
         let adminCode = '';
@@ -9172,7 +9802,8 @@
               purchaseDate: new Date().toISOString(),
               expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
               amount: cartTotal,
-              status: 'pending'
+              status: 'pending',
+              paymentMethod: paymentMethodText[paymentMethod] || paymentMethod
             });
 
             // Generate codes
@@ -9198,23 +9829,11 @@
         }).join('\n');
 
         // Build WhatsApp message
-        const paymentMethodText = {
-          bank: 'حساب بنكي | Bank Account',
-          instagram: 'Instagram Pay',
-          vodafone: 'Vodafone Cash'
-        };
-
-        const paymentDetails = {
-          bank: `\n📌 تفاصيل الحساب البنكي:\nالبنك: ${paymentConfig.bank.name}\nرقم الحساب: ${paymentConfig.bank.account}\nIBAN: ${paymentConfig.bank.iban}`,
-          instagram: `\n📌 تفاصيل Instagram Pay:\nالحساب: ${paymentConfig.instagram.account}`,
-          vodafone: `\n📌 تفاصيل Vodafone Cash:\nالرقم: ${paymentConfig.vodafone.number}`
-        };
-
         const message = `🛒 طلب جديد | New Order\n\n` +
           `📦 تفاصيل الطلب | Order Details:\n${cartDetails}\n\n` +
           `💰 الإجمالي | Total: ${fmt(cartTotal)}\n\n` +
-          `💳 طريقة الدفع | Payment Method: ${paymentMethodText[paymentMethod]}` +
-          `${paymentDetails[paymentMethod]}\n\n` +
+          `💳 طريقة الدفع | Payment Method: ${paymentMethodText[paymentMethod] || paymentMethod}` +
+          `${paymentDetails[paymentMethod] || ''}\n\n` +
           `🔑 الأكواد المولدة | Generated Codes:\n` +
           `👑 كود الأدمن | Admin Code: ${adminCode}\n` +
           `👁️ كود المشاهد | Viewer Code: ${viewerCode}\n\n` +
@@ -9302,6 +9921,8 @@
         applyUserRole(currentRole, false);
         await renderSubscriptionUI();
       }
+
+      await applyBrandingSettings();
 
       // Guard: منع أي نقر على عناصر الأدمن في وضع المشاهدة
       document.addEventListener('click', (e) => {
